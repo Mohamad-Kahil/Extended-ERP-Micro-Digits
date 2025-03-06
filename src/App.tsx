@@ -23,6 +23,9 @@ const POSDashboard = lazy(() => import("./modules/POS/POSDashboard"));
 const LogisticsDashboard = lazy(
   () => import("./modules/Logistics/LogisticsDashboard"),
 );
+const StoreNetworkDashboard = lazy(
+  () => import("./modules/StoreNetwork/StoreNetworkDashboard"),
+);
 
 function App() {
   return (
@@ -68,7 +71,7 @@ function App() {
           <Route path="/pos" element={<POSDashboard />} />
           <Route path="/ecommerce" element={<Dashboard />} />
           <Route path="/logistics" element={<LogisticsDashboard />} />
-          <Route path="/store-network" element={<Dashboard />} />
+          <Route path="/store-network" element={<StoreNetworkDashboard />} />
           <Route path="/marketing" element={<Dashboard />} />
           <Route path="/legal" element={<Dashboard />} />
           <Route path="/operations" element={<Dashboard />} />
