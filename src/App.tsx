@@ -30,6 +30,9 @@ const MarketingDashboard = lazy(
   () => import("./modules/Marketing/MarketingDashboard"),
 );
 const LegalDashboard = lazy(() => import("./modules/Legal/LegalDashboard"));
+const OperationsDashboard = lazy(
+  () => import("./modules/Operations/OperationsDashboard"),
+);
 
 function App() {
   return (
@@ -78,7 +81,7 @@ function App() {
           <Route path="/store-network" element={<StoreNetworkDashboard />} />
           <Route path="/marketing" element={<MarketingDashboard />} />
           <Route path="/legal" element={<LegalDashboard />} />
-          <Route path="/operations" element={<Dashboard />} />
+          <Route path="/operations" element={<OperationsDashboard />} />
           <Route path="/executive" element={<Dashboard />} />
 
           {/* Add this before the catchall route */}
