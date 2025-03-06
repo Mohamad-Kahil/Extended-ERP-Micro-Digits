@@ -116,6 +116,9 @@ const FinancialKPIs = ({
       ? ["efficiency", "quality", "onTimeDelivery", "customerSatisfaction"]
       : ["revenue", "expenses", "profit", "cashFlow"];
 
+  // Type assertion to help TypeScript understand the data structure
+  type MetricDataType = { period: string; value: number }[];
+
   const metricLabels = {
     // Financial
     revenue: "Revenue",
@@ -219,7 +222,9 @@ const FinancialKPIs = ({
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {metrics.map((metric) => {
-          const metricData = data[metric as keyof typeof data];
+          const metricData = data[
+            metric as keyof typeof data
+          ] as MetricDataType;
           const currentValue = metricData[metricData.length - 1].value;
           const previousValue = metricData[metricData.length - 2].value;
           const percentageChange = getPercentageChange(
@@ -344,7 +349,9 @@ const FinancialKPIs = ({
             </p>
             <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
               {metrics.map((metric) => {
-                const metricData = data[metric as keyof typeof data];
+                const metricData = data[
+                  metric as keyof typeof data
+                ] as MetricDataType;
                 const currentValue = metricData[metricData.length - 1].value;
                 const previousValue = metricData[metricData.length - 2].value;
                 const percentageChange = getPercentageChange(

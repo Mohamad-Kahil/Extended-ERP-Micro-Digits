@@ -512,9 +512,9 @@ const CustomerNotifications = () => {
                     placeholder="Enter notification template content..."
                   />
                   <p className="mt-2 text-xs text-slate-500">
-                    Use {{ order_id }}, {{ tracking_number }},{" "}
-                    {{ customer_name }}, and
-                    {{ delivery_date }} as placeholders.
+                    Use {"{{ order_id }}"}, {"{{ tracking_number }}"},{" "}
+                    {"{{ customer_name }}"}, and
+                    {"{{ delivery_date }}"} as placeholders.
                   </p>
                 </div>
 
