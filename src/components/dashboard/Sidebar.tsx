@@ -51,7 +51,7 @@ const NavItem = ({ href, icon, title, isActive, collapsed }: NavItemProps) => {
       <Button
         variant="ghost"
         className={cn(
-          "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-[10px]",
+          "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-xs",
           isActive
             ? "bg-cyan-600/20 text-cyan-500 font-medium"
             : "text-slate-400 hover:bg-slate-800/50 hover:text-white",
@@ -394,7 +394,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
       <div className="scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800 flex-1 overflow-y-auto">
         <div className="px-2 py-3">
           {!collapsed && (
-            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+            <div className="mb-1 px-2 text-[11px] font-semibold uppercase text-slate-500">
               Main
             </div>
           )}
@@ -414,7 +414,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
 
         <div className="px-2 py-3">
           {!collapsed && (
-            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+            <div className="mb-1 px-2 text-[11px] font-semibold uppercase text-slate-500">
               Operations
             </div>
           )}
@@ -434,7 +434,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
 
         <div className="px-2 py-3">
           {!collapsed && (
-            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+            <div className="mb-1 px-2 text-[11px] font-semibold uppercase text-slate-500">
               Sales
             </div>
           )}
@@ -454,7 +454,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
 
         <div className="px-2 py-3">
           {!collapsed && (
-            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+            <div className="mb-1 px-2 text-[11px] font-semibold uppercase text-slate-500">
               Other
             </div>
           )}
@@ -476,11 +476,11 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
         <div className="border-t border-slate-800 p-2">
           <div className="flex items-center gap-2 rounded-md bg-slate-800/50 p-1.5">
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-600/20 text-cyan-500">
-              <span className="text-[10px] font-medium">JD</span>
+              <span className="text-xs font-medium">JD</span>
             </div>
             <div>
-              <p className="text-[10px] font-medium text-white">John Doe</p>
-              <p className="text-[8px] text-slate-400">Administrator</p>
+              <p className="text-xs font-medium text-white">John Doe</p>
+              <p className="text-[10px] text-slate-400">Administrator</p>
             </div>
           </div>
         </div>
