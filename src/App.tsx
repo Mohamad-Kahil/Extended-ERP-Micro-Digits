@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { useRoutes, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/home";
 import routes from "tempo-routes";
@@ -6,43 +6,82 @@ import AuthContainer from "./components/auth/AuthContainer";
 import LoginForm from "./components/auth/LoginForm";
 import ForgotPasswordForm from "./components/auth/ForgotPasswordForm";
 import ResetPasswordForm from "./components/auth/ResetPasswordForm";
+import { LoadingSpinner } from "./components/ui/loading-spinner";
 
-// Lazy load dashboard components
-const Dashboard = lazy(() => import("./pages/dashboard"));
-const FinanceDashboard = lazy(
+// Preload all dashboard components
+const preloadComponent = (importFn: () => Promise<any>) => {
+  const Component = lazy(importFn);
+  // Start loading the component in the background
+  importFn();
+  return Component;
+};
+
+// Lazy load dashboard components with preloading
+const Dashboard = preloadComponent(() => import("./pages/dashboard"));
+const FinanceDashboard = preloadComponent(
   () => import("./modules/Finance/FinanceDashboard"),
 );
-const HRDashboard = lazy(() => import("./modules/HR/HRDashboard"));
-const SupplyChainDashboard = lazy(
+const HRDashboard = preloadComponent(() => import("./modules/HR/HRDashboard"));
+const SupplyChainDashboard = preloadComponent(
   () => import("./modules/SupplyChain/SupplyChainDashboard"),
 );
-const ProductionDashboard = lazy(
+const ProductionDashboard = preloadComponent(
   () => import("./modules/Production/ProductionDashboard"),
 );
-const POSDashboard = lazy(() => import("./modules/POS/POSDashboard"));
-const LogisticsDashboard = lazy(
+const POSDashboard = preloadComponent(
+  () => import("./modules/POS/POSDashboard"),
+);
+const LogisticsDashboard = preloadComponent(
   () => import("./modules/Logistics/LogisticsDashboard"),
 );
-const StoreNetworkDashboard = lazy(
+const StoreNetworkDashboard = preloadComponent(
   () => import("./modules/StoreNetwork/StoreNetworkDashboard"),
 );
-const MarketingDashboard = lazy(
+const MarketingDashboard = preloadComponent(
   () => import("./modules/Marketing/MarketingDashboard"),
 );
-const LegalDashboard = lazy(() => import("./modules/Legal/LegalDashboard"));
-const OperationsDashboard = lazy(
+const LegalDashboard = preloadComponent(
+  () => import("./modules/Legal/LegalDashboard"),
+);
+const OperationsDashboard = preloadComponent(
   () => import("./modules/Operations/OperationsDashboard"),
 );
-const ExecutiveDashboard = lazy(
+const ExecutiveDashboard = preloadComponent(
   () => import("./modules/Executive/ExecutiveDashboard"),
 );
 
 function App() {
+  // Preload all modules when the app starts
+  useEffect(() => {
+    const preloadModules = async () => {
+      // Preload all modules in the background
+      const modules = [
+        import("./pages/dashboard"),
+        import("./modules/Finance/FinanceDashboard"),
+        import("./modules/HR/HRDashboard"),
+        import("./modules/SupplyChain/SupplyChainDashboard"),
+        import("./modules/Production/ProductionDashboard"),
+        import("./modules/POS/POSDashboard"),
+        import("./modules/Logistics/LogisticsDashboard"),
+        import("./modules/StoreNetwork/StoreNetworkDashboard"),
+        import("./modules/Marketing/MarketingDashboard"),
+        import("./modules/Legal/LegalDashboard"),
+        import("./modules/Operations/OperationsDashboard"),
+        import("./modules/Executive/ExecutiveDashboard"),
+      ];
+
+      // Load all modules in parallel
+      await Promise.all(modules);
+    };
+
+    preloadModules();
+  }, []);
+
   return (
     <Suspense
       fallback={
         <div className="flex h-screen w-screen items-center justify-center bg-slate-950 text-white">
-          Loading...
+          <LoadingSpinner />
         </div>
       }
     >

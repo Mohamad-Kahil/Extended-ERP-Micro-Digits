@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { ModulePreloader } from "./ModulePreloader";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <Header />
         <main className="flex-1 overflow-auto p-6">{children}</main>
       </div>
+      {/* Invisible component that preloads all modules */}
+      <ModulePreloader />
     </div>
   );
 };
