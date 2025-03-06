@@ -2,24 +2,59 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface NavItemProps {
   href: string;
   icon: React.ReactNode;
   title: string;
   isActive?: boolean;
+  collapsed?: boolean;
 }
 
-const NavItem = ({ href, icon, title, isActive }: NavItemProps) => {
+const NavItem = ({ href, icon, title, isActive, collapsed }: NavItemProps) => {
+  if (collapsed) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link to={href}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "w-7 h-7 rounded-full",
+                  isActive
+                    ? "bg-cyan-600/20 text-cyan-500"
+                    : "text-slate-400 hover:bg-slate-800/50 hover:text-white",
+                )}
+              >
+                {icon}
+              </Button>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{title}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
   return (
     <Link to={href}>
       <Button
         variant="ghost"
         className={cn(
-          "flex w-full items-center justify-start gap-3 px-3 py-2",
+          "flex w-full items-center justify-start gap-2 px-2 py-1.5 text-[10px]",
           isActive
-            ? "bg-cyan-900/20 text-cyan-500"
-            : "text-slate-400 hover:bg-slate-800 hover:text-white",
+            ? "bg-cyan-600/20 text-cyan-500 font-medium"
+            : "text-slate-400 hover:bg-slate-800/50 hover:text-white",
         )}
       >
         {icon}
@@ -29,7 +64,11 @@ const NavItem = ({ href, icon, title, isActive }: NavItemProps) => {
   );
 };
 
-const Sidebar = () => {
+interface SidebarProps {
+  collapsed?: boolean;
+}
+
+const Sidebar = ({ collapsed = false }: SidebarProps) => {
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -40,8 +79,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -62,8 +101,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -82,8 +121,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -98,14 +137,17 @@ const Sidebar = () => {
         </svg>
       ),
     },
+  ];
+
+  const operationalModules = [
     {
       title: "Supply Chain",
       href: "/supply-chain",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -126,8 +168,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -143,13 +185,42 @@ const Sidebar = () => {
       ),
     },
     {
+      title: "Operations",
+      href: "/operations",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 6V2H8" />
+          <path d="m8 2 4 4" />
+          <path d="M12 18v4h4" />
+          <path d="m16 22-4-4" />
+          <path d="M6 12H2v4" />
+          <path d="m2 16 4-4" />
+          <path d="M18 12h4v-4" />
+          <path d="m22 8-4 4" />
+        </svg>
+      ),
+    },
+  ];
+
+  const salesModules = [
+    {
       title: "POS",
       href: "/pos",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -168,8 +239,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -184,13 +255,36 @@ const Sidebar = () => {
       ),
     },
     {
+      title: "Marketing",
+      href: "/marketing",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+          <path d="M22 12A10 10 0 0 0 12 2v10z" />
+        </svg>
+      ),
+    },
+  ];
+
+  const otherModules = [
+    {
       title: "Logistics",
       href: "/logistics",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -210,8 +304,8 @@ const Sidebar = () => {
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -225,33 +319,13 @@ const Sidebar = () => {
       ),
     },
     {
-      title: "Marketing",
-      href: "/marketing",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
-          <path d="M22 12A10 10 0 0 0 12 2v10z" />
-        </svg>
-      ),
-    },
-    {
       title: "Legal",
       href: "/legal",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -264,39 +338,13 @@ const Sidebar = () => {
       ),
     },
     {
-      title: "Operations",
-      href: "/operations",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 6V2H8" />
-          <path d="m8 2 4 4" />
-          <path d="M12 18v4h4" />
-          <path d="m16 22-4-4" />
-          <path d="M6 12H2v4" />
-          <path d="m2 16 4-4" />
-          <path d="M18 12h4v-4" />
-          <path d="m22 8-4 4" />
-        </svg>
-      ),
-    },
-    {
       title: "Executive",
       href: "/executive",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -315,14 +363,18 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="flex h-full w-64 flex-col border-r border-slate-800 bg-slate-900">
-      <div className="flex h-16 items-center border-b border-slate-800 px-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-cyan-600">
+    <aside
+      className={`flex h-full flex-col border-r border-slate-800 bg-slate-900/90 backdrop-blur-sm ${collapsed ? "w-12" : "w-48"}`}
+    >
+      <div className="flex h-12 items-center justify-center border-b border-slate-800 px-2">
+        <div
+          className={`flex items-center ${collapsed ? "justify-center" : "gap-2"}`}
+        >
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-cyan-600">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
+              width="14"
+              height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -334,31 +386,105 @@ const Sidebar = () => {
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
             </svg>
           </div>
-          <span className="text-xl font-bold text-white">ERP System</span>
+          {!collapsed && (
+            <span className="text-xs font-bold text-white">WCRM</span>
+          )}
         </div>
       </div>
-      <nav className="flex-1 space-y-1 px-3 py-4">
-        {modules.map((module) => (
-          <NavItem
-            key={module.href}
-            href={module.href}
-            icon={module.icon}
-            title={module.title}
-            isActive={pathname === module.href}
-          />
-        ))}
-      </nav>
-      <div className="border-t border-slate-800 p-4">
-        <div className="flex items-center gap-3 rounded-md bg-slate-800 p-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-700">
-            <span className="text-sm font-medium text-white">JD</span>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-white">John Doe</p>
-            <p className="text-xs text-slate-400">Administrator</p>
-          </div>
+      <div className="scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800 flex-1 overflow-y-auto">
+        <div className="px-2 py-3">
+          {!collapsed && (
+            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+              Main
+            </div>
+          )}
+          <nav className="space-y-1">
+            {modules.map((module) => (
+              <NavItem
+                key={module.href}
+                href={module.href}
+                icon={module.icon}
+                title={module.title}
+                isActive={pathname === module.href}
+                collapsed={collapsed}
+              />
+            ))}
+          </nav>
+        </div>
+
+        <div className="px-2 py-3">
+          {!collapsed && (
+            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+              Operations
+            </div>
+          )}
+          <nav className="space-y-1">
+            {operationalModules.map((module) => (
+              <NavItem
+                key={module.href}
+                href={module.href}
+                icon={module.icon}
+                title={module.title}
+                isActive={pathname === module.href}
+                collapsed={collapsed}
+              />
+            ))}
+          </nav>
+        </div>
+
+        <div className="px-2 py-3">
+          {!collapsed && (
+            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+              Sales
+            </div>
+          )}
+          <nav className="space-y-1">
+            {salesModules.map((module) => (
+              <NavItem
+                key={module.href}
+                href={module.href}
+                icon={module.icon}
+                title={module.title}
+                isActive={pathname === module.href}
+                collapsed={collapsed}
+              />
+            ))}
+          </nav>
+        </div>
+
+        <div className="px-2 py-3">
+          {!collapsed && (
+            <div className="mb-1 px-2 text-[9px] font-semibold uppercase text-slate-500">
+              Other
+            </div>
+          )}
+          <nav className="space-y-1">
+            {otherModules.map((module) => (
+              <NavItem
+                key={module.href}
+                href={module.href}
+                icon={module.icon}
+                title={module.title}
+                isActive={pathname === module.href}
+                collapsed={collapsed}
+              />
+            ))}
+          </nav>
         </div>
       </div>
+      {!collapsed && (
+        <div className="border-t border-slate-800 p-2">
+          <div className="flex items-center gap-2 rounded-md bg-slate-800/50 p-1.5">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-600/20 text-cyan-500">
+              <span className="text-[10px] font-medium">JD</span>
+            </div>
+            <div>
+              <p className="text-[10px] font-medium text-white">John Doe</p>
+              <p className="text-[8px] text-slate-400">Administrator</p>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,20 +15,62 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-slate-800 bg-slate-900 px-6">
-      <div className="flex items-center">
-        <h2 className="text-xl font-semibold text-white">Dashboard</h2>
-      </div>
+    <header className="flex h-12 items-center justify-between border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm px-3">
       <div className="flex items-center space-x-4">
+        <div className="relative w-64 hidden md:block">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <Input
+            placeholder="Search..."
+            className="pl-8 bg-slate-800/50 border-slate-700 focus:border-cyan-600 h-9 text-sm"
+          />
+        </div>
+      </div>
+      <div className="flex items-center space-x-3">
         <Button
-          variant="ghost"
-          size="icon"
-          className="text-slate-400 hover:text-white"
+          variant="outline"
+          size="sm"
+          className="hidden md:flex border-slate-700 bg-slate-800/50 hover:bg-slate-800 hover:text-cyan-500"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-2"
+          >
+            <path d="M5 12h14" />
+            <path d="M12 5v14" />
+          </svg>
+          New Task
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="text-slate-400 hover:text-white relative"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -38,13 +81,16 @@ const Header = () => {
             <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
             <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
           </svg>
+          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-600 text-[10px] font-medium text-white">
+            3
+          </span>
           <span className="sr-only">Notifications</span>
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
-              className="relative h-8 w-8 rounded-full bg-slate-700"
+              className="relative h-8 w-8 rounded-full border border-slate-700 bg-slate-800/50"
             >
               <span className="sr-only">Open user menu</span>
               <span className="flex h-full w-full items-center justify-center text-sm font-medium text-white">
