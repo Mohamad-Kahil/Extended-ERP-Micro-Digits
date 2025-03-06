@@ -17,27 +17,7 @@ const Header = () => {
   return (
     <header className="flex h-12 items-center justify-between border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm px-3 py-1">
       <div className="flex items-center space-x-4">
-        <div className="flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2 text-slate-400"
-          >
-            <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-            <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
-            <path d="M12 3v6" />
-          </svg>
-          <h1 className="text-lg font-semibold text-white">Dashboard</h1>
-          <span className="mx-2 text-slate-400">/</span>
-          <span className="text-slate-400">Home</span>
-        </div>
+        {/* Page title removed as requested */}
       </div>
       <div className="flex items-center space-x-3">
         <div className="relative w-64 hidden md:block">
