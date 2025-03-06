@@ -26,6 +26,9 @@ const LogisticsDashboard = lazy(
 const StoreNetworkDashboard = lazy(
   () => import("./modules/StoreNetwork/StoreNetworkDashboard"),
 );
+const MarketingDashboard = lazy(
+  () => import("./modules/Marketing/MarketingDashboard"),
+);
 
 function App() {
   return (
@@ -72,7 +75,7 @@ function App() {
           <Route path="/ecommerce" element={<Dashboard />} />
           <Route path="/logistics" element={<LogisticsDashboard />} />
           <Route path="/store-network" element={<StoreNetworkDashboard />} />
-          <Route path="/marketing" element={<Dashboard />} />
+          <Route path="/marketing" element={<MarketingDashboard />} />
           <Route path="/legal" element={<Dashboard />} />
           <Route path="/operations" element={<Dashboard />} />
           <Route path="/executive" element={<Dashboard />} />
