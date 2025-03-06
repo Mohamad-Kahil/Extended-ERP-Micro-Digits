@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import { useRoutes, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./components/home";
 import routes from "tempo-routes";
@@ -9,6 +9,10 @@ import ResetPasswordForm from "./components/auth/ResetPasswordForm";
 
 // Lazy load dashboard components
 const Dashboard = lazy(() => import("./pages/dashboard"));
+const FinanceDashboard = lazy(
+  () => import("./modules/Finance/FinanceDashboard"),
+);
+const HRDashboard = lazy(() => import("./modules/HR/HRDashboard"));
 
 function App() {
   return (
@@ -47,8 +51,8 @@ function App() {
             }
           />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/finance" element={<Dashboard />} />
-          <Route path="/hr" element={<Dashboard />} />
+          <Route path="/finance" element={<FinanceDashboard />} />
+          <Route path="/hr" element={<HRDashboard />} />
           <Route path="/supply-chain" element={<Dashboard />} />
           <Route path="/production" element={<Dashboard />} />
           <Route path="/pos" element={<Dashboard />} />
