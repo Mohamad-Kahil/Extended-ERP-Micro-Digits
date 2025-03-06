@@ -31,6 +31,9 @@ const ProductionDashboard = preloadComponent(
 const POSDashboard = preloadComponent(
   () => import("./modules/POS/POSDashboard"),
 );
+const EcommerceDashboard = preloadComponent(
+  () => import("./modules/Ecommerce/EcommerceDashboard"),
+);
 const LogisticsDashboard = preloadComponent(
   () => import("./modules/Logistics/LogisticsDashboard"),
 );
@@ -62,6 +65,7 @@ function App() {
         import("./modules/SupplyChain/SupplyChainDashboard"),
         import("./modules/Production/ProductionDashboard"),
         import("./modules/POS/POSDashboard"),
+        import("./modules/Ecommerce/EcommerceDashboard"),
         import("./modules/Logistics/LogisticsDashboard"),
         import("./modules/StoreNetwork/StoreNetworkDashboard"),
         import("./modules/Marketing/MarketingDashboard"),
@@ -118,7 +122,7 @@ function App() {
           <Route path="/supply-chain" element={<SupplyChainDashboard />} />
           <Route path="/production" element={<ProductionDashboard />} />
           <Route path="/pos" element={<POSDashboard />} />
-          <Route path="/ecommerce" element={<Dashboard />} />
+          <Route path="/ecommerce" element={<EcommerceDashboard />} />
           <Route path="/logistics" element={<LogisticsDashboard />} />
           <Route path="/store-network" element={<StoreNetworkDashboard />} />
           <Route path="/marketing" element={<MarketingDashboard />} />

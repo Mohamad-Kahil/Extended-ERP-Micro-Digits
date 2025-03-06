@@ -13,6 +13,7 @@ export function ModulePreloader() {
         import("../../modules/SupplyChain/SupplyChainDashboard"),
         import("../../modules/Production/ProductionDashboard"),
         import("../../modules/POS/POSDashboard"),
+        import("../../modules/Ecommerce/EcommerceDashboard"),
         import("../../modules/Logistics/LogisticsDashboard"),
         import("../../modules/StoreNetwork/StoreNetworkDashboard"),
         import("../../modules/Marketing/MarketingDashboard"),
