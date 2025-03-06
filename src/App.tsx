@@ -13,6 +13,9 @@ const FinanceDashboard = lazy(
   () => import("./modules/Finance/FinanceDashboard"),
 );
 const HRDashboard = lazy(() => import("./modules/HR/HRDashboard"));
+const SupplyChainDashboard = lazy(
+  () => import("./modules/SupplyChain/SupplyChainDashboard"),
+);
 
 function App() {
   return (
@@ -53,7 +56,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/finance" element={<FinanceDashboard />} />
           <Route path="/hr" element={<HRDashboard />} />
-          <Route path="/supply-chain" element={<Dashboard />} />
+          <Route path="/supply-chain" element={<SupplyChainDashboard />} />
           <Route path="/production" element={<Dashboard />} />
           <Route path="/pos" element={<Dashboard />} />
           <Route path="/ecommerce" element={<Dashboard />} />
