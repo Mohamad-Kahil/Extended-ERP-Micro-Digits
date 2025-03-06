@@ -19,6 +19,7 @@ const SupplyChainDashboard = lazy(
 const ProductionDashboard = lazy(
   () => import("./modules/Production/ProductionDashboard"),
 );
+const POSDashboard = lazy(() => import("./modules/POS/POSDashboard"));
 
 function App() {
   return (
@@ -61,7 +62,7 @@ function App() {
           <Route path="/hr" element={<HRDashboard />} />
           <Route path="/supply-chain" element={<SupplyChainDashboard />} />
           <Route path="/production" element={<ProductionDashboard />} />
-          <Route path="/pos" element={<Dashboard />} />
+          <Route path="/pos" element={<POSDashboard />} />
           <Route path="/ecommerce" element={<Dashboard />} />
           <Route path="/logistics" element={<Dashboard />} />
           <Route path="/store-network" element={<Dashboard />} />
