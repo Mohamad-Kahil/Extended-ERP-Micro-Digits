@@ -33,6 +33,9 @@ const LegalDashboard = lazy(() => import("./modules/Legal/LegalDashboard"));
 const OperationsDashboard = lazy(
   () => import("./modules/Operations/OperationsDashboard"),
 );
+const ExecutiveDashboard = lazy(
+  () => import("./modules/Executive/ExecutiveDashboard"),
+);
 
 function App() {
   return (
@@ -82,7 +85,7 @@ function App() {
           <Route path="/marketing" element={<MarketingDashboard />} />
           <Route path="/legal" element={<LegalDashboard />} />
           <Route path="/operations" element={<OperationsDashboard />} />
-          <Route path="/executive" element={<Dashboard />} />
+          <Route path="/executive" element={<ExecutiveDashboard />} />
 
           {/* Add this before the catchall route */}
           {import.meta.env.VITE_TEMPO === "true" && (
