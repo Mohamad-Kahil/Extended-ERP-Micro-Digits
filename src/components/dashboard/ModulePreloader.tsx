@@ -11,7 +11,7 @@ export function ModulePreloader() {
         import("../../modules/Finance/FinanceDashboard"),
         import("../../modules/HR/HRDashboard"),
         import("../../modules/SupplyChain/SupplyChainDashboard"),
-        import("../../modules/Production/ProductionDashboard"),
+
         import("../../modules/POS/POSDashboard"),
         import("../../modules/Ecommerce/EcommerceDashboard"),
         import("../../modules/Logistics/LogisticsDashboard"),
@@ -19,6 +19,7 @@ export function ModulePreloader() {
         import("../../modules/Marketing/MarketingDashboard"),
         import("../../modules/Legal/LegalDashboard"),
         import("../../modules/Operations/OperationsDashboard"),
+        import("../../modules/Production/ProductionDashboard"),
         import("../../modules/Executive/ExecutiveDashboard"),
       ];
 

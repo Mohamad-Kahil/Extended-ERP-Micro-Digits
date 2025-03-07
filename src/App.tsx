@@ -25,9 +25,6 @@ const HRDashboard = preloadComponent(() => import("./modules/HR/HRDashboard"));
 const SupplyChainDashboard = preloadComponent(
   () => import("./modules/SupplyChain/SupplyChainDashboard"),
 );
-const ProductionDashboard = preloadComponent(
-  () => import("./modules/Production/ProductionDashboard"),
-);
 const POSDashboard = preloadComponent(
   () => import("./modules/POS/POSDashboard"),
 );
@@ -49,6 +46,9 @@ const LegalDashboard = preloadComponent(
 const OperationsDashboard = preloadComponent(
   () => import("./modules/Operations/OperationsDashboard"),
 );
+const ProductionDashboard = preloadComponent(
+  () => import("./modules/Production/ProductionDashboard"),
+);
 const ExecutiveDashboard = preloadComponent(
   () => import("./modules/Executive/ExecutiveDashboard"),
 );
@@ -63,7 +63,6 @@ function App() {
         import("./modules/Finance/FinanceDashboard"),
         import("./modules/HR/HRDashboard"),
         import("./modules/SupplyChain/SupplyChainDashboard"),
-        import("./modules/Production/ProductionDashboard"),
         import("./modules/POS/POSDashboard"),
         import("./modules/Ecommerce/EcommerceDashboard"),
         import("./modules/Logistics/LogisticsDashboard"),
@@ -71,6 +70,7 @@ function App() {
         import("./modules/Marketing/MarketingDashboard"),
         import("./modules/Legal/LegalDashboard"),
         import("./modules/Operations/OperationsDashboard"),
+        import("./modules/Production/ProductionDashboard"),
         import("./modules/Executive/ExecutiveDashboard"),
       ];
 
@@ -120,7 +120,6 @@ function App() {
           <Route path="/finance" element={<FinanceDashboard />} />
           <Route path="/hr" element={<HRDashboard />} />
           <Route path="/supply-chain" element={<SupplyChainDashboard />} />
-          <Route path="/production" element={<ProductionDashboard />} />
           <Route path="/pos" element={<POSDashboard />} />
           <Route path="/ecommerce" element={<EcommerceDashboard />} />
           <Route path="/logistics" element={<LogisticsDashboard />} />
@@ -128,6 +127,7 @@ function App() {
           <Route path="/marketing" element={<MarketingDashboard />} />
           <Route path="/legal" element={<LegalDashboard />} />
           <Route path="/operations" element={<OperationsDashboard />} />
+          <Route path="/production" element={<ProductionDashboard />} />
           <Route path="/executive" element={<ExecutiveDashboard />} />
 
           {/* Add this before the catchall route */}
