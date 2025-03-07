@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 interface Account {
@@ -18,6 +17,10 @@ interface Account {
   balance: number;
   currency: string;
   status: "active" | "inactive";
+}
+
+interface ChartOfAccountsProps {
+  searchTerm: string;
 }
 
 const accounts: Account[] = [
@@ -95,9 +98,7 @@ const accounts: Account[] = [
   },
 ];
 
-const ChartOfAccounts = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
-
+const ChartOfAccounts = ({ searchTerm }: ChartOfAccountsProps) => {
   const filteredAccounts = accounts.filter(
     (account) =>
       account.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
