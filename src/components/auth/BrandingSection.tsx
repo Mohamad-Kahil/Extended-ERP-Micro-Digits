@@ -20,12 +20,17 @@ const BrandingSection = () => {
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
           </svg>
         </div>
-        <h1 className="mb-4 text-4xl font-bold">Micro Digits</h1>
-        <h1 className="mb-4 text-4xl font-bold">Extended ERP</h1>
+        <h1 className="mb-4 text-4xl font-bold text-red-400">
+          Micro <span className="text-green-400">Digits</span>
+        </h1>
+        <h1 className="mb-4 text-4xl font-bold text-yellow-400">
+          Nexus Enterprise Suite
+        </h1>
         <p className="mb-8 text-center text-lg text-slate-300">
-          A comprehensive enterprise resource planning system with a sleek
-          dark-themed interface that provides secure access to multiple business
-          modules.
+          A unified enterprise management system that integrates finance, HR,
+          supply chain, production, sales, and operations with advanced workflow
+          automation. It ensures real-time decision-making, efficiency, and
+          scalability for seamless business growth.
         </p>
         <div className="space-y-4">
           <div className="flex items-center space-x-3">
