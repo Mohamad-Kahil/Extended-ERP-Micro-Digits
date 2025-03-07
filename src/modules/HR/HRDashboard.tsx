@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import HROverview from "./components/HROverview";
-import EmployeeManagement from "./components/EmployeeManagement/EmployeeManagement";
-import RecruitmentOnboarding from "./components/RecruitmentOnboarding/RecruitmentOnboarding";
+import { Input } from "@/components/ui/input";
+import EmployeeTable from "./components/EmployeeManagement/EmployeeTable";
 import PayrollProcessing from "./components/PayrollProcessing/PayrollProcessing";
+import RecruitmentOnboarding from "./components/RecruitmentOnboarding/RecruitmentOnboarding";
 import PerformanceTraining from "./components/PerformanceTraining/PerformanceTraining";
 import { motion, AnimatePresence } from "framer-motion";
-import Header from "@/components/dashboard/Header";
 
 const HRDashboard = () => {
-  const [activeSection, setActiveSection] = useState("overview");
+  const [activeSection, setActiveSection] = useState("employee");
 
   const navItems = [
     { id: "overview", label: "HR Overview" },
@@ -27,9 +26,18 @@ const HRDashboard = () => {
   const renderContent = () => {
     switch (activeSection) {
       case "overview":
-        return <HROverview />;
+        return (
+          <div className="p-6 bg-slate-800 rounded-lg border border-slate-700">
+            <h2 className="text-xl font-semibold text-white mb-4">
+              HR Overview Dashboard
+            </h2>
+            <p className="text-base text-slate-300">
+              Welcome to the Human Resources management system.
+            </p>
+          </div>
+        );
       case "employee":
-        return <EmployeeManagement />;
+        return <EmployeeTable />;
       case "payroll":
         return <PayrollProcessing />;
       case "recruitment":
@@ -38,19 +46,30 @@ const HRDashboard = () => {
       case "performance":
       case "training":
         return <PerformanceTraining />;
+      case "attendance":
+        return (
+          <div className="p-6 bg-slate-800 rounded-lg border border-slate-700">
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Attendance Module
+            </h2>
+            <p className="text-base text-slate-300">
+              Track employee attendance and time-off requests.
+            </p>
+          </div>
+        );
       default:
-        return <HROverview />;
+        return <EmployeeTable />;
     }
   };
 
   // Create a custom navbar to be passed to DashboardLayout
   const hrNavbar = (
-    <div className="flex items-center overflow-x-auto">
+    <div className="flex items-center w-full overflow-x-auto">
       {navItems.map((item) => (
         <Button
           key={item.id}
           variant={activeSection === item.id ? "default" : "ghost"}
-          className={`${activeSection === item.id ? "bg-cyan-600 hover:bg-cyan-700" : "hover:bg-slate-700"}`}
+          className={`${activeSection === item.id ? "bg-cyan-600 hover:bg-cyan-700" : "hover:bg-slate-700"} text-sm`}
           onClick={() => setActiveSection(item.id)}
         >
           {item.label}
@@ -62,48 +81,6 @@ const HRDashboard = () => {
   return (
     <DashboardLayout navbar={hrNavbar}>
       <div className="space-y-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex space-x-2">
-            <Button variant="outline">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" x2="12" y1="15" y2="3" />
-              </svg>
-              Export
-            </Button>
-            <Button variant="outline">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2"
-              >
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-              Search
-            </Button>
-          </div>
-        </div>
-
         {/* Content Area */}
         <AnimatePresence mode="wait">
           <motion.div
