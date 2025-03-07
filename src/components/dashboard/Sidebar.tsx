@@ -96,6 +96,29 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
       ),
     },
     {
+      title: "Executive",
+      href: "/executive",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+          <line x1="6" y1="1" x2="6" y2="4" />
+          <line x1="10" y1="1" x2="10" y2="4" />
+          <line x1="14" y1="1" x2="14" y2="4" />
+        </svg>
+      ),
+    },
+    {
       title: "Finance",
       href: "/finance",
       icon: (
@@ -154,6 +177,25 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
         >
           <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
           <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+    {
+      title: "Legal",
+      href: "/legal",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
         </svg>
       ),
     },
@@ -375,48 +417,6 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
         >
           <path d="M3 3v18h18" />
           <path d="M7 17v-5h5V7h5v10" />
-        </svg>
-      ),
-    },
-    {
-      title: "Legal",
-      href: "/legal",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
-        </svg>
-      ),
-    },
-    {
-      title: "Executive",
-      href: "/executive",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-          <line x1="6" y1="1" x2="6" y2="4" />
-          <line x1="10" y1="1" x2="10" y2="4" />
-          <line x1="14" y1="1" x2="14" y2="4" />
         </svg>
       ),
     },
