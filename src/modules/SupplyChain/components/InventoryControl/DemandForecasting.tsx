@@ -9,7 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const DemandForecasting = () => {
+interface DemandForecastingProps {
+  searchTerm: string;
+}
+
+const DemandForecasting = ({ searchTerm }: DemandForecastingProps) => {
   const [forecastPeriod, setForecastPeriod] = React.useState("3");
   const [forecastMethod, setForecastMethod] = React.useState("moving-average");
 

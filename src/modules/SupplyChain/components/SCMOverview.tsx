@@ -1,9 +1,10 @@
 import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const SCMOverview = () => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
-      <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
+      <Card className="border-slate-800 bg-slate-900 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium text-slate-400">
             Active Suppliers
@@ -18,7 +19,7 @@ const SCMOverview = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-amber-500"
+            className="text-cyan-500"
           >
             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
             <circle cx="9" cy="7" r="4" />
@@ -45,9 +46,9 @@ const SCMOverview = () => {
           </svg>
           <span>3 new this month</span>
         </div>
-      </div>
+      </Card>
 
-      <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
+      <Card className="border-slate-800 bg-slate-900 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium text-slate-400">
             Inventory Value
@@ -87,9 +88,9 @@ const SCMOverview = () => {
           </svg>
           <span>4.2% from last quarter</span>
         </div>
-      </div>
+      </Card>
 
-      <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
+      <Card className="border-slate-800 bg-slate-900 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium text-slate-400">Open Orders</h3>
           <svg
@@ -102,7 +103,7 @@ const SCMOverview = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-blue-500"
+            className="text-cyan-500"
           >
             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
             <path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z" />
@@ -127,9 +128,9 @@ const SCMOverview = () => {
           </svg>
           <span>5 more than last week</span>
         </div>
-      </div>
+      </Card>
 
-      <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
+      <Card className="border-slate-800 bg-slate-900 p-6">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-medium text-slate-400">
             Low Stock Items
@@ -144,7 +145,7 @@ const SCMOverview = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-red-500"
+            className="text-cyan-500"
           >
             <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
           </svg>
@@ -168,7 +169,91 @@ const SCMOverview = () => {
           </svg>
           <span>3 more than yesterday</span>
         </div>
-      </div>
+      </Card>
+
+      {/* Additional KPI Cards */}
+      <Card className="border-slate-800 bg-slate-900 p-6 md:col-span-2">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-medium text-slate-400">
+            Supply Chain Performance
+          </h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-cyan-500"
+          >
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+        </div>
+        <p className="mt-2 text-3xl font-bold text-white">92%</p>
+        <div className="mt-2 flex items-center text-xs text-emerald-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-1"
+          >
+            <path d="m5 12 7-7 7 7" />
+            <path d="M12 19V5" />
+          </svg>
+          <span>2.5% improvement this quarter</span>
+        </div>
+      </Card>
+
+      <Card className="border-slate-800 bg-slate-900 p-6 md:col-span-2">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-medium text-slate-400">
+            On-Time Delivery Rate
+          </h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-cyan-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        </div>
+        <p className="mt-2 text-3xl font-bold text-white">94.8%</p>
+        <div className="mt-2 flex items-center text-xs text-emerald-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mr-1"
+          >
+            <path d="m5 12 7-7 7 7" />
+            <path d="M12 19V5" />
+          </svg>
+          <span>1.2% improvement from last month</span>
+        </div>
+      </Card>
     </div>
   );
 };

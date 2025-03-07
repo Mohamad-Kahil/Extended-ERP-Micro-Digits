@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -28,6 +27,10 @@ interface InventoryItem {
   reorderPoint: number;
   unitPrice: number;
   lastUpdated: string;
+}
+
+interface StockLevelsProps {
+  searchTerm: string;
 }
 
 const inventoryItems: InventoryItem[] = [
@@ -117,8 +120,7 @@ const inventoryItems: InventoryItem[] = [
   },
 ];
 
-const StockLevels = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const StockLevels = ({ searchTerm }: StockLevelsProps) => {
   const [categoryFilter, setCategoryFilter] = React.useState("all");
   const [stockFilter, setStockFilter] = React.useState("all");
 
@@ -188,29 +190,6 @@ const StockLevels = () => {
 
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
-          <div className="relative w-full md:w-64">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search inventory..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Category" />
@@ -234,45 +213,6 @@ const StockLevels = () => {
               <SelectItem value="out">Out of Stock</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <div className="flex w-full space-x-2 md:w-auto">
-          <Button className="w-full bg-cyan-600 hover:bg-cyan-700 md:w-auto">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2"
-            >
-              <path d="M5 12h14" />
-              <path d="M12 5v14" />
-            </svg>
-            Add Item
-          </Button>
-          <Button variant="outline" className="w-full md:w-auto">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2"
-            >
-              <path d="M12 8a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-8Z" />
-              <path d="M4 22V2" />
-              <path d="M10 22V2" />
-            </svg>
-            Adjust Stock
-          </Button>
         </div>
       </div>
 

@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -30,6 +29,10 @@ interface Order {
   totalValue: number;
   createdDate: string;
   priority: "low" | "medium" | "high" | "critical";
+}
+
+interface MultiSupplierOrdersProps {
+  searchTerm: string;
 }
 
 const orders: Order[] = [
@@ -135,8 +138,7 @@ const orders: Order[] = [
   },
 ];
 
-const MultiSupplierOrders = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const MultiSupplierOrders = ({ searchTerm }: MultiSupplierOrdersProps) => {
   const [priorityFilter, setPriorityFilter] = React.useState("all");
 
   const filteredOrders = orders.filter(
@@ -183,29 +185,6 @@ const MultiSupplierOrders = () => {
     <div className="space-y-4">
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
-          <div className="relative w-full md:w-64">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search orders..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
           <Select value={priorityFilter} onValueChange={setPriorityFilter}>
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Priority" />
@@ -219,24 +198,6 @@ const MultiSupplierOrders = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-700 md:w-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
-          Create Order
-        </Button>
       </div>
 
       <div className="rounded-md border border-slate-800">
@@ -274,7 +235,7 @@ const MultiSupplierOrders = () => {
                       >
                         <span className="text-slate-300">{supplier.name}</span>
                         <span
-                          className={`ml-2 rounded-full px-2 py-0.5 text-xs font-semibold ${getStatusColor(supplier.status)}`}
+                          className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${getStatusColor(supplier.status)}`}
                         >
                           {supplier.status}
                         </span>
@@ -295,7 +256,8 @@ const MultiSupplierOrders = () => {
                   <span
                     className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${getPriorityColor(order.priority)}`}
                   >
-                    {order.priority}
+                    {order.priority.charAt(0).toUpperCase() +
+                      order.priority.slice(1)}
                   </span>
                 </TableCell>
                 <TableCell className="text-right">

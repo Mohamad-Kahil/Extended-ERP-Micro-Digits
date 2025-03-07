@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -27,6 +26,10 @@ interface Vendor {
   status: "active" | "inactive" | "pending";
   rating: number;
   lastOrderDate: string;
+}
+
+interface VendorDatabaseProps {
+  searchTerm: string;
 }
 
 const vendors: Vendor[] = [
@@ -109,8 +112,7 @@ const vendors: Vendor[] = [
   },
 ];
 
-const VendorDatabase = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const VendorDatabase = ({ searchTerm }: VendorDatabaseProps) => {
   const [categoryFilter, setCategoryFilter] = React.useState("all");
   const [statusFilter, setStatusFilter] = React.useState("all");
 
@@ -125,33 +127,23 @@ const VendorDatabase = () => {
 
   const categories = [...new Set(vendors.map((vendor) => vendor.category))];
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "active":
+        return "bg-emerald-500/10 text-emerald-500";
+      case "inactive":
+        return "bg-red-500/10 text-red-500";
+      case "pending":
+        return "bg-amber-500/10 text-amber-500";
+      default:
+        return "bg-slate-500/10 text-slate-500";
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
-          <div className="relative w-full md:w-64">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search vendors..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Category" />
@@ -177,24 +169,6 @@ const VendorDatabase = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-700 md:w-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
-          Add Vendor
-        </Button>
       </div>
 
       <div className="rounded-md border border-slate-800">
