@@ -152,39 +152,6 @@ const WarehouseIntegration = ({ searchTerm }: WarehouseIntegrationProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Warehouses
-          </div>
-          <div className="mt-1 text-2xl font-bold text-white">
-            {warehouses.length}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Connected Warehouses
-          </div>
-          <div className="mt-1 text-2xl font-bold text-emerald-500">
-            {
-              warehouses.filter((w) => w.integrationStatus === "connected")
-                .length
-            }
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Inventory
-          </div>
-          <div className="mt-1 text-2xl font-bold text-cyan-500">
-            {warehouses
-              .reduce((sum, w) => sum + w.inventoryCount, 0)
-              .toLocaleString()}{" "}
-            units
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
           <Select value={typeFilter} onValueChange={setTypeFilter}>
