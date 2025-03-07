@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { ModulePreloader } from "./ModulePreloader";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,25 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, navbar }: DashboardLayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const location = useLocation();
+
+  // Determine module title based on current path
+  const getModuleTitle = () => {
+    const path = location.pathname;
+    if (path.includes("hr")) return "Human Resources";
+    if (path.includes("finance")) return "Finance";
+    if (path.includes("supply-chain")) return "Supply Chain";
+    if (path.includes("production")) return "Production";
+    if (path.includes("pos")) return "Point of Sale";
+    if (path.includes("ecommerce")) return "E-Commerce";
+    if (path.includes("logistics")) return "Logistics";
+    if (path.includes("store-network")) return "Store Network";
+    if (path.includes("marketing")) return "Marketing";
+    if (path.includes("legal")) return "Legal";
+    if (path.includes("operations")) return "Operations";
+    if (path.includes("executive")) return "Executive";
+    return "Dashboard";
+  };
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gradient-to-br from-slate-950 to-slate-900">
@@ -20,7 +40,7 @@ const DashboardLayout = ({ children, navbar }: DashboardLayoutProps) => {
         <Sidebar collapsed={sidebarCollapsed} />
       </div>
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Header />
+        <Header moduleTitle={getModuleTitle()} />
         <div className="flex items-center px-3 py-1.5 bg-slate-900/50">
           <Button
             variant="ghost"

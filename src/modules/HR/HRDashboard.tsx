@@ -8,6 +8,7 @@ import RecruitmentOnboarding from "./components/RecruitmentOnboarding/Recruitmen
 import PayrollProcessing from "./components/PayrollProcessing/PayrollProcessing";
 import PerformanceTraining from "./components/PerformanceTraining/PerformanceTraining";
 import { motion, AnimatePresence } from "framer-motion";
+import Header from "@/components/dashboard/Header";
 
 const HRDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -62,7 +63,6 @@ const HRDashboard = () => {
     <DashboardLayout navbar={hrNavbar}>
       <div className="space-y-6">
         <div className="flex items-center justify-between mb-2">
-          <h1 className="text-2xl font-bold text-white">Human Resources</h1>
           <div className="flex space-x-2">
             <Button variant="outline">
               <svg

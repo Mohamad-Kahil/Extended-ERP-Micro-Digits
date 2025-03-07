@@ -9,15 +9,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const Header = () => {
+interface HeaderProps {
+  moduleTitle?: string;
+}
+
+const Header = ({ moduleTitle }: HeaderProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Determine module title based on current path if not provided
+  const getDefaultModuleTitle = () => {
+    const path = location.pathname;
+    if (path.includes("hr")) return "Human Resources";
+    if (path.includes("finance")) return "Finance";
+    if (path.includes("supply-chain")) return "Supply Chain";
+    if (path.includes("production")) return "Production";
+    if (path.includes("pos")) return "Point of Sale";
+    if (path.includes("ecommerce")) return "E-Commerce";
+    if (path.includes("logistics")) return "Logistics";
+    if (path.includes("store-network")) return "Store Network";
+    if (path.includes("marketing")) return "Marketing";
+    if (path.includes("legal")) return "Legal";
+    if (path.includes("operations")) return "Operations";
+    if (path.includes("executive")) return "Executive";
+    return "Dashboard";
+  };
+
+  const displayTitle = moduleTitle || getDefaultModuleTitle();
 
   return (
     <header className="flex h-12 items-center justify-between border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm px-3 py-1">
       <div className="flex items-center space-x-4">
-        {/* Page title removed as requested */}
+        <h1 className="text-xl font-bold text-white">{displayTitle}</h1>
       </div>
       <div className="flex items-center space-x-3">
         <div className="relative w-64 hidden md:block">
