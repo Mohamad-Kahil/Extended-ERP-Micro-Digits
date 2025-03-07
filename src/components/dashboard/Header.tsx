@@ -69,7 +69,7 @@ const Header = ({ moduleTitle }: HeaderProps) => {
         <Button
           variant="outline"
           size="sm"
-          className="hidden md:flex border-slate-700 bg-slate-800/50 hover:bg-slate-800 hover:text-cyan-500"
+          className="hidden md:flex h-9 border-slate-700 bg-slate-800/50 hover:bg-slate-800 hover:text-cyan-500"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

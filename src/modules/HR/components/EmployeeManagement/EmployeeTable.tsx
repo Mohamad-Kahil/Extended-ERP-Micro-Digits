@@ -152,6 +152,31 @@ const EmployeeTable = () => {
               ))}
             </SelectContent>
           </Select>
+
+          {/* Status summary boxes */}
+          <div className="flex space-x-2">
+            <div className="flex items-center px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
+              <span className="text-xs font-medium text-emerald-500">
+                Active:{" "}
+                {employees.filter((emp) => emp.status === "active").length}
+              </span>
+            </div>
+            <div className="flex items-center px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/20">
+              <span className="h-2 w-2 rounded-full bg-amber-500 mr-2"></span>
+              <span className="text-xs font-medium text-amber-500">
+                On Leave:{" "}
+                {employees.filter((emp) => emp.status === "on-leave").length}
+              </span>
+            </div>
+            <div className="flex items-center px-3 py-1 rounded-md bg-red-500/10 border border-red-500/20">
+              <span className="h-2 w-2 rounded-full bg-red-500 mr-2"></span>
+              <span className="text-xs font-medium text-red-500">
+                Inactive:{" "}
+                {employees.filter((emp) => emp.status === "inactive").length}
+              </span>
+            </div>
+          </div>
         </div>
         <Button className="bg-cyan-600 hover:bg-cyan-700">
           <svg
