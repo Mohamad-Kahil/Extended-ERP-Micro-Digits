@@ -7,14 +7,16 @@ import EmployeeTable from "./components/EmployeeManagement/EmployeeTable";
 import PayrollProcessing from "./components/PayrollProcessing/PayrollProcessing";
 import RecruitmentOnboarding from "./components/RecruitmentOnboarding/RecruitmentOnboarding";
 import PerformanceTraining from "./components/PerformanceTraining/PerformanceTraining";
+import OrganizationalChart from "./components/OrganizationalChart/OrganizationalChart";
 import { motion, AnimatePresence } from "framer-motion";
 
 const HRDashboard = () => {
-  const [activeSection, setActiveSection] = useState("employee");
+  const [activeSection, setActiveSection] = useState("overview");
 
   const navItems = [
     { id: "overview", label: "HR Overview" },
     { id: "employee", label: "Employee Management" },
+    { id: "orgchart", label: "Organizational Chart" },
     { id: "attendance", label: "Attendance" },
     { id: "payroll", label: "Payroll" },
     { id: "recruitment", label: "Recruitment" },
@@ -38,6 +40,8 @@ const HRDashboard = () => {
         );
       case "employee":
         return <EmployeeTable />;
+      case "orgchart":
+        return <OrganizationalChart />;
       case "payroll":
         return <PayrollProcessing />;
       case "recruitment":
