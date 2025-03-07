@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -25,6 +24,10 @@ interface Transaction {
   type: "revenue" | "expense";
   amount: number;
   department: string;
+}
+
+interface RevenueExpenseTrackingProps {
+  searchTerm: string;
 }
 
 const transactions: Transaction[] = [
@@ -120,8 +123,9 @@ const transactions: Transaction[] = [
   },
 ];
 
-const RevenueExpenseTracking = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const RevenueExpenseTracking = ({
+  searchTerm,
+}: RevenueExpenseTrackingProps) => {
   const [filterType, setFilterType] = React.useState<
     "all" | "revenue" | "expense"
   >("all");
@@ -148,67 +152,8 @@ const RevenueExpenseTracking = () => {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Revenue
-          </div>
-          <div className="mt-1 text-2xl font-bold text-emerald-500">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalRevenue)}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Expenses
-          </div>
-          <div className="mt-1 text-2xl font-bold text-red-500">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalExpense)}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Net Profit/Loss
-          </div>
-          <div className="mt-1 text-2xl font-bold text-white">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalRevenue - totalExpense)}
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
-          <div className="relative w-full md:w-64">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search transactions..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
           <Select
             value={filterType}
             onValueChange={(value: "all" | "revenue" | "expense") =>
@@ -225,24 +170,6 @@ const RevenueExpenseTracking = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-700 md:w-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
-          Add Transaction
-        </Button>
       </div>
 
       <div className="rounded-md border border-slate-800">

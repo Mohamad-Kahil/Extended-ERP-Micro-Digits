@@ -27,6 +27,10 @@ interface AuditLog {
   ipAddress: string;
 }
 
+interface TransactionLogsProps {
+  searchTerm: string;
+}
+
 const auditLogs: AuditLog[] = [
   {
     id: "1",
@@ -111,8 +115,7 @@ const auditLogs: AuditLog[] = [
   },
 ];
 
-const TransactionLogs = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+const TransactionLogs = ({ searchTerm }: TransactionLogsProps) => {
   const [filterAction, setFilterAction] = React.useState("all");
 
   const filteredLogs = auditLogs.filter(
@@ -127,29 +130,6 @@ const TransactionLogs = () => {
     <div className="space-y-4">
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
-          <div className="relative w-full md:w-64">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search logs..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
           <Select
             value={filterAction}
             onValueChange={(value) => setFilterAction(value)}
@@ -169,25 +149,6 @@ const TransactionLogs = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button className="w-full bg-cyan-600 hover:bg-cyan-700 md:w-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" x2="12" y1="15" y2="3" />
-          </svg>
-          Export Logs
-        </Button>
       </div>
 
       <div className="rounded-md border border-slate-800">

@@ -9,7 +9,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const BudgetOverview = () => {
+interface BudgetOverviewProps {
+  searchTerm: string;
+}
+
+const BudgetOverview = ({ searchTerm }: BudgetOverviewProps) => {
   const [selectedYear, setSelectedYear] = React.useState("2023");
   const [selectedQuarter, setSelectedQuarter] = React.useState("Q2");
 
@@ -87,6 +91,11 @@ const BudgetOverview = () => {
     },
   ];
 
+  // Filter departments based on search term
+  const filteredDepartments = departmentBudgets.filter((dept) =>
+    dept.department.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -115,24 +124,6 @@ const BudgetOverview = () => {
             </SelectContent>
           </Select>
         </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
-          Create Budget
-        </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -194,7 +185,7 @@ const BudgetOverview = () => {
               Department Budgets
             </h3>
             <div className="space-y-4">
-              {departmentBudgets.map((dept, index) => (
+              {filteredDepartments.map((dept, index) => (
                 <div key={index} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-slate-300">
