@@ -68,15 +68,6 @@ const SupplyChainDashboard = () => {
   return (
     <DashboardLayout navbar={supplyChainNavbar}>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-white">
-            Supply Chain Management
-          </h1>
-          <p className="text-slate-400">
-            Manage procurement, inventory, and supplier coordination
-          </p>
-        </div>
-
         {/* Content Area */}
         <AnimatePresence mode="wait">
           <motion.div
