@@ -20,7 +20,8 @@ const BrandingSection = () => {
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
           </svg>
         </div>
-        <h1 className="mb-4 text-4xl font-bold">Enterprise ERP</h1>
+        <h1 className="mb-4 text-4xl font-bold">Micro Digits</h1>
+        <h1 className="mb-4 text-4xl font-bold">Extended ERP</h1>
         <p className="mb-8 text-center text-lg text-slate-300">
           A comprehensive enterprise resource planning system with a sleek
           dark-themed interface that provides secure access to multiple business
