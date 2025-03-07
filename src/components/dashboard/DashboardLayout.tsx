@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
+  navbar?: React.ReactNode;
 }
 
-const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+const DashboardLayout = ({ children, navbar }: DashboardLayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 
   return (
@@ -52,9 +53,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               )}
             </svg>
           </Button>
-          <div className="text-[10px] text-slate-400 font-medium">
-            <span className="text-white">Dashboard</span> / Home
-          </div>
+          {navbar ? (
+            navbar
+          ) : (
+            <div className="text-[10px] text-slate-400 font-medium">
+              <span className="text-white">Dashboard</span> / Home
+            </div>
+          )}
         </div>
         <main className="flex-1 overflow-auto p-3 bg-slate-950/30">
           {children}
