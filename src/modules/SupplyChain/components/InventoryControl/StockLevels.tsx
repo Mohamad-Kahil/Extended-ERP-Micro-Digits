@@ -158,36 +158,6 @@ const StockLevels = ({ searchTerm }: StockLevelsProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Inventory Value
-          </div>
-          <div className="mt-1 text-2xl font-bold text-white">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalInventoryValue)}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Low Stock Items
-          </div>
-          <div className="mt-1 text-2xl font-bold text-amber-500">
-            {lowStockItems}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Out of Stock Items
-          </div>
-          <div className="mt-1 text-2xl font-bold text-red-500">
-            {outOfStockItems}
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
