@@ -120,38 +120,6 @@ const PurchaseOrders = ({ searchTerm }: PurchaseOrdersProps) => {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">Total Orders</div>
-          <div className="mt-1 text-2xl font-bold text-white">
-            {purchaseOrders.length}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Pending Delivery
-          </div>
-          <div className="mt-1 text-2xl font-bold text-amber-500">
-            {
-              purchaseOrders.filter(
-                (o) => o.status === "sent" || o.status === "confirmed",
-              ).length
-            }
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Pending Amount
-          </div>
-          <div className="mt-1 text-2xl font-bold text-cyan-500">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalPendingAmount)}
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-col items-start justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
         <div className="flex w-full flex-col space-y-4 md:w-auto md:flex-row md:space-x-4 md:space-y-0">
           <Select value={statusFilter} onValueChange={setStatusFilter}>
