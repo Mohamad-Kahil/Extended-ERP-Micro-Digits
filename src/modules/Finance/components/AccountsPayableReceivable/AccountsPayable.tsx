@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 interface Invoice {
@@ -18,6 +17,10 @@ interface Invoice {
   dueDate: string;
   amount: number;
   status: "paid" | "pending" | "overdue";
+}
+
+interface AccountsPayableProps {
+  searchTerm: string;
 }
 
 const invoices: Invoice[] = [
@@ -68,101 +71,15 @@ const invoices: Invoice[] = [
   },
 ];
 
-const AccountsPayable = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
-
+const AccountsPayable = ({ searchTerm }: AccountsPayableProps) => {
   const filteredInvoices = invoices.filter(
     (invoice) =>
       invoice.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
       invoice.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const totalPending = invoices
-    .filter(
-      (invoice) => invoice.status === "pending" || invoice.status === "overdue",
-    )
-    .reduce((sum, invoice) => sum + invoice.amount, 0);
-
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Total Pending
-          </div>
-          <div className="mt-1 text-2xl font-bold text-white">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(totalPending)}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">Overdue</div>
-          <div className="mt-1 text-2xl font-bold text-red-500">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(4500.0)}
-          </div>
-        </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-          <div className="text-sm font-medium text-slate-400">
-            Due This Week
-          </div>
-          <div className="mt-1 text-2xl font-bold text-amber-500">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-            }).format(2125.25)}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="relative w-64">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="absolute left-2 top-2.5 h-4 w-4 text-slate-400"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-          <Input
-            placeholder="Search invoices..."
-            className="pl-8"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <Button className="bg-cyan-600 hover:bg-cyan-700">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
-          New Invoice
-        </Button>
-      </div>
-
       <div className="rounded-md border border-slate-800">
         <Table>
           <TableHeader className="bg-slate-800">
