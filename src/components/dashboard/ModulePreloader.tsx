@@ -18,7 +18,6 @@ export function ModulePreloader() {
         import("../../modules/StoreNetwork/StoreNetworkDashboard"),
         import("../../modules/Marketing/MarketingDashboard"),
         import("../../modules/Legal/LegalDashboard"),
-        import("../../modules/Operations/OperationsDashboard"),
         import("../../modules/Production/ProductionDashboard"),
         import("../../modules/Executive/ExecutiveDashboard"),
       ];

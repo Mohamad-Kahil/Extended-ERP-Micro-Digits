@@ -83,18 +83,43 @@ const ProductionReporting = () => {
             <TabsTrigger value="quality">Quality</TabsTrigger>
             <TabsTrigger value="costs">Costs</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="performance" className="mt-4 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               {[
-                { title: "Production Volume", value: "12,450 units", trend: "up", change: "+8.5%", color: "emerald" },
-                { title: "On-Time Completion", value: "94.2%", trend: "up", change: "+2.1%", color: "emerald" },
-                { title: "Capacity Utilization", value: "87.5%", trend: "down", change: "-1.3%", color: "red" },
+                {
+                  title: "Production Volume",
+                  value: "12,450 units",
+                  trend: "up",
+                  change: "+8.5%",
+                  color: "emerald",
+                },
+                {
+                  title: "On-Time Completion",
+                  value: "94.2%",
+                  trend: "up",
+                  change: "+2.1%",
+                  color: "emerald",
+                },
+                {
+                  title: "Capacity Utilization",
+                  value: "87.5%",
+                  trend: "down",
+                  change: "-1.3%",
+                  color: "red",
+                },
               ].map((metric, index) => (
-                <div key={index} className="p-4 bg-slate-800/50 rounded-md border border-slate-700">
-                  <h4 className="text-slate-400 text-sm mb-1">{metric.title}</h4>
+                <div
+                  key={index}
+                  className="p-4 bg-slate-800/50 rounded-md border border-slate-700"
+                >
+                  <h4 className="text-slate-400 text-sm mb-1">
+                    {metric.title}
+                  </h4>
                   <div className="flex items-end">
-                    <span className="text-2xl font-bold text-white">{metric.value}</span>
+                    <span className="text-2xl font-bold text-white">
+                      {metric.value}
+                    </span>
                     <div className="flex items-center ml-2 mb-1">
                       {metric.trend === "up" ? (
                         <svg
@@ -137,9 +162,11 @@ const ProductionReporting = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="rounded-md border border-slate-800 p-4">
-              <h3 className="text-lg font-medium text-white mb-4">Production Volume by Product Line</h3>
+              <h3 className="text-lg font-medium text-white mb-4">
+                Production Volume by Product Line
+              </h3>
               <div className="h-64 flex items-end space-x-1">
                 {[
                   { name: "Circuit Boards", value: 4250, percentage: 85 },
@@ -147,31 +174,44 @@ const ProductionReporting = () => {
                   { name: "Sensor Modules", value: 2800, percentage: 56 },
                   { name: "Control Panels", value: 2200, percentage: 44 },
                 ].map((product, index) => (
-                  <div key={index} className="flex flex-col items-center flex-1">
-                    <div 
-                      className="w-full bg-cyan-600 rounded-t" 
+                  <div
+                    key={index}
+                    className="flex flex-col items-center flex-1"
+                  >
+                    <div
+                      className="w-full bg-cyan-600 rounded-t"
                       style={{ height: `${product.percentage}%` }}
                     ></div>
-                    <div className="mt-2 text-xs text-slate-400 text-center">{product.name}</div>
-                    <div className="text-xs font-medium text-white">{product.value}</div>
+                    <div className="mt-2 text-xs text-slate-400 text-center">
+                      {product.name}
+                    </div>
+                    <div className="text-xs font-medium text-white">
+                      {product.value}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            
+
             <div className="rounded-md border border-slate-800 p-4">
-              <h3 className="text-lg font-medium text-white mb-4">Production Trends</h3>
+              <h3 className="text-lg font-medium text-white mb-4">
+                Production Trends
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-white font-medium mb-3">Monthly Production Volume</h4>
+                  <h4 className="text-white font-medium mb-3">
+                    Monthly Production Volume
+                  </h4>
                   <div className="h-48 flex items-end space-x-1">
-                    {[65, 70, 68, 72, 75, 78, 80, 82, 85, 88, 92, 95].map((value, index) => (
-                      <div 
-                        key={index} 
-                        className="flex-1 bg-cyan-600 rounded-t" 
-                        style={{ height: `${value}%` }}
-                      ></div>
-                    ))}
+                    {[65, 70, 68, 72, 75, 78, 80, 82, 85, 88, 92, 95].map(
+                      (value, index) => (
+                        <div
+                          key={index}
+                          className="flex-1 bg-cyan-600 rounded-t"
+                          style={{ height: `${value}%` }}
+                        ></div>
+                      ),
+                    )}
                   </div>
                   <div className="flex justify-between mt-2 text-xs text-slate-400">
                     <span>Jan</span>
@@ -188,15 +228,81 @@ const ProductionReporting = () => {
                     <span>Dec</span>
                   </div>
                 </div>
-                
+
                 <div>
-                  <h4 className="text-white font-medium mb-3">Production by Assembly Line</h4>
+                  <h4 className="text-white font-medium mb-3">
+                    Production by Assembly Line
+                  </h4>
                   <div className="space-y-3">
                     {[
-                      { line: "Main Assembly Line A", value: 4500, percentage: 90 },
-                      { line: "Main Assembly Line B", value: 4000, percentage: 80 },
+                      {
+                        line: "Main Assembly Line A",
+                        value: 4500,
+                        percentage: 90,
+                      },
+                      {
+                        line: "Main Assembly Line B",
+                        value: 4000,
+                        percentage: 80,
+                      },
                       { line: "Secondary Line 1", value: 2500, percentage: 50 },
                       { line: "Secondary Line 2", value: 1450, percentage: 29 },
                     ].map((line, index) => (
                       <div key={index}>
-                        <div className="flex justify-between text-xs text-slate-300 mb-
+                        <div className="flex justify-between text-xs text-slate-300 mb-1">
+                          <span>{line.line}</span>
+                          <span>{line.value} units</span>
+                        </div>
+                        <div className="h-2 bg-slate-700 rounded-full">
+                          <div
+                            className="h-2 bg-cyan-600 rounded-full"
+                            style={{ width: `${line.percentage}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="efficiency" className="mt-4 space-y-4">
+            <div className="rounded-md border border-slate-800 p-4">
+              <h3 className="text-lg font-medium text-white mb-4">
+                Efficiency Metrics
+              </h3>
+              <p className="text-slate-300">
+                Efficiency metrics content will be displayed here.
+              </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="quality" className="mt-4 space-y-4">
+            <div className="rounded-md border border-slate-800 p-4">
+              <h3 className="text-lg font-medium text-white mb-4">
+                Quality Metrics
+              </h3>
+              <p className="text-slate-300">
+                Quality metrics content will be displayed here.
+              </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="costs" className="mt-4 space-y-4">
+            <div className="rounded-md border border-slate-800 p-4">
+              <h3 className="text-lg font-medium text-white mb-4">
+                Cost Analysis
+              </h3>
+              <p className="text-slate-300">
+                Cost analysis content will be displayed here.
+              </p>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default ProductionReporting;
