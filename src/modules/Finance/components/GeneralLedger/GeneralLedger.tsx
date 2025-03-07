@@ -19,6 +19,15 @@ const GeneralLedger = () => {
               activeView === "accounts" ? "bg-cyan-600 hover:bg-cyan-700" : ""
             }
           >
+            + Add Account
+          </Button>
+          <Button
+            variant={activeView === "accounts" ? "default" : "outline"}
+            onClick={() => setActiveView("accounts")}
+            className={
+              activeView === "accounts" ? "bg-cyan-600 hover:bg-cyan-700" : ""
+            }
+          >
             Chart of Accounts
           </Button>
           <Button
