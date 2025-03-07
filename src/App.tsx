@@ -47,9 +47,7 @@ const OperationsDashboard = preloadComponent(
 const ProductionDashboard = preloadComponent(
   () => import("./modules/Production/ProductionDashboard"),
 );
-const ExecutiveDashboard = preloadComponent(
-  () => import("./modules/Executive/ExecutiveDashboard"),
-);
+
 const AdministrationDashboard = preloadComponent(
   () => import("./modules/Administration/AdministrationDashboard"),
 );
@@ -61,6 +59,9 @@ const MaintenanceDashboard = preloadComponent(
 );
 const LegalDashboard = preloadComponent(
   () => import("./modules/Legal/LegalDashboard"),
+);
+const ExecutiveDashboard = preloadComponent(
+  () => import("./modules/Executive/ExecutiveDashboard"),
 );
 
 function App() {
@@ -138,14 +139,13 @@ function App() {
           <Route path="/logistics" element={<LogisticsDashboard />} />
           <Route path="/store-network" element={<StoreNetworkDashboard />} />
           <Route path="/marketing" element={<MarketingDashboard />} />
-
           <Route path="/operations" element={<OperationsDashboard />} />
           <Route path="/production" element={<ProductionDashboard />} />
-          <Route path="/executive" element={<ExecutiveDashboard />} />
           <Route path="/administration" element={<AdministrationDashboard />} />
           <Route path="/crm" element={<CRMDashboard />} />
           <Route path="/maintenance" element={<MaintenanceDashboard />} />
           <Route path="/legal" element={<LegalDashboard />} />
+          <Route path="/executive" element={<ExecutiveDashboard />} />
 
           {/* Add this before the catchall route */}
           {import.meta.env.VITE_TEMPO === "true" && (

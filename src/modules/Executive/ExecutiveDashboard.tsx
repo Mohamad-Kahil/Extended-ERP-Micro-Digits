@@ -1,42 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import ExecutiveOverview from "./components/ExecutiveOverview";
 import KPIMonitoring from "./components/KPIMonitoring/KPIMonitoring";
 import AIForecasting from "./components/AIForecasting/AIForecasting";
 import DepartmentalInsights from "./components/DepartmentalInsights/DepartmentalInsights";
+import StrategicPlanning from "./components/StrategicPlanning/StrategicPlanning";
+import BoardReporting from "./components/BoardReporting/BoardReporting";
 
 const ExecutiveDashboard = () => {
+  const [activeSection, setActiveSection] = useState("overview");
+
+  const navItems = [
+    { id: "overview", label: "Executive Overview" },
+    { id: "kpi", label: "KPI Monitoring" },
+    { id: "ai", label: "AI Forecasting" },
+    { id: "insights", label: "Departmental Insights" },
+    { id: "strategic", label: "Strategic Planning" },
+    { id: "board", label: "Board Reporting" },
+  ];
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case "overview":
+        return <ExecutiveOverview />;
+      case "kpi":
+        return <KPIMonitoring />;
+      case "ai":
+        return <AIForecasting />;
+      case "insights":
+        return <DepartmentalInsights />;
+      case "strategic":
+        return <StrategicPlanning />;
+      case "board":
+        return <BoardReporting />;
+      default:
+        return <ExecutiveOverview />;
+    }
+  };
+
+  // Create a custom navbar to be passed to DashboardLayout
+  const executiveNavbar = (
+    <div className="flex items-center w-full overflow-x-auto">
+      {navItems.map((item) => (
+        <Button
+          key={item.id}
+          variant={activeSection === item.id ? "default" : "ghost"}
+          className={`${activeSection === item.id ? "bg-cyan-600 hover:bg-cyan-700" : "hover:bg-slate-700"} text-sm`}
+          onClick={() => setActiveSection(item.id)}
+        >
+          {item.label}
+        </Button>
+      ))}
+    </div>
+  );
+
   return (
-    <DashboardLayout>
+    <DashboardLayout navbar={executiveNavbar}>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Executive Dashboard</h1>
-          <p className="text-slate-400">
-            Company-wide business intelligence and performance monitoring
-          </p>
-        </div>
-
-        <ExecutiveOverview />
-
-        <Tabs defaultValue="kpi-monitoring" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-slate-800">
-            <TabsTrigger value="kpi-monitoring">KPI Monitoring</TabsTrigger>
-            <TabsTrigger value="ai-forecasting">AI Forecasting</TabsTrigger>
-            <TabsTrigger value="departmental-insights">
-              Departmental Insights
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="kpi-monitoring" className="mt-4">
-            <KPIMonitoring />
-          </TabsContent>
-          <TabsContent value="ai-forecasting" className="mt-4">
-            <AIForecasting />
-          </TabsContent>
-          <TabsContent value="departmental-insights" className="mt-4">
-            <DepartmentalInsights />
-          </TabsContent>
-        </Tabs>
+        {/* Content Area */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+          >
+            {renderContent()}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </DashboardLayout>
   );
