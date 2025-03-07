@@ -81,45 +81,6 @@ const FinanceDashboard = () => {
   return (
     <DashboardLayout navbar={financeNavbar}>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold text-white">
-            Finance & Accounting
-          </h1>
-          <p className="text-slate-400">
-            Manage financial transactions, reporting, and compliance
-          </p>
-        </div>
-
-        {/* Status Summary Boxes */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-          <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-            <div className="text-sm font-medium text-slate-400">
-              Total Transactions
-            </div>
-            <div className="mt-1 text-2xl font-bold text-white">1,248</div>
-          </div>
-          <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-            <div className="text-sm font-medium text-slate-400">
-              Pending Approvals
-            </div>
-            <div className="mt-1 text-2xl font-bold text-amber-500">24</div>
-          </div>
-          <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-            <div className="text-sm font-medium text-slate-400">
-              Monthly Revenue
-            </div>
-            <div className="mt-1 text-2xl font-bold text-emerald-500">
-              $128,450
-            </div>
-          </div>
-          <div className="rounded-lg border border-slate-800 bg-slate-800/50 p-4">
-            <div className="text-sm font-medium text-slate-400">
-              Outstanding Invoices
-            </div>
-            <div className="mt-1 text-2xl font-bold text-red-500">18</div>
-          </div>
-        </div>
-
         {/* Content Area */}
         <AnimatePresence mode="wait">
           <motion.div
