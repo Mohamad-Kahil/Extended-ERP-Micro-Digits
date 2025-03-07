@@ -3,11 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import LegalCases from "./LegalCases";
-import CaseAnalytics from "./CaseAnalytics";
+import PatentTracker from "./PatentTracker";
+import TrademarkRegistry from "./TrademarkRegistry";
 
-const CaseManagement = () => {
-  const [activeTab, setActiveTab] = useState("cases");
+const IntellectualProperty = () => {
+  const [activeTab, setActiveTab] = useState("patents");
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -15,7 +15,7 @@ const CaseManagement = () => {
       <CardHeader className="border-b border-slate-800 pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl font-semibold text-white">
-            Case Management
+            Intellectual Property Management
           </CardTitle>
           <div className="flex space-x-2">
             <Button variant="outline">
@@ -53,7 +53,7 @@ const CaseManagement = () => {
                 <path d="M5 12h14" />
                 <path d="M12 5v14" />
               </svg>
-              New Case
+              New IP Asset
             </Button>
           </div>
         </div>
@@ -78,7 +78,7 @@ const CaseManagement = () => {
                 <path d="m21 21-4.3-4.3" />
               </svg>
               <Input
-                placeholder="Search cases..."
+                placeholder="Search IP assets..."
                 className="pl-8"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -89,19 +89,19 @@ const CaseManagement = () => {
               <div className="flex items-center px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20">
                 <span className="h-2 w-2 rounded-full bg-blue-500 mr-2"></span>
                 <span className="text-xs font-medium text-blue-500">
-                  Active: 24
+                  Patents: 32
+                </span>
+              </div>
+              <div className="flex items-center px-3 py-1 rounded-md bg-purple-500/10 border border-purple-500/20">
+                <span className="h-2 w-2 rounded-full bg-purple-500 mr-2"></span>
+                <span className="text-xs font-medium text-purple-500">
+                  Trademarks: 46
                 </span>
               </div>
               <div className="flex items-center px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/20">
                 <span className="h-2 w-2 rounded-full bg-amber-500 mr-2"></span>
                 <span className="text-xs font-medium text-amber-500">
-                  Pending: 15
-                </span>
-              </div>
-              <div className="flex items-center px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
-                <span className="text-xs font-medium text-emerald-500">
-                  Resolved: 8
+                  Renewals Due: 3
                 </span>
               </div>
             </div>
@@ -110,16 +110,16 @@ const CaseManagement = () => {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-slate-800">
-            <TabsTrigger value="cases">Legal Cases</TabsTrigger>
-            <TabsTrigger value="analytics">Case Analytics</TabsTrigger>
+            <TabsTrigger value="patents">Patents</TabsTrigger>
+            <TabsTrigger value="trademarks">Trademarks</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="cases" className="mt-6 space-y-6">
-            <LegalCases searchTerm={searchTerm} />
+          <TabsContent value="patents" className="mt-6 space-y-6">
+            <PatentTracker searchTerm={searchTerm} />
           </TabsContent>
 
-          <TabsContent value="analytics" className="mt-6 space-y-6">
-            <CaseAnalytics />
+          <TabsContent value="trademarks" className="mt-6 space-y-6">
+            <TrademarkRegistry searchTerm={searchTerm} />
           </TabsContent>
         </Tabs>
       </CardContent>
@@ -127,4 +127,4 @@ const CaseManagement = () => {
   );
 };
 
-export default CaseManagement;
+export default IntellectualProperty;

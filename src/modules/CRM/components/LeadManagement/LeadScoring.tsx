@@ -2,14 +2,22 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const LeadScoring = () => {
   const scoringCriteria = [
     {
       id: "engagement",
       name: "Engagement Score",
-      description: "Based on website visits, email opens, and content downloads",
+      description:
+        "Based on website visits, email opens, and content downloads",
       weight: 25,
       icon: (
         <svg
@@ -188,12 +196,21 @@ const LeadScoring = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       {criteria.icon}
-                      <span className="font-medium text-white">{criteria.name}</span>
+                      <span className="font-medium text-white">
+                        {criteria.name}
+                      </span>
                     </div>
-                    <span className="text-sm text-slate-400">{criteria.weight}%</span>
+                    <span className="text-sm text-slate-400">
+                      {criteria.weight}%
+                    </span>
                   </div>
-                  <Progress value={criteria.weight} className="h-2 bg-slate-700" />
-                  <p className="text-xs text-slate-400">{criteria.description}</p>
+                  <Progress
+                    value={criteria.weight}
+                    className="h-2 bg-slate-700"
+                  />
+                  <p className="text-xs text-slate-400">
+                    {criteria.description}
+                  </p>
                 </div>
               ))}
               <div className="pt-2">
@@ -222,13 +239,20 @@ const LeadScoring = () => {
                   { range: "61-80", count: 65, color: "bg-emerald-500" },
                   { range: "81-100", count: 35, color: "bg-cyan-500" },
                 ].map((bar) => (
-                  <div key={bar.range} className="flex flex-col items-center flex-1">
+                  <div
+                    key={bar.range}
+                    className="flex flex-col items-center flex-1"
+                  >
                     <div
                       className={`w-full ${bar.color} rounded-t`}
                       style={{ height: `${(bar.count / 65) * 100}%` }}
                     ></div>
-                    <span className="text-xs text-slate-400 mt-1">{bar.range}</span>
-                    <span className="text-xs font-medium text-white">{bar.count}</span>
+                    <span className="text-xs text-slate-400 mt-1">
+                      {bar.range}
+                    </span>
+                    <span className="text-xs font-medium text-white">
+                      {bar.count}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -267,8 +291,12 @@ const LeadScoring = () => {
                   <TableHead className="text-slate-300">Lead</TableHead>
                   <TableHead className="text-slate-300">Company</TableHead>
                   <TableHead className="text-slate-300">Score</TableHead>
-                  <TableHead className="text-slate-300">Last Activity</TableHead>
-                  <TableHead className="text-right text-slate-300">Actions</TableHead>
+                  <TableHead className="text-slate-300">
+                    Last Activity
+                  </TableHead>
+                  <TableHead className="text-right text-slate-300">
+                    Actions
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -286,8 +314,8 @@ const LeadScoring = () => {
                               lead.score >= 80
                                 ? "bg-emerald-500"
                                 : lead.score >= 60
-                                ? "bg-amber-500"
-                                : "bg-blue-500"
+                                  ? "bg-amber-500"
+                                  : "bg-blue-500"
                             }`}
                             style={{ width: `${lead.score}%` }}
                           ></div>
@@ -342,14 +370,18 @@ const LeadScoring = () => {
               </svg>
             </div>
             <p className="text-3xl font-bold text-white">42</p>
-            <p className="text-xs text-slate-400 mt-1">Leads with score > 80</p>
+            <p className="text-xs text-slate-400 mt-1">
+              Leads with score &gt; 80
+            </p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-800/50">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-slate-400">Conversion Rate</h3>
+              <h3 className="text-sm font-medium text-slate-400">
+                Conversion Rate
+              </h3>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -371,14 +403,18 @@ const LeadScoring = () => {
               </svg>
             </div>
             <p className="text-3xl font-bold text-white">28.5%</p>
-            <p className="text-xs text-slate-400 mt-1">For leads with score > 80</p>
+            <p className="text-xs text-slate-400 mt-1">
+              For leads with score &gt; 80
+            </p>
           </CardContent>
         </Card>
 
         <Card className="border-slate-800 bg-slate-800/50">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-slate-400">Avg. Deal Size</h3>
+              <h3 className="text-sm font-medium text-slate-400">
+                Avg. Deal Size
+              </h3>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -396,7 +432,9 @@ const LeadScoring = () => {
               </svg>
             </div>
             <p className="text-3xl font-bold text-white">$42.5K</p>
-            <p className="text-xs text-slate-400 mt-1">For high-scoring leads</p>
+            <p className="text-xs text-slate-400 mt-1">
+              For high-scoring leads
+            </p>
           </CardContent>
         </Card>
       </div>

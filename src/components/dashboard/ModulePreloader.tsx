@@ -17,7 +17,7 @@ export function ModulePreloader() {
         import("../../modules/Logistics/LogisticsDashboard"),
         import("../../modules/StoreNetwork/StoreNetworkDashboard"),
         import("../../modules/Marketing/MarketingDashboard"),
-        import("../../modules/Legal/LegalDashboard"),
+
         import("../../modules/Production/ProductionDashboard"),
         import("../../modules/Executive/ExecutiveDashboard"),
       ];

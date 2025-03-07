@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -42,127 +42,132 @@ interface ComplianceRequirement {
   description: string;
 }
 
-const complianceRequirements: ComplianceRequirement[] = [
-  {
-    id: "1",
-    name: "ISO 27001 - Information Security Management",
-    category: "ISO",
-    status: "compliant",
-    dueDate: "2023-12-31",
-    lastAuditDate: "2023-03-15",
-    nextAuditDate: "2023-09-15",
-    responsibleDepartment: "IT",
-    riskLevel: "high",
-    description:
-      "Ensure information security controls are in place and effective",
-  },
-  {
-    id: "2",
-    name: "GDPR - Data Subject Access Requests",
-    category: "GDPR",
-    status: "compliant",
-    dueDate: "2023-12-31",
-    lastAuditDate: "2023-05-10",
-    nextAuditDate: "2023-11-10",
-    responsibleDepartment: "Legal",
-    riskLevel: "high",
-    description:
-      "Process for handling data subject access requests within required timeframe",
-  },
-  {
-    id: "3",
-    name: "PCI DSS - Payment Card Security",
-    category: "Industry",
-    status: "in-progress",
-    dueDate: "2023-08-15",
-    lastAuditDate: "2022-08-20",
-    nextAuditDate: "2023-08-20",
-    responsibleDepartment: "Finance",
-    riskLevel: "critical",
-    description: "Compliance with Payment Card Industry Data Security Standard",
-  },
-  {
-    id: "4",
-    name: "SOX 404 - Internal Controls",
-    category: "Financial",
-    status: "compliant",
-    dueDate: "2023-12-31",
-    lastAuditDate: "2023-02-28",
-    nextAuditDate: "2023-10-31",
-    responsibleDepartment: "Finance",
-    riskLevel: "high",
-    description: "Internal controls over financial reporting",
-  },
-  {
-    id: "5",
-    name: "ISO 14001 - Environmental Management",
-    category: "Environmental",
-    status: "non-compliant",
-    dueDate: "2023-09-30",
-    lastAuditDate: "2023-04-05",
-    nextAuditDate: "2023-07-15",
-    responsibleDepartment: "Operations",
-    riskLevel: "medium",
-    description: "Environmental management system standards compliance",
-  },
-  {
-    id: "6",
-    name: "HIPAA - Health Information Privacy",
-    category: "Industry",
-    status: "not-applicable",
-    dueDate: "2023-12-31",
-    responsibleDepartment: "HR",
-    riskLevel: "low",
-    description:
-      "Health Insurance Portability and Accountability Act compliance",
-  },
-  {
-    id: "7",
-    name: "ISO 9001 - Quality Management",
-    category: "ISO",
-    status: "compliant",
-    dueDate: "2023-12-31",
-    lastAuditDate: "2023-01-20",
-    nextAuditDate: "2023-07-20",
-    responsibleDepartment: "Operations",
-    riskLevel: "medium",
-    description: "Quality management system standards compliance",
-  },
-  {
-    id: "8",
-    name: "GDPR - Data Processing Agreements",
-    category: "GDPR",
-    status: "pending-review",
-    dueDate: "2023-07-31",
-    lastAuditDate: "2023-01-15",
-    nextAuditDate: "2023-07-15",
-    responsibleDepartment: "Legal",
-    riskLevel: "high",
-    description:
-      "Ensure all third-party data processors have appropriate agreements in place",
-  },
-  {
-    id: "9",
-    name: "OSHA - Workplace Safety",
-    category: "Health & Safety",
-    status: "in-progress",
-    dueDate: "2023-08-31",
-    lastAuditDate: "2023-02-10",
-    nextAuditDate: "2023-08-10",
-    responsibleDepartment: "Facilities",
-    riskLevel: "medium",
-    description: "Occupational Safety and Health Administration compliance",
-  },
-];
+interface ComplianceAuditProps {
+  searchTerm: string;
+}
 
-const ComplianceAudit = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [categoryFilter, setCategoryFilter] = React.useState("all");
-  const [statusFilter, setStatusFilter] = React.useState("all");
-  const [riskFilter, setRiskFilter] = React.useState("all");
-  const [selectedRequirement, setSelectedRequirement] = React.useState<
-    string | null
-  >(null);
+const ComplianceAudit = ({ searchTerm }: ComplianceAuditProps) => {
+  const [searchTerm2, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [riskFilter, setRiskFilter] = useState("all");
+  const [selectedRequirement, setSelectedRequirement] = useState<string | null>(
+    null,
+  );
+
+  const complianceRequirements: ComplianceRequirement[] = [
+    {
+      id: "1",
+      name: "ISO 27001 - Information Security Management",
+      category: "ISO",
+      status: "compliant",
+      dueDate: "2023-12-31",
+      lastAuditDate: "2023-03-15",
+      nextAuditDate: "2023-09-15",
+      responsibleDepartment: "IT",
+      riskLevel: "high",
+      description:
+        "Ensure information security controls are in place and effective",
+    },
+    {
+      id: "2",
+      name: "GDPR - Data Subject Access Requests",
+      category: "GDPR",
+      status: "compliant",
+      dueDate: "2023-12-31",
+      lastAuditDate: "2023-05-10",
+      nextAuditDate: "2023-11-10",
+      responsibleDepartment: "Legal",
+      riskLevel: "high",
+      description:
+        "Process for handling data subject access requests within required timeframe",
+    },
+    {
+      id: "3",
+      name: "PCI DSS - Payment Card Security",
+      category: "Industry",
+      status: "in-progress",
+      dueDate: "2023-08-15",
+      lastAuditDate: "2022-08-20",
+      nextAuditDate: "2023-08-20",
+      responsibleDepartment: "Finance",
+      riskLevel: "critical",
+      description:
+        "Compliance with Payment Card Industry Data Security Standard",
+    },
+    {
+      id: "4",
+      name: "SOX 404 - Internal Controls",
+      category: "Financial",
+      status: "compliant",
+      dueDate: "2023-12-31",
+      lastAuditDate: "2023-02-28",
+      nextAuditDate: "2023-10-31",
+      responsibleDepartment: "Finance",
+      riskLevel: "high",
+      description: "Internal controls over financial reporting",
+    },
+    {
+      id: "5",
+      name: "ISO 14001 - Environmental Management",
+      category: "Environmental",
+      status: "non-compliant",
+      dueDate: "2023-09-30",
+      lastAuditDate: "2023-04-05",
+      nextAuditDate: "2023-07-15",
+      responsibleDepartment: "Operations",
+      riskLevel: "medium",
+      description: "Environmental management system standards compliance",
+    },
+    {
+      id: "6",
+      name: "HIPAA - Health Information Privacy",
+      category: "Industry",
+      status: "not-applicable",
+      dueDate: "2023-12-31",
+      responsibleDepartment: "HR",
+      riskLevel: "low",
+      description:
+        "Health Insurance Portability and Accountability Act compliance",
+    },
+    {
+      id: "7",
+      name: "ISO 9001 - Quality Management",
+      category: "ISO",
+      status: "compliant",
+      dueDate: "2023-12-31",
+      lastAuditDate: "2023-01-20",
+      nextAuditDate: "2023-07-20",
+      responsibleDepartment: "Operations",
+      riskLevel: "medium",
+      description: "Quality management system standards compliance",
+    },
+    {
+      id: "8",
+      name: "GDPR - Data Processing Agreements",
+      category: "GDPR",
+      status: "pending-review",
+      dueDate: "2023-07-31",
+      lastAuditDate: "2023-01-15",
+      nextAuditDate: "2023-07-15",
+      responsibleDepartment: "Legal",
+      riskLevel: "high",
+      description:
+        "Ensure all third-party data processors have appropriate agreements in place",
+    },
+    {
+      id: "9",
+      name: "OSHA - Workplace Safety",
+      category: "Health & Safety",
+      status: "in-progress",
+      dueDate: "2023-08-31",
+      lastAuditDate: "2023-02-10",
+      nextAuditDate: "2023-08-10",
+      responsibleDepartment: "Facilities",
+      riskLevel: "medium",
+      description: "Occupational Safety and Health Administration compliance",
+    },
+  ];
 
   const categories = [
     ...new Set(complianceRequirements.map((req) => req.category)),
@@ -290,7 +295,7 @@ const ComplianceAudit = () => {
             <Input
               placeholder="Search requirements..."
               className="pl-8"
-              value={searchTerm}
+              value={searchTerm2}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
