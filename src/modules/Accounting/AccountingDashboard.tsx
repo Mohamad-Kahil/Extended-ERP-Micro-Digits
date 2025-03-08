@@ -20,14 +20,14 @@ const AccountingDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
 
   const navItems = [
-    { id: "overview", label: "Accounting Overview" },
-    { id: "coa", label: "Chart of Accounts" },
+    { id: "overview", label: "Overview" },
+    { id: "coa", label: "CoA" },
     { id: "gl", label: "General Ledger" },
     { id: "ap", label: "Accounts Payable" },
     { id: "ar", label: "Accounts Receivable" },
     { id: "assets", label: "Fixed Assets" },
     { id: "procurement", label: "Procurement" },
-    { id: "taxation", label: "Taxation & Compliance" },
+    { id: "taxation", label: "Taxation" },
     { id: "intercompany", label: "Intercompany" },
     { id: "financial-reporting", label: "Financial Reporting" },
     { id: "budgeting", label: "Budgeting" },
