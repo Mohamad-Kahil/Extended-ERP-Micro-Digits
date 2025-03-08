@@ -20,8 +20,8 @@ const BrandingSection = () => {
             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
           </svg>
         </div>
-        <h1 className="mb-4 text-4xl font-bold text-red-400">
-          Micro <span className="text-green-400">Digits</span>
+        <h1 className="mb-4 text-4xl font-bold text-white-400">
+          Micro <span className="text-white-400">Digits</span>
         </h1>
         <h1 className="mb-4 text-4xl font-bold text-yellow-400">
           Nexus Enterprise Suite
