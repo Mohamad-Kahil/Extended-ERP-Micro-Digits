@@ -13,9 +13,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 interface HeaderProps {
   moduleTitle?: string;
+  toggleSidebar?: () => void;
 }
 
-const Header = ({ moduleTitle }: HeaderProps) => {
+const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +43,30 @@ const Header = ({ moduleTitle }: HeaderProps) => {
   return (
     <header className="flex h-12 items-center justify-between border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm px-3 py-1">
       <div className="flex items-center space-x-4">
-        <h1 className="text-xl font-bold text-white">{displayTitle}</h1>
+        {toggleSidebar && (
+          <button
+            onClick={toggleSidebar}
+            className="mr-2 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+            aria-label="Toggle Sidebar"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        )}
+        <h1 className="text-xl font-bold text-white">Nexus {displayTitle}</h1>
       </div>
       <div className="flex items-center space-x-3">
         <div className="relative w-64 hidden md:block">

@@ -1,39 +1,35 @@
-import { useEffect } from "react";
+import React from "react";
 
-/**
- * This component preloads all module components to improve navigation performance
- */
-export function ModulePreloader() {
-  useEffect(() => {
-    const preloadModules = async () => {
-      // Create an array of import promises
-      const moduleImports = [
-        import("../../modules/Finance/FinanceDashboard"),
-        import("../../modules/HR/HRDashboard"),
-        import("../../modules/SupplyChain/SupplyChainDashboard"),
+export const ModulePreloader = () => {
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="h-5 w-24 bg-slate-800 rounded-md animate-pulse"></div>
+        <div className="flex space-x-2">
+          <div className="h-7 w-20 bg-slate-800 rounded-md animate-pulse"></div>
+          <div className="h-7 w-24 bg-slate-800 rounded-md animate-pulse"></div>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        {Array(12)
+          .fill(0)
+          .map((_, index) => (
+            <div
+              key={index}
+              className="bg-slate-900 rounded-lg p-4 border border-slate-800 animate-pulse"
+            >
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3 p-2 bg-slate-800 rounded-lg h-8 w-8"></div>
+                <div className="w-full">
+                  <div className="h-4 bg-slate-800 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-slate-800 rounded w-full"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
+  );
+};
 
-        import("../../modules/POS/POSDashboard"),
-        import("../../modules/Ecommerce/EcommerceDashboard"),
-        import("../../modules/Logistics/LogisticsDashboard"),
-        import("../../modules/StoreNetwork/StoreNetworkDashboard"),
-        import("../../modules/Marketing/MarketingDashboard"),
-
-        import("../../modules/Production/ProductionDashboard"),
-        import("../../modules/Executive/ExecutiveDashboard"),
-      ];
-
-      // Load all modules in parallel
-      await Promise.all(moduleImports);
-    };
-
-    // Start preloading after a short delay to prioritize current view
-    const timer = setTimeout(() => {
-      preloadModules();
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // This component doesn't render anything
-  return null;
-}
+export default ModulePreloader;

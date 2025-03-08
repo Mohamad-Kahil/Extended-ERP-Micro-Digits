@@ -286,17 +286,61 @@ const modules = [
 
 const ModuleGrid = () => {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {modules.map((module) => (
-        <ModuleCard
-          key={module.id}
-          title={module.title}
-          description={module.description}
-          icon={module.icon}
-          color={module.color}
-          href={`/${module.id}`}
-        />
-      ))}
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-medium text-white">Modules</h2>
+        <div className="flex space-x-2">
+          <button className="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-3 py-1.5 rounded-md flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1.5"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" x2="12" y1="15" y2="3" />
+            </svg>
+            Export
+          </button>
+          <button className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs px-3 py-1.5 rounded-md flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1.5"
+            >
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+            Add Module
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        {modules.map((module) => (
+          <ModuleCard
+            key={module.id}
+            title={module.title}
+            description={module.description}
+            icon={module.icon}
+            href={`/${module.id}`}
+            color={module.color}
+          />
+        ))}
+      </div>
     </div>
   );
 };

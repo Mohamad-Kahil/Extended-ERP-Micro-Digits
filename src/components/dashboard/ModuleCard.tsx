@@ -6,53 +6,33 @@ interface ModuleCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  color: string;
   href: string;
+  color?: string;
 }
 
 const ModuleCard = ({
   title,
   description,
   icon,
-  color,
   href,
+  color = "bg-cyan-500",
 }: ModuleCardProps) => {
   return (
     <Link
       to={href}
-      className="group block overflow-hidden rounded-lg border border-slate-800 bg-slate-900 transition-all hover:border-slate-700 hover:shadow-lg"
+      className="block bg-slate-900 rounded-lg p-4 hover:bg-slate-800 transition-colors duration-200 border border-slate-800 relative overflow-hidden group"
     >
-      <div className="p-6">
-        <div className="mb-4 flex items-center">
-          <div
-            className={cn(
-              "mr-4 flex h-12 w-12 items-center justify-center rounded-lg",
-              color,
-            )}
-          >
-            {icon}
-          </div>
-          <h3 className="text-lg font-semibold text-white">{title}</h3>
-        </div>
-        <p className="text-sm text-slate-400">{description}</p>
-      </div>
-      <div className="flex items-center justify-between border-t border-slate-800 bg-slate-800/50 px-6 py-3">
-        <span className="text-xs font-medium text-cyan-500">Access Module</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-cyan-500 transition-transform group-hover:translate-x-1"
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="flex items-start relative z-10">
+        <div
+          className={cn("flex-shrink-0 mr-3 p-2 rounded-lg text-white", color)}
         >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
+          {icon}
+        </div>
+        <div>
+          <h2 className="text-base font-medium text-white mb-1">{title}</h2>
+          <p className="text-xs text-slate-400">{description}</p>
+        </div>
       </div>
     </Link>
   );
