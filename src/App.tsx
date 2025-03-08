@@ -7,6 +7,19 @@ import LoginForm from "./components/auth/LoginForm";
 import ForgotPasswordForm from "./components/auth/ForgotPasswordForm";
 import ResetPasswordForm from "./components/auth/ResetPasswordForm";
 import { LoadingSpinner } from "./components/ui/loading-spinner";
+import { Card } from "./components/ui/card";
+
+// Custom loading component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center h-screen bg-slate-950">
+    <Card className="p-6 border-slate-800 bg-slate-900">
+      <div className="flex items-center space-x-4">
+        <div className="h-8 w-8 rounded-full bg-cyan-500"></div>
+        <div className="text-lg font-medium text-white">Loading module...</div>
+      </div>
+    </Card>
+  </div>
+);
 
 // Preload all dashboard components
 const preloadComponent = (importFn: () => Promise<any>) => {
@@ -100,13 +113,7 @@ function App() {
   }, []);
 
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen w-screen items-center justify-center bg-slate-950 text-white">
-          <LoadingSpinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <>
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
