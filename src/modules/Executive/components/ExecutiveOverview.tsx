@@ -4,10 +4,10 @@ import { Progress } from "@/components/ui/progress";
 
 const ExecutiveOverview = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* KPI Cards - 4 in a row */}
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-        <Card className="border-slate-800 bg-slate-900 p-3">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
+        <Card className="border-slate-800 bg-slate-900 p-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-medium text-slate-400">Revenue YTD</h3>
             <svg
@@ -26,7 +26,7 @@ const ExecutiveOverview = () => {
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <p className="mt-1 text-xl font-bold text-white">$24.5M</p>
+          <p className="mt-1 text-lg font-bold text-white">$24.5M</p>
           <div className="flex items-center text-xs text-emerald-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ const ExecutiveOverview = () => {
           </div>
         </Card>
 
-        <Card className="border-slate-800 bg-slate-900 p-3">
+        <Card className="border-slate-800 bg-slate-900 p-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-medium text-slate-400">Net Profit</h3>
             <svg
@@ -66,7 +66,7 @@ const ExecutiveOverview = () => {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
           </div>
-          <p className="mt-1 text-xl font-bold text-white">$4.2M</p>
+          <p className="mt-1 text-lg font-bold text-white">$4.2M</p>
           <div className="flex items-center text-xs text-emerald-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ const ExecutiveOverview = () => {
           </div>
         </Card>
 
-        <Card className="border-slate-800 bg-slate-900 p-3">
+        <Card className="border-slate-800 bg-slate-900 p-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-medium text-slate-400">
               Customer Satisfaction
@@ -107,7 +107,7 @@ const ExecutiveOverview = () => {
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
             </svg>
           </div>
-          <p className="mt-1 text-xl font-bold text-white">92%</p>
+          <p className="mt-1 text-lg font-bold text-white">92%</p>
           <div className="flex items-center text-xs text-emerald-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +128,7 @@ const ExecutiveOverview = () => {
           </div>
         </Card>
 
-        <Card className="border-slate-800 bg-slate-900 p-3">
+        <Card className="border-slate-800 bg-slate-900 p-2">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-medium text-slate-400">
               Employee Retention
@@ -151,7 +151,7 @@ const ExecutiveOverview = () => {
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
-          <p className="mt-1 text-xl font-bold text-white">94.5%</p>
+          <p className="mt-1 text-lg font-bold text-white">94.5%</p>
           <div className="flex items-center text-xs text-emerald-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -174,14 +174,14 @@ const ExecutiveOverview = () => {
       </div>
 
       {/* Two graphs in one row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Revenue by Department */}
         <Card className="border-slate-800 bg-slate-900">
-          <CardContent className="p-5">
-            <h3 className="text-lg font-medium text-white mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-xs font-medium text-white mb-1.5">
               Revenue by Department
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[
                 {
                   unit: "E-commerce",
@@ -215,7 +215,7 @@ const ExecutiveOverview = () => {
                 },
               ].map((item) => (
                 <div key={item.unit} className="space-y-1">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs">
                     <span className="text-white">{item.unit}</span>
                     <div className="flex space-x-3">
                       <span className="text-white font-medium">
@@ -239,11 +239,11 @@ const ExecutiveOverview = () => {
 
         {/* Strategic Initiatives Progress */}
         <Card className="border-slate-800 bg-slate-900">
-          <CardContent className="p-5">
-            <h3 className="text-lg font-medium text-white mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-xs font-medium text-white mb-1.5">
               Strategic Initiatives Progress
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[
                 {
                   name: "Digital Transformation",
@@ -277,7 +277,7 @@ const ExecutiveOverview = () => {
                 },
               ].map((initiative, index) => (
                 <div key={index} className="space-y-1">
-                  <div className="flex justify-between items-center text-sm">
+                  <div className="flex justify-between items-center text-xs">
                     <span className="text-white">{initiative.name}</span>
                     <span className={initiative.statusColor}>
                       {initiative.status}
@@ -307,14 +307,14 @@ const ExecutiveOverview = () => {
       </div>
 
       {/* Second row of two graphs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Financial Performance Trends */}
         <Card className="border-slate-800 bg-slate-900">
-          <CardContent className="p-5">
-            <h3 className="text-lg font-medium text-white mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-xs font-medium text-white mb-1.5">
               Financial Performance Trends
             </h3>
-            <div className="relative h-48 mb-6">
+            <div className="relative h-36 mb-2">
               {/* Chart background grid */}
               <div className="absolute inset-0 grid grid-cols-12 gap-0">
                 {Array(12)
@@ -333,7 +333,7 @@ const ExecutiveOverview = () => {
                 preserveAspectRatio="none"
               >
                 <polyline
-                  points="0,144 80,136 160,126 240,132 320,120 400,108 480,114 560,102 640,108 720,96 800,90 880,84"
+                  points="0,84 80,78 160,72 240,76 320,68 400,60 480,64 560,56 640,60 720,52 800,48 880,44"
                   fill="none"
                   stroke="#64748b"
                   strokeWidth="2"
@@ -348,7 +348,7 @@ const ExecutiveOverview = () => {
                 preserveAspectRatio="none"
               >
                 <polyline
-                  points="0,168 80,162 160,156 240,162 320,150 400,144 480,150 560,144 640,150 720,138 800,138 880,132"
+                  points="0,100 80,96 160,92 240,96 320,88 400,84 480,88 560,84 640,88 720,80 800,80 880,76"
                   fill="none"
                   stroke="#0ea5e9"
                   strokeWidth="2"
@@ -360,18 +360,18 @@ const ExecutiveOverview = () => {
               {/* Data points for Revenue */}
               <div className="absolute inset-0 flex justify-between">
                 {[
-                  { month: "Jan", value: 144 },
-                  { month: "Feb", value: 136 },
-                  { month: "Mar", value: 126 },
-                  { month: "Apr", value: 132 },
-                  { month: "May", value: 120 },
-                  { month: "Jun", value: 108 },
-                  { month: "Jul", value: 114 },
-                  { month: "Aug", value: 102 },
-                  { month: "Sep", value: 108 },
-                  { month: "Oct", value: 96 },
-                  { month: "Nov", value: 90 },
-                  { month: "Dec", value: 84 },
+                  { month: "Jan", value: 84 },
+                  { month: "Feb", value: 78 },
+                  { month: "Mar", value: 72 },
+                  { month: "Apr", value: 76 },
+                  { month: "May", value: 68 },
+                  { month: "Jun", value: 60 },
+                  { month: "Jul", value: 64 },
+                  { month: "Aug", value: 56 },
+                  { month: "Sep", value: 60 },
+                  { month: "Oct", value: 52 },
+                  { month: "Nov", value: 48 },
+                  { month: "Dec", value: 44 },
                 ].map((point, index) => (
                   <div
                     key={index}
@@ -379,7 +379,7 @@ const ExecutiveOverview = () => {
                     style={{ height: "100%" }}
                   >
                     <div
-                      className="absolute w-2 h-2 rounded-full bg-slate-500"
+                      className="absolute w-1.5 h-1.5 rounded-full bg-slate-500"
                       style={{ top: `${point.value}px` }}
                     ></div>
                   </div>
@@ -389,18 +389,18 @@ const ExecutiveOverview = () => {
               {/* Data points for Profit */}
               <div className="absolute inset-0 flex justify-between">
                 {[
-                  { month: "Jan", value: 168 },
-                  { month: "Feb", value: 162 },
-                  { month: "Mar", value: 156 },
-                  { month: "Apr", value: 162 },
-                  { month: "May", value: 150 },
-                  { month: "Jun", value: 144 },
-                  { month: "Jul", value: 150 },
-                  { month: "Aug", value: 144 },
-                  { month: "Sep", value: 150 },
-                  { month: "Oct", value: 138 },
-                  { month: "Nov", value: 138 },
-                  { month: "Dec", value: 132 },
+                  { month: "Jan", value: 100 },
+                  { month: "Feb", value: 96 },
+                  { month: "Mar", value: 92 },
+                  { month: "Apr", value: 96 },
+                  { month: "May", value: 88 },
+                  { month: "Jun", value: 84 },
+                  { month: "Jul", value: 88 },
+                  { month: "Aug", value: 84 },
+                  { month: "Sep", value: 88 },
+                  { month: "Oct", value: 80 },
+                  { month: "Nov", value: 80 },
+                  { month: "Dec", value: 76 },
                 ].map((point, index) => (
                   <div
                     key={index}
@@ -408,7 +408,7 @@ const ExecutiveOverview = () => {
                     style={{ height: "100%" }}
                   >
                     <div
-                      className="absolute w-2 h-2 rounded-full bg-cyan-500"
+                      className="absolute w-1.5 h-1.5 rounded-full bg-cyan-500"
                       style={{ top: `${point.value}px` }}
                     ></div>
                   </div>
@@ -438,13 +438,13 @@ const ExecutiveOverview = () => {
               ))}
             </div>
 
-            <div className="mt-3 flex justify-center space-x-6">
+            <div className="mt-1 flex justify-center space-x-6">
               <div className="flex items-center">
-                <div className="w-2 h-2 rounded-full bg-slate-500 mr-2"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-500 mr-1"></div>
                 <span className="text-xs text-slate-300">Revenue</span>
               </div>
               <div className="flex items-center">
-                <div className="w-2 h-2 rounded-full bg-cyan-500 mr-2"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 mr-1"></div>
                 <span className="text-xs text-slate-300">Profit</span>
               </div>
             </div>
@@ -453,11 +453,11 @@ const ExecutiveOverview = () => {
 
         {/* Departmental Performance */}
         <Card className="border-slate-800 bg-slate-900">
-          <CardContent className="p-5">
-            <h3 className="text-lg font-medium text-white mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-xs font-medium text-white mb-1.5">
               Departmental Performance
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[
                 {
                   department: "Sales",
@@ -491,7 +491,7 @@ const ExecutiveOverview = () => {
                 },
               ].map((dept) => (
                 <div key={dept.department} className="space-y-1">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs">
                     <span className="text-white">{dept.department}</span>
                     <div className="flex space-x-3">
                       <span className="text-slate-400">
