@@ -79,6 +79,9 @@ const ExecutiveDashboard = preloadComponent(
 const InventoryDashboard = preloadComponent(
   () => import("./modules/Inventory/InventoryDashboard"),
 );
+const AccountingDashboard = preloadComponent(
+  () => import("./modules/Accounting/AccountingDashboard"),
+);
 
 function App() {
   // Preload all modules when the app starts
@@ -103,6 +106,7 @@ function App() {
         import("./modules/CRM/CRMDashboard"),
         import("./modules/Maintenance/MaintenanceDashboard"),
         import("./modules/Inventory/InventoryDashboard"),
+        import("./modules/Accounting/AccountingDashboard"),
       ];
 
       // Load all modules in parallel
@@ -158,6 +162,7 @@ function App() {
           <Route path="/legal" element={<LegalDashboard />} />
           <Route path="/executive" element={<ExecutiveDashboard />} />
           <Route path="/inventory" element={<InventoryDashboard />} />
+          <Route path="/accounting" element={<AccountingDashboard />} />
 
           {/* Add this before the catchall route */}
           {import.meta.env.VITE_TEMPO === "true" && (

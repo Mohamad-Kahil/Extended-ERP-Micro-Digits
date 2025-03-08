@@ -25,6 +25,32 @@ const modules = [
     color: "bg-emerald-500",
   },
   {
+    id: "accounting",
+    title: "Accounting",
+    description:
+      "Manage accounts payable, receivable, taxation, and fixed assets",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1" />
+        <path d="M4 6h16" />
+        <path d="M4 10h16" />
+        <path d="M4 14h16" />
+        <path d="M4 18h16" />
+      </svg>
+    ),
+    color: "bg-cyan-500",
+  },
+  {
     id: "hr",
     title: "Human Resources",
     description: "Manage employees, payroll, and recruitment",
