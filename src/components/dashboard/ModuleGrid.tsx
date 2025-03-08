@@ -23,6 +23,7 @@ const modules = [
       </svg>
     ),
     color: "bg-emerald-500",
+    href: "/finance",
   },
   {
     id: "accounting",
@@ -49,6 +50,7 @@ const modules = [
       </svg>
     ),
     color: "bg-cyan-500",
+    href: "/accounting",
   },
   {
     id: "hr",

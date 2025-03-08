@@ -11,6 +11,10 @@ import FixedAssets from "./components/FixedAssets/FixedAssets";
 import Procurement from "./components/Procurement/Procurement";
 import Taxation from "./components/Taxation/Taxation";
 import IntercompanyAccounting from "./components/IntercompanyAccounting/IntercompanyAccounting";
+import FinancialReporting from "./components/FinancialReporting/FinancialReporting";
+import Budgeting from "./components/Budgeting/Budgeting";
+import AuditControls from "./components/AuditControls/AuditControls";
+import CostAccounting from "./components/CostAccounting/CostAccounting";
 
 const AccountingDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -25,6 +29,10 @@ const AccountingDashboard = () => {
     { id: "procurement", label: "Procurement" },
     { id: "taxation", label: "Taxation & Compliance" },
     { id: "intercompany", label: "Intercompany" },
+    { id: "financial-reporting", label: "Financial Reporting" },
+    { id: "budgeting", label: "Budgeting" },
+    { id: "audit-controls", label: "Audit Controls" },
+    { id: "cost-accounting", label: "Cost Accounting" },
   ];
 
   const renderContent = () => {
@@ -47,6 +55,14 @@ const AccountingDashboard = () => {
         return <Taxation />;
       case "intercompany":
         return <IntercompanyAccounting />;
+      case "financial-reporting":
+        return <FinancialReporting />;
+      case "budgeting":
+        return <Budgeting />;
+      case "audit-controls":
+        return <AuditControls />;
+      case "cost-accounting":
+        return <CostAccounting />;
       default:
         return <AccountingOverview />;
     }

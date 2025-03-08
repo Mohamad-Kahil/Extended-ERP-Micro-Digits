@@ -107,9 +107,7 @@ const CostAccounting = () => {
 
         <Card className="border-slate-800 bg-slate-900 p-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-medium text-slate-400">
-              Gross Margin
-            </h3>
+            <h3 className="text-xs font-medium text-slate-400">Gross Margin</h3>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
@@ -291,9 +289,313 @@ const CostAccounting = () => {
             <TabsList className="grid w-full max-w-md grid-cols-3 bg-slate-800">
               <TabsTrigger value="cost-centers">Cost Centers</TabsTrigger>
               <TabsTrigger value="product-costing">Product Costing</TabsTrigger>
-              <TabsTrigger value="variance-analysis">Variance Analysis</TabsTrigger>
+              <TabsTrigger value="variance-analysis">
+                Variance Analysis
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="cost-centers" className="mt-6 space-y-6">
               <div className="rounded-md border border-slate-800">
-                <div className="bg-slate-800/
+                <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
+                  <div className="col-span-1">ID</div>
+                  <div className="col-span-3">Cost Center</div>
+                  <div className="col-span-2">Type</div>
+                  <div className="col-span-2">Budget</div>
+                  <div className="col-span-2">Actual</div>
+                  <div className="col-span-2">Actions</div>
+                </div>
+                <div className="divide-y divide-slate-800">
+                  {[
+                    {
+                      id: "CC-001",
+                      name: "Manufacturing - Assembly",
+                      type: "Production",
+                      budget: "$1,250,000",
+                      actual: "$1,175,000",
+                    },
+                    {
+                      id: "CC-002",
+                      name: "Manufacturing - Packaging",
+                      type: "Production",
+                      budget: "$750,000",
+                      actual: "$780,000",
+                    },
+                    {
+                      id: "CC-003",
+                      name: "Quality Control",
+                      type: "Production",
+                      budget: "$500,000",
+                      actual: "$485,000",
+                    },
+                    {
+                      id: "CC-004",
+                      name: "Research & Development",
+                      type: "Service",
+                      budget: "$850,000",
+                      actual: "$825,000",
+                    },
+                    {
+                      id: "CC-005",
+                      name: "IT Services",
+                      type: "Service",
+                      budget: "$450,000",
+                      actual: "$475,000",
+                    },
+                    {
+                      id: "CC-006",
+                      name: "Human Resources",
+                      type: "Support",
+                      budget: "$350,000",
+                      actual: "$340,000",
+                    },
+                    {
+                      id: "CC-007",
+                      name: "Finance & Accounting",
+                      type: "Support",
+                      budget: "$400,000",
+                      actual: "$395,000",
+                    },
+                  ].map((center, index) => (
+                    <div
+                      key={index}
+                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                    >
+                      <div className="col-span-1 font-medium">{center.id}</div>
+                      <div className="col-span-3">{center.name}</div>
+                      <div className="col-span-2">{center.type}</div>
+                      <div className="col-span-2">{center.budget}</div>
+                      <div className="col-span-2">{center.actual}</div>
+                      <div className="col-span-2 flex space-x-2">
+                        <button className="text-slate-400 hover:text-white transition-colors">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        </button>
+                        <button className="text-slate-400 hover:text-white transition-colors">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                          </svg>
+                        </button>
+                        <button className="text-slate-400 hover:text-white transition-colors">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M3 6h18" />
+                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="product-costing" className="mt-6 space-y-6">
+              <div className="rounded-md border border-slate-800">
+                <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
+                  <div className="col-span-1">ID</div>
+                  <div className="col-span-3">Product</div>
+                  <div className="col-span-2">Direct Materials</div>
+                  <div className="col-span-2">Direct Labor</div>
+                  <div className="col-span-2">Overhead</div>
+                  <div className="col-span-2">Total Cost</div>
+                </div>
+                <div className="divide-y divide-slate-800">
+                  {[
+                    {
+                      id: "P-001",
+                      name: "Product A",
+                      materials: "$45.00",
+                      labor: "$25.00",
+                      overhead: "$15.00",
+                      total: "$85.00",
+                    },
+                    {
+                      id: "P-002",
+                      name: "Product B",
+                      materials: "$65.00",
+                      labor: "$30.00",
+                      overhead: "$20.00",
+                      total: "$115.00",
+                    },
+                    {
+                      id: "P-003",
+                      name: "Product C",
+                      materials: "$35.00",
+                      labor: "$20.00",
+                      overhead: "$12.50",
+                      total: "$67.50",
+                    },
+                    {
+                      id: "P-004",
+                      name: "Product D",
+                      materials: "$55.00",
+                      labor: "$35.00",
+                      overhead: "$22.50",
+                      total: "$112.50",
+                    },
+                    {
+                      id: "P-005",
+                      name: "Product E",
+                      materials: "$75.00",
+                      labor: "$40.00",
+                      overhead: "$28.75",
+                      total: "$143.75",
+                    },
+                  ].map((product, index) => (
+                    <div
+                      key={index}
+                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                    >
+                      <div className="col-span-1 font-medium">{product.id}</div>
+                      <div className="col-span-3">{product.name}</div>
+                      <div className="col-span-2">{product.materials}</div>
+                      <div className="col-span-2">{product.labor}</div>
+                      <div className="col-span-2">{product.overhead}</div>
+                      <div className="col-span-2 font-medium">
+                        {product.total}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="variance-analysis" className="mt-6 space-y-6">
+              <div className="rounded-md border border-slate-800">
+                <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
+                  <div className="col-span-2">Cost Center</div>
+                  <div className="col-span-2">Category</div>
+                  <div className="col-span-2">Standard</div>
+                  <div className="col-span-2">Actual</div>
+                  <div className="col-span-2">Variance</div>
+                  <div className="col-span-2">Variance %</div>
+                </div>
+                <div className="divide-y divide-slate-800">
+                  {[
+                    {
+                      center: "Manufacturing - Assembly",
+                      category: "Materials",
+                      standard: "$525,000",
+                      actual: "$545,000",
+                      variance: "-$20,000",
+                      percentage: "-3.8%",
+                      negative: true,
+                    },
+                    {
+                      center: "Manufacturing - Assembly",
+                      category: "Labor",
+                      standard: "$425,000",
+                      actual: "$410,000",
+                      variance: "$15,000",
+                      percentage: "+3.5%",
+                      negative: false,
+                    },
+                    {
+                      center: "Manufacturing - Assembly",
+                      category: "Overhead",
+                      standard: "$300,000",
+                      actual: "$295,000",
+                      variance: "$5,000",
+                      percentage: "+1.7%",
+                      negative: false,
+                    },
+                    {
+                      center: "Manufacturing - Packaging",
+                      category: "Materials",
+                      standard: "$350,000",
+                      actual: "$365,000",
+                      variance: "-$15,000",
+                      percentage: "-4.3%",
+                      negative: true,
+                    },
+                    {
+                      center: "Manufacturing - Packaging",
+                      category: "Labor",
+                      standard: "$275,000",
+                      actual: "$280,000",
+                      variance: "-$5,000",
+                      percentage: "-1.8%",
+                      negative: true,
+                    },
+                    {
+                      center: "Manufacturing - Packaging",
+                      category: "Overhead",
+                      standard: "$125,000",
+                      actual: "$135,000",
+                      variance: "-$10,000",
+                      percentage: "-8.0%",
+                      negative: true,
+                    },
+                    {
+                      center: "Quality Control",
+                      category: "Labor",
+                      standard: "$350,000",
+                      actual: "$340,000",
+                      variance: "$10,000",
+                      percentage: "+2.9%",
+                      negative: false,
+                    },
+                  ].map((variance, index) => (
+                    <div
+                      key={index}
+                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                    >
+                      <div className="col-span-2">{variance.center}</div>
+                      <div className="col-span-2">{variance.category}</div>
+                      <div className="col-span-2">{variance.standard}</div>
+                      <div className="col-span-2">{variance.actual}</div>
+                      <div
+                        className={`col-span-2 ${variance.negative ? "text-red-500" : "text-emerald-500"}`}
+                      >
+                        {variance.variance}
+                      </div>
+                      <div
+                        className={`col-span-2 ${variance.negative ? "text-red-500" : "text-emerald-500"}`}
+                      >
+                        {variance.percentage}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default CostAccounting;
