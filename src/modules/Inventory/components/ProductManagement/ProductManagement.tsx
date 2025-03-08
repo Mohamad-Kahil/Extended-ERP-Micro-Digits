@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import ProductList from "./ProductList";
 import ProductVariants from "./ProductVariants";
 import ProductFeatures from "./ProductFeatures";
+import ProductDefinition from "./ProductDefinition";
 
 const ProductManagement = () => {
   const [activeTab, setActiveTab] = useState("products");
@@ -110,10 +111,11 @@ const ProductManagement = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-slate-800">
+          <TabsList className="grid w-full grid-cols-4 bg-slate-800">
             <TabsTrigger value="products">Products</TabsTrigger>
             <TabsTrigger value="variants">Product Variants</TabsTrigger>
             <TabsTrigger value="features">Product Features</TabsTrigger>
+            <TabsTrigger value="definition">Product Definition</TabsTrigger>
           </TabsList>
 
           <TabsContent value="products" className="mt-6 space-y-6">
@@ -126,6 +128,10 @@ const ProductManagement = () => {
 
           <TabsContent value="features" className="mt-6 space-y-6">
             <ProductFeatures searchTerm={searchTerm} />
+          </TabsContent>
+
+          <TabsContent value="definition" className="mt-6 space-y-6">
+            <ProductDefinition />
           </TabsContent>
         </Tabs>
       </CardContent>

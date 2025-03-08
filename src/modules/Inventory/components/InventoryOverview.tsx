@@ -276,7 +276,6 @@ const InventoryOverview = () => {
                   strokeWidth="10"
                   strokeDasharray="251.2"
                   strokeDashoffset="201.0"
-                  strokeDashoffset="87.92"
                   transform="rotate(-90 50 50)"
                 />
                 {/* Out of Stock: 15% */}
@@ -289,7 +288,6 @@ const InventoryOverview = () => {
                   strokeWidth="10"
                   strokeDasharray="251.2"
                   strokeDashoffset="213.52"
-                  strokeDashoffset="50.24"
                   transform="rotate(-90 50 50)"
                 />
               </svg>
