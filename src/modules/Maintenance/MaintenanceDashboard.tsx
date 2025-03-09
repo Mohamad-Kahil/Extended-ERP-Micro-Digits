@@ -3,42 +3,21 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import MaintenanceOverview from "./components/MaintenanceOverview";
-import WorkOrderManagement from "./components/WorkOrderManagement/WorkOrderManagement";
-import PreventiveMaintenance from "./components/PreventiveMaintenance/PreventiveMaintenance";
-import AssetManagement from "./components/AssetManagement/AssetManagement";
-import MaintenanceReporting from "./components/MaintenanceReporting/MaintenanceReporting";
-import InventoryManagement from "./components/InventoryManagement/InventoryManagement";
-import TechnicianManagement from "./components/TechnicianManagement/TechnicianManagement";
 
 const MaintenanceDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
 
   const navItems = [
-    { id: "overview", label: "Maintenance Overview" },
-    { id: "workorders", label: "Work Orders" },
+    { id: "overview", label: "Overview" },
+    { id: "work-orders", label: "Work Orders" },
     { id: "preventive", label: "Preventive Maintenance" },
     { id: "assets", label: "Asset Management" },
-    { id: "inventory", label: "Inventory Management" },
-    { id: "technicians", label: "Technician Management" },
-    { id: "reporting", label: "Reporting & Analytics" },
   ];
 
   const renderContent = () => {
     switch (activeSection) {
       case "overview":
         return <MaintenanceOverview />;
-      case "workorders":
-        return <WorkOrderManagement />;
-      case "preventive":
-        return <PreventiveMaintenance />;
-      case "assets":
-        return <AssetManagement />;
-      case "inventory":
-        return <InventoryManagement />;
-      case "technicians":
-        return <TechnicianManagement />;
-      case "reporting":
-        return <MaintenanceReporting />;
       default:
         return <MaintenanceOverview />;
     }
