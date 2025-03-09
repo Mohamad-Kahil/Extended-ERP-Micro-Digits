@@ -23,22 +23,27 @@ const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
   // Determine module title based on current path if not provided
   const getDefaultModuleTitle = () => {
     const path = location.pathname;
-    if (path.includes("hr")) return "Human Resources";
-    if (path.includes("product")) return "Product Management";
+    if (path.includes("executive")) return "Executive Management";
+    if (path.includes("finance")) return "Finance Management";
     if (path.includes("accounting")) return "Accounting Management";
-    if (path.includes("adminsistration")) return "Adminsistration Management";
+    if (path.includes("hr")) return "Human Resources";
+    if (path.includes("admin")) return "Adminsistration Management";
+
+    if (path.includes("product")) return "Product Management";
     if (path.includes("inventory")) return "Inventory Management";
-    if (path.includes("finance")) return "Finance";
+
     if (path.includes("supply-chain")) return "Supply Chain";
     if (path.includes("production")) return "Production";
     if (path.includes("pos")) return "Point of Sale";
+    if (path.includes("crm")) return "Customer Relationship Management";
     if (path.includes("ecommerce")) return "E-Commerce";
     if (path.includes("logistics")) return "Logistics";
     if (path.includes("store-network")) return "Store Network";
     if (path.includes("marketing")) return "Marketing";
     if (path.includes("legal")) return "Legal";
     if (path.includes("operations")) return "Operations";
-    if (path.includes("executive")) return "Executive";
+    if (path.includes("maint")) return "Maintenance Management";
+
     return "Dashboard";
   };
 
