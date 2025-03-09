@@ -26,7 +26,8 @@ const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
     if (path.includes("hr")) return "Human Resources";
     if (path.includes("product")) return "Product Management";
     if (path.includes("accounting")) return "Accounting Management";
-    if (path.includes("adminstration")) return "Adminstration Management";
+    if (path.includes("adminsistration")) return "Adminsistration Management";
+    if (path.includes("inventory")) return "Inventory Management";
     if (path.includes("finance")) return "Finance";
     if (path.includes("supply-chain")) return "Supply Chain";
     if (path.includes("production")) return "Production";
