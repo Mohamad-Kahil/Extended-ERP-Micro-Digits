@@ -19,32 +19,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modules, setModules] = useState<ModuleCardProps[]>([
     // Main modules in the same order as sidebar
-    {
-      id: "dashboard",
-      title: "Dashboard",
-      description: "Overview of all enterprise modules and activities",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect width="7" height="9" x="3" y="3" rx="1" />
-          <rect width="7" height="5" x="14" y="3" rx="1" />
-          <rect width="7" height="9" x="14" y="12" rx="1" />
-          <rect width="7" height="5" x="3" y="16" rx="1" />
-        </svg>
-      ),
-      color: "bg-blue-500",
-      position: { x: 0, y: 0 },
-      href: "/dashboard",
-    },
+
     {
       id: "executive",
       title: "Executive",
@@ -75,7 +50,7 @@ const Dashboard = () => {
     {
       id: "finance",
       title: "Finance",
-      description: "Manage financial transactions, reports, and budgeting",
+      description: "Finance management, reports, and budgeting",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +74,7 @@ const Dashboard = () => {
     {
       id: "accounting",
       title: "Accounting",
-      description:
-        "Manage accounts payable, receivable, taxation, and fixed assets",
+      description: "Manage payable, receivable, taxation, and fixed assets",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -123,30 +97,6 @@ const Dashboard = () => {
       color: "bg-cyan-500",
       position: { x: 3, y: 0 },
       href: "/accounting",
-    },
-    {
-      id: "product-management",
-      title: "Product Management",
-      description:
-        "Manage product definitions, variants, forecasting, and reporting",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
-        </svg>
-      ),
-      color: "bg-purple-500",
-      position: { x: 0, y: 1 },
-      href: "/product-management",
     },
     {
       id: "hr",
@@ -175,8 +125,31 @@ const Dashboard = () => {
       href: "/hr",
     },
     {
+      id: "product-management",
+      title: "Products",
+      description: "Manage products, variants, forecasting, and reporting",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+        </svg>
+      ),
+      color: "bg-purple-500",
+      position: { x: 0, y: 1 },
+      href: "/product-management",
+    },
+    {
       id: "administration",
-      title: "Administration",
+      title: "IT Administration",
       description: "Manage system settings, users, and permissions",
       icon: (
         <svg
@@ -201,7 +174,7 @@ const Dashboard = () => {
     {
       id: "legal",
       title: "Legal",
-      description: "Manage contracts, compliance, and legal documentation",
+      description: "Manage contracts, and legal documentation",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +197,7 @@ const Dashboard = () => {
     {
       id: "inventory",
       title: "Inventory",
-      description: "Manage stock levels, warehouses, and product tracking",
+      description: "Manage stock, warehouses, and product tracking",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -334,7 +307,7 @@ const Dashboard = () => {
     {
       id: "crm",
       title: "CRM",
-      description: "Manage customer relationships and sales pipeline",
+      description: "Manage customer relationships and sales",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -410,7 +383,7 @@ const Dashboard = () => {
     {
       id: "store-network",
       title: "Store Network",
-      description: "Manage retail locations, franchises, and store performance",
+      description: "Manage retail locations, franchises, and stores",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -458,7 +431,7 @@ const Dashboard = () => {
     {
       id: "logistics",
       title: "Logistics",
-      description: "Manage transportation, warehousing, and distribution",
+      description: "Transportation, warehousing, and distribution",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -483,7 +456,7 @@ const Dashboard = () => {
     {
       id: "maintenance",
       title: "Maintenance",
-      description: "Manage equipment maintenance and service requests",
+      description: "Equipment maintenance and service requests",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -502,6 +475,58 @@ const Dashboard = () => {
       color: "bg-orange-600",
       position: { x: 2, y: 4 },
       href: "/maintenance",
+    },
+    {
+      id: "dashboard",
+      title: "New",
+      description: "Overview of all enterprise modules and activities",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect width="7" height="9" x="3" y="3" rx="1" />
+          <rect width="7" height="5" x="14" y="3" rx="1" />
+          <rect width="7" height="9" x="14" y="12" rx="1" />
+          <rect width="7" height="5" x="3" y="16" rx="1" />
+        </svg>
+      ),
+      color: "bg-blue-500",
+      position: { x: 0, y: 0 },
+      href: "/dashboard",
+    },
+    {
+      id: "dashboard",
+      title: "New",
+      description: "Overview of all enterprise modules and activities",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect width="7" height="9" x="3" y="3" rx="1" />
+          <rect width="7" height="5" x="14" y="3" rx="1" />
+          <rect width="7" height="9" x="14" y="12" rx="1" />
+          <rect width="7" height="5" x="3" y="16" rx="1" />
+        </svg>
+      ),
+      color: "bg-blue-500",
+      position: { x: 0, y: 0 },
+      href: "/dashboard",
     },
   ]);
   const [draggedModule, setDraggedModule] = useState<string | null>(null);
@@ -560,7 +585,7 @@ const Dashboard = () => {
           {isLoading ? (
             <ModulePreloader />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
               {modules.map((module) => (
                 <ModuleCard
                   key={module.id}
