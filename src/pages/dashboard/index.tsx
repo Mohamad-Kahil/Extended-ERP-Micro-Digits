@@ -19,32 +19,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modules, setModules] = useState<ModuleCardProps[]>([
     // Main modules in the same order as sidebar
-    {
-      id: "dashboard",
-      title: "Dashboard",
-      description: "Overview of all enterprise modules and activities",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect width="7" height="9" x="3" y="3" rx="1" />
-          <rect width="7" height="5" x="14" y="3" rx="1" />
-          <rect width="7" height="9" x="14" y="12" rx="1" />
-          <rect width="7" height="5" x="3" y="16" rx="1" />
-        </svg>
-      ),
-      color: "bg-blue-500",
-      position: { x: 0, y: 0 },
-      href: "/dashboard",
-    },
+
     {
       id: "executive",
       title: "Executive",
@@ -150,9 +125,9 @@ const Dashboard = () => {
       href: "/hr",
     },
     {
-      id: "product-management",
-      title: "Products",
-      description: "Manage products, variants, forecasting, and reporting",
+      id: "administrative-services",
+      title: "Admin Services",
+      description: "Office management, facilities, and administrative tasks",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -165,13 +140,16 @@ const Dashboard = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+          <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
+          <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
+          <path d="M12 3v6" />
         </svg>
       ),
-      color: "bg-blue-500",
-      position: { x: 0, y: 1 },
-      href: "/product-management",
+      color: "bg-teal-600",
+      position: { x: 3, y: 4 },
+      href: "/administrative-services",
     },
+
     {
       id: "administration",
       title: "IT Administration",
@@ -218,6 +196,29 @@ const Dashboard = () => {
       color: "bg-green-500",
       position: { x: 3, y: 1 },
       href: "/legal",
+    },
+    {
+      id: "product-management",
+      title: "Products",
+      description: "Manage products, variants, forecasting, and reporting",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
+        </svg>
+      ),
+      color: "bg-blue-500",
+      position: { x: 0, y: 1 },
+      href: "/product-management",
     },
     {
       id: "inventory",
@@ -474,7 +475,7 @@ const Dashboard = () => {
           <path d="M12 3v6" />
         </svg>
       ),
-      color: "bg-blue-500",
+      color: "bg-green-500",
       position: { x: 1, y: 4 },
       href: "/logistics",
     },
@@ -502,9 +503,9 @@ const Dashboard = () => {
       href: "/maintenance",
     },
     {
-      id: "administrative-services",
-      title: "Administrative Services",
-      description: "Office management, facilities, and administrative tasks",
+      id: "dashboard",
+      title: "Upcoming",
+      description: "Overview of all enterprise modules and activities",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -517,14 +518,15 @@ const Dashboard = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-          <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
-          <path d="M12 3v6" />
+          <rect width="7" height="9" x="3" y="3" rx="1" />
+          <rect width="7" height="5" x="14" y="3" rx="1" />
+          <rect width="7" height="9" x="14" y="12" rx="1" />
+          <rect width="7" height="5" x="3" y="16" rx="1" />
         </svg>
       ),
-      color: "bg-teal-600",
-      position: { x: 3, y: 4 },
-      href: "/administrative-services",
+      color: "bg-yellow-500",
+      position: { x: 0, y: 0 },
+      href: "/dashboard",
     },
   ]);
   const [draggedModule, setDraggedModule] = useState<string | null>(null);
