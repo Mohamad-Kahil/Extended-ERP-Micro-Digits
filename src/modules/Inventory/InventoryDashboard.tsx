@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import InventoryOverview from "./components/InventoryOverview";
 import ProductManagement from "./components/ProductManagement/ProductManagement";
 import CategoryManagement from "./components/CategoryManagement/CategoryManagement";
-// InventoryAnalytics removed
 import WarehouseManagement from "./components/WarehouseManagement/WarehouseManagement";
 import StockMovement from "./components/StockMovement/StockMovement";
 import InventoryAudit from "./components/InventoryAudit/InventoryAudit";
@@ -17,7 +16,6 @@ const InventoryDashboard = () => {
     { id: "overview", label: "Inventory Overview" },
     { id: "products", label: "Product Management" },
     { id: "categories", label: "Category Management" },
-
     { id: "warehouse", label: "Warehouse Management" },
     { id: "stock", label: "Stock Movement" },
     { id: "audit", label: "Inventory Audit" },
@@ -31,7 +29,6 @@ const InventoryDashboard = () => {
         return <ProductManagement />;
       case "categories":
         return <CategoryManagement />;
-
       case "warehouse":
         return <WarehouseManagement />;
       case "stock":
