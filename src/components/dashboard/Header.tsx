@@ -33,7 +33,7 @@ const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
     if (path.includes("inventory")) return "Inventory Management";
 
     if (path.includes("supply-chain")) return "Supply Chain";
-    if (path.includes("production")) return "Production";
+    if (path.includes("factory production")) return "Production";
     if (path.includes("pos")) return "Point of Sale";
     if (path.includes("crm")) return "Customer Relationship Management";
     if (path.includes("ecommerce")) return "E-Commerce";

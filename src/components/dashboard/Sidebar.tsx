@@ -289,7 +289,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
       ),
     },
     {
-      title: "Production",
+      title: "Factory Production",
       href: "/production",
       icon: (
         <svg
