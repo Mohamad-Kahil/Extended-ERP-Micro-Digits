@@ -67,7 +67,7 @@ const Dashboard = () => {
           <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
         </svg>
       ),
-      color: "bg-emerald-500",
+      color: "bg-red-500",
       position: { x: 2, y: 0 },
       href: "/finance",
     },
@@ -94,7 +94,7 @@ const Dashboard = () => {
           <path d="M4 18h16" />
         </svg>
       ),
-      color: "bg-cyan-500",
+      color: "bg-purple-500",
       position: { x: 3, y: 0 },
       href: "/accounting",
     },
@@ -120,7 +120,7 @@ const Dashboard = () => {
           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
       ),
-      color: "bg-blue-500",
+      color: "bg-gray-500",
       position: { x: 1, y: 1 },
       href: "/hr",
     },
@@ -143,7 +143,7 @@ const Dashboard = () => {
           <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" />
         </svg>
       ),
-      color: "bg-purple-500",
+      color: "bg-blue-500",
       position: { x: 0, y: 1 },
       href: "/product-management",
     },
@@ -167,7 +167,7 @@ const Dashboard = () => {
           <circle cx="12" cy="12" r="3" />
         </svg>
       ),
-      color: "bg-violet-500",
+      color: "bg-yellow-500",
       position: { x: 2, y: 1 },
       href: "/administration",
     },
@@ -190,7 +190,7 @@ const Dashboard = () => {
           <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
         </svg>
       ),
-      color: "bg-yellow-500",
+      color: "bg-green-500",
       position: { x: 3, y: 1 },
       href: "/legal",
     },
@@ -243,7 +243,7 @@ const Dashboard = () => {
           <path d="M12 22V12" />
         </svg>
       ),
-      color: "bg-amber-500",
+      color: "bg-red-500",
       position: { x: 1, y: 2 },
       href: "/supply-chain",
     },
@@ -269,7 +269,7 @@ const Dashboard = () => {
           <path d="M7 18h1" />
         </svg>
       ),
-      color: "bg-red-500",
+      color: "bg-purple-500",
       position: { x: 2, y: 2 },
       href: "/production",
     },
