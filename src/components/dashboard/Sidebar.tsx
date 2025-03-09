@@ -516,7 +516,7 @@ const Sidebar = ({ collapsed = false }: SidebarProps) => {
         collapsed ? "w-12" : "w-64",
       )}
     >
-      <div className="flex h-14 items-center border-b border-slate-800 px-3">
+      <div className="flex h-12 items-center border-b border-slate-800 px-3">
         {collapsed ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
