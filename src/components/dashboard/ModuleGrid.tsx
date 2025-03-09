@@ -98,9 +98,10 @@ const modules = [
       </svg>
     ),
     color: "bg-blue-500",
+    href: "/hr",
   },
   {
-    id: "scm",
+    id: "supply-chain",
     title: "Supply Chain",
     description: "Manage inventory, suppliers, and procurement",
     icon: (
@@ -122,6 +123,7 @@ const modules = [
       </svg>
     ),
     color: "bg-amber-500",
+    href: "/supply-chain",
   },
   {
     id: "production",
@@ -146,6 +148,7 @@ const modules = [
       </svg>
     ),
     color: "bg-red-500",
+    href: "/production",
   },
   {
     id: "pos",
@@ -168,6 +171,7 @@ const modules = [
       </svg>
     ),
     color: "bg-pink-500",
+    href: "/pos",
   },
   {
     id: "ecommerce",
@@ -191,6 +195,7 @@ const modules = [
       </svg>
     ),
     color: "bg-pink-500",
+    href: "/ecommerce",
   },
   {
     id: "logistics",
@@ -214,6 +219,7 @@ const modules = [
       </svg>
     ),
     color: "bg-indigo-500",
+    href: "/logistics",
   },
   {
     id: "store-network",
@@ -236,6 +242,7 @@ const modules = [
       </svg>
     ),
     color: "bg-teal-500",
+    href: "/store-network",
   },
   {
     id: "marketing",
@@ -258,6 +265,7 @@ const modules = [
       </svg>
     ),
     color: "bg-orange-500",
+    href: "/marketing",
   },
   {
     id: "legal",
@@ -279,6 +287,7 @@ const modules = [
       </svg>
     ),
     color: "bg-yellow-500",
+    href: "/legal",
   },
   {
     id: "operations",
@@ -307,6 +316,7 @@ const modules = [
       </svg>
     ),
     color: "bg-cyan-500",
+    href: "/operations",
   },
   {
     id: "executive",
@@ -332,6 +342,105 @@ const modules = [
       </svg>
     ),
     color: "bg-slate-500",
+    href: "/executive",
+  },
+  {
+    id: "crm",
+    title: "CRM",
+    description: "Manage customer relationships, leads, and opportunities",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M17 18a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6" />
+        <path d="m15 2 5 5-5 5" />
+        <path d="M9 9h5" />
+        <path d="M9 13h5" />
+        <path d="M9 17h5" />
+      </svg>
+    ),
+    color: "bg-green-500",
+    href: "/crm",
+  },
+  {
+    id: "administration",
+    title: "Administration",
+    description: "Manage system settings, users, and permissions",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    ),
+    color: "bg-violet-500",
+    href: "/administration",
+  },
+  {
+    id: "inventory",
+    title: "Inventory",
+    description: "Manage stock levels, warehouses, and product tracking",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+        <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+        <path d="M2 7h20" />
+        <path d="M22 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7" />
+        <path d="M6 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7" />
+      </svg>
+    ),
+    color: "bg-amber-600",
+    href: "/inventory",
+  },
+  {
+    id: "maintenance",
+    title: "Maintenance",
+    description: "Manage equipment maintenance, repairs, and scheduling",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+      </svg>
+    ),
+    color: "bg-orange-600",
+    href: "/maintenance",
   },
 ];
 
