@@ -34,7 +34,7 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [entityType, setEntityType] = useState("Subsidiary");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("US");
   const [currency, setCurrency] = useState("USD");
   const [ownershipPercentage, setOwnershipPercentage] = useState("");
   const [parentEntityId, setParentEntityId] = useState("");
@@ -108,7 +108,7 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
   const resetForm = () => {
     setName("");
     setEntityType("Subsidiary");
-    setCountry("");
+    setCountry("US");
     setCurrency("USD");
     setOwnershipPercentage("");
     setParentEntityId("");
@@ -138,16 +138,16 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
             <path d="M5 12h14" />
             <path d="M12 5v14" />
           </svg>
-          Add New Entity
+          New Entity
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[900px] bg-slate-900 text-white border-slate-700">
+      <DialogContent className="sm:max-w-[1200px] max-h-[90vh] overflow-y-auto bg-slate-900 text-white border-slate-700">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-white">
             Add New Entity
           </DialogTitle>
           <DialogDescription className="text-slate-400">
-            Create a new entity for intercompany transactions
+            Create a new entity for inter-entity transactions
           </DialogDescription>
         </DialogHeader>
 
@@ -158,7 +158,8 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-4">
+            {/* First row */}
             <div className="space-y-2">
               <Label htmlFor="entity-name">Entity Name *</Label>
               <Input
@@ -209,6 +210,7 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
               </Select>
             </div>
 
+            {/* Second row */}
             <div className="space-y-2">
               <Label htmlFor="country">Country</Label>
               <Select value={country} onValueChange={setCountry}>
@@ -257,6 +259,7 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
               />
             </div>
 
+            {/* Third row */}
             <div className="space-y-2">
               <Label htmlFor="fiscal-year">Fiscal Year End</Label>
               <Select value={fiscalYearEnd} onValueChange={setFiscalYearEnd}>
@@ -317,18 +320,18 @@ const NewEntityDialog: React.FC<NewEntityDialogProps> = ({
               </div>
             )}
 
-            <div className="space-y-2 col-span-2">
+            {/* Fourth row - Address and Description */}
+            <div className="space-y-2 col-span-3">
               <Label htmlFor="address">Address</Label>
-              <Textarea
+              <Input
                 id="address"
                 placeholder="Enter entity address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                rows={2}
               />
             </div>
 
-            <div className="space-y-2 col-span-2">
+            <div className="space-y-2 col-span-3">
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"

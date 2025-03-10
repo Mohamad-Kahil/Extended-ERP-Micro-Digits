@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +11,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const GeneralLedger = () => {
+interface GeneralLedgerProps {
+  currentEntity?: string;
+}
+
+const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
   const [activeTab, setActiveTab] = useState("journal");
   const [selectedPeriod, setSelectedPeriod] = useState("current");
+  const [selectedEntity, setSelectedEntity] = useState(currentEntity || "all");
+
+  // Update selected entity when currentEntity changes
+  useEffect(() => {
+    if (currentEntity) {
+      setSelectedEntity(currentEntity);
+    }
+  }, [currentEntity]);
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -100,6 +112,18 @@ const GeneralLedger = () => {
                   <SelectItem value="previous">Previous Period</SelectItem>
                   <SelectItem value="ytd">Year to Date</SelectItem>
                   <SelectItem value="custom">Custom Range</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={selectedEntity} onValueChange={setSelectedEntity}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Select Entity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Entities</SelectItem>
+                  <SelectItem value="Parent Company">Parent Company</SelectItem>
+                  <SelectItem value="Subsidiary 1">Subsidiary 1</SelectItem>
+                  <SelectItem value="Subsidiary 2">Subsidiary 2</SelectItem>
                 </SelectContent>
               </Select>
             </div>

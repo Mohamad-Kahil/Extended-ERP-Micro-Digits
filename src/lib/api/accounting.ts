@@ -2,12 +2,14 @@ import { supabase } from "@/lib/supabase";
 
 // Companies API
 export const companiesApi = {
-  getAll: async () => {
-    const { data, error } = await supabase
-      .from("companies")
-      .select("*")
-      .order("name");
+  getAll: async (entityId?: string) => {
+    let query = supabase.from("companies").select("*").order("name");
 
+    if (entityId) {
+      query = query.eq("entity_id", entityId);
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
     return data;
   },
@@ -25,6 +27,21 @@ export const companiesApi = {
 
   create: async (company: any) => {
     try {
+      // Ensure entity_id is set if available
+      if (!company.entity_id && company.entity_name) {
+        // Try to find entity_id by name
+        const { data: entities } = await supabase
+          .from("intercompany_entities")
+          .select("id")
+          .eq("name", company.entity_name)
+          .limit(1);
+
+        if (entities && entities.length > 0) {
+          company.entity_id = entities[0].id;
+        }
+        delete company.entity_name; // Remove the temporary field
+      }
+
       const { data, error } = await supabase
         .from("companies")
         .insert(company)
@@ -71,13 +88,21 @@ export const companiesApi = {
 
 // Chart of Accounts API
 export const chartOfAccountsApi = {
-  getAll: async (companyId: string) => {
-    const { data, error } = await supabase
+  getAll: async (companyId?: string, entityId?: string) => {
+    let query = supabase
       .from("chart_of_accounts")
       .select("*")
-      .eq("company_id", companyId)
       .order("account_code");
 
+    if (companyId) {
+      query = query.eq("company_id", companyId);
+    }
+
+    if (entityId) {
+      query = query.eq("entity_id", entityId);
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
     return data;
   },
@@ -94,6 +119,21 @@ export const chartOfAccountsApi = {
   },
 
   create: async (account: any) => {
+    // Ensure entity_id is set if available
+    if (!account.entity_id && account.entity_name) {
+      // Try to find entity_id by name
+      const { data: entities } = await supabase
+        .from("intercompany_entities")
+        .select("id")
+        .eq("name", account.entity_name)
+        .limit(1);
+
+      if (entities && entities.length > 0) {
+        account.entity_id = entities[0].id;
+      }
+      delete account.entity_name; // Remove the temporary field
+    }
+
     const { data, error } = await supabase
       .from("chart_of_accounts")
       .insert(account)
@@ -127,13 +167,18 @@ export const chartOfAccountsApi = {
 
 // Journal Entries API
 export const journalEntriesApi = {
-  getAll: async (companyId: string) => {
-    const { data, error } = await supabase
+  getAll: async (companyId: string, entityId?: string) => {
+    let query = supabase
       .from("journal_entries")
       .select("*")
       .eq("company_id", companyId)
       .order("entry_date", { ascending: false });
 
+    if (entityId) {
+      query = query.eq("entity_id", entityId);
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
     return data;
   },
@@ -150,6 +195,21 @@ export const journalEntriesApi = {
   },
 
   create: async (journalEntry: any, journalLines: any[]) => {
+    // Ensure entity_id is set if available
+    if (!journalEntry.entity_id && journalEntry.entity_name) {
+      // Try to find entity_id by name
+      const { data: entities } = await supabase
+        .from("intercompany_entities")
+        .select("id")
+        .eq("name", journalEntry.entity_name)
+        .limit(1);
+
+      if (entities && entities.length > 0) {
+        journalEntry.entity_id = entities[0].id;
+      }
+      delete journalEntry.entity_name; // Remove the temporary field
+    }
+
     // Start a transaction
     const { data: entry, error: entryError } = await supabase
       .from("journal_entries")
@@ -158,10 +218,11 @@ export const journalEntriesApi = {
 
     if (entryError) throw entryError;
 
-    // Add the journal entry ID to each line
+    // Add the journal entry ID and entity_id to each line
     const linesWithEntryId = journalLines.map((line) => ({
       ...line,
       journal_entry_id: entry[0].id,
+      entity_id: journalEntry.entity_id, // Propagate entity_id to lines
     }));
 
     const { error: linesError } = await supabase
@@ -253,8 +314,8 @@ export const intercompanyEntitiesApi = {
 
 // Intercompany Transactions API
 export const intercompanyTransactionsApi = {
-  getAll: async () => {
-    const { data, error } = await supabase
+  getAll: async (entityId?: string) => {
+    let query = supabase
       .from("intercompany_transactions")
       .select(
         `
@@ -265,6 +326,13 @@ export const intercompanyTransactionsApi = {
       )
       .order("transaction_date", { ascending: false });
 
+    if (entityId) {
+      query = query.or(
+        `from_entity_id.eq.${entityId},to_entity_id.eq.${entityId}`,
+      );
+    }
+
+    const { data, error } = await query;
     if (error) throw error;
     return data;
   },

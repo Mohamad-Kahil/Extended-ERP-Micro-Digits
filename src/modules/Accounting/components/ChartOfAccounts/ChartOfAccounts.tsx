@@ -18,6 +18,59 @@ interface ChartOfAccountsProps {
 const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
   const [activeTab, setActiveTab] = useState("accounts");
   const [selectedEntity, setSelectedEntity] = useState(currentEntity || "all");
+  const [accounts, setAccounts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch accounts based on selected entity
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      setLoading(true);
+      try {
+        // In a real implementation, you would call the API with the entity ID
+        // For now, we'll just simulate filtering based on the entity name
+        const mockAccounts = [
+          {
+            code: "1000",
+            name: "Cash and Cash Equivalents",
+            type: "Asset",
+            category: "Current Asset",
+            currency: "USD",
+            entity: selectedEntity !== "all" ? selectedEntity : "All",
+            status: "Active",
+          },
+          {
+            code: "1100",
+            name: "Accounts Receivable",
+            type: "Asset",
+            category: "Current Asset",
+            currency: "USD",
+            entity: selectedEntity !== "all" ? selectedEntity : "All",
+            status: "Active",
+          },
+          // More accounts would be here
+        ];
+
+        // Filter accounts if a specific entity is selected
+        const filteredAccounts =
+          selectedEntity !== "all"
+            ? mockAccounts.filter(
+                (account) =>
+                  account.entity === selectedEntity || account.entity === "All",
+              )
+            : mockAccounts;
+
+        setAccounts(filteredAccounts);
+      } catch (err) {
+        console.error("Error fetching accounts:", err);
+        setError("Failed to load accounts");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAccounts();
+  }, [selectedEntity]);
 
   // Update selected entity when currentEntity changes
   useEffect(() => {
