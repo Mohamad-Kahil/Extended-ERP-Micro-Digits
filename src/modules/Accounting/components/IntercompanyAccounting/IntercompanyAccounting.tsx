@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,16 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { useIntercompanyData } from "./hooks/useIntercompanyData";
+import NewTransactionDialog from "./components/NewTransactionDialog";
+import NewEntityDialog from "./components/NewEntityDialog";
+import NewCompanyDialog from "./components/NewCompanyDialog";
+import ViewTransactionDialog from "./components/ViewTransactionDialog";
+import EditTransactionDialog from "./components/EditTransactionDialog";
+import { intercompanyTransactionsApi } from "@/lib/api/accounting";
 
 const IntercompanyAccounting = () => {
   const [activeTab, setActiveTab] = useState("transactions");
@@ -29,75 +27,35 @@ const IntercompanyAccounting = () => {
   const [dateFilter, setDateFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
 
-  // Company data
-  const companies = ["Parent Company", "Subsidiary 1", "Subsidiary 2"];
+  // Fetch data from API
+  const { entities, transactions, loading, error, refetch } =
+    useIntercompanyData(selectedCompany);
 
-  // Transaction data
-  const transactions = [
-    {
-      id: "IC-2023-1001",
-      date: "2023-10-15",
-      fromEntity: "Parent Company",
-      toEntity: "Subsidiary 1",
-      amount: "$125,000.00",
-      currency: "USD",
-      status: "Matched",
-    },
-    {
-      id: "IC-2023-1002",
-      date: "2023-10-18",
-      fromEntity: "Subsidiary 2",
-      toEntity: "Parent Company",
-      amount: "$78,500.00",
-      currency: "USD",
-      status: "Matched",
-    },
-    {
-      id: "IC-2023-1003",
-      date: "2023-10-20",
-      fromEntity: "Subsidiary 1",
-      toEntity: "Subsidiary 2",
-      amount: "$45,200.00",
-      currency: "USD",
-      status: "Unmatched",
-    },
-    {
-      id: "IC-2023-1004",
-      date: "2023-10-22",
-      fromEntity: "Parent Company",
-      toEntity: "Subsidiary 2",
-      amount: "$92,800.00",
-      currency: "USD",
-      status: "Matched",
-    },
-    {
-      id: "IC-2023-1005",
-      date: "2023-10-25",
-      fromEntity: "Subsidiary 1",
-      toEntity: "Parent Company",
-      amount: "$37,350.00",
-      currency: "USD",
-      status: "Unmatched",
-    },
-    {
-      id: "IC-2023-1006",
-      date: "2023-10-28",
-      fromEntity: "Subsidiary 2",
-      toEntity: "Subsidiary 1",
-      amount: "$62,500.00",
-      currency: "USD",
-      status: "Matched",
-    },
-  ];
+  // Extract company names for the dropdown
+  const companies = entities.map((entity) => entity.name);
+
+  // Add "All Companies" option
+  useEffect(() => {
+    if (companies.length > 0 && selectedCompany === "Parent Company") {
+      setSelectedCompany("All Companies");
+    }
+  }, [companies]);
+
+  // Handle transaction deletion
+  const handleDeleteTransaction = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this transaction?")) {
+      try {
+        await intercompanyTransactionsApi.delete(id);
+        refetch(); // Refresh the data
+      } catch (err) {
+        console.error("Error deleting transaction:", err);
+        alert("Failed to delete transaction. Please try again.");
+      }
+    }
+  };
 
   // Filter transactions based on selected filters
   const filteredTransactions = transactions
-    .filter(
-      (transaction) =>
-        selectedCompany === "All Companies" ||
-        transaction.fromEntity === selectedCompany ||
-        transaction.toEntity === selectedCompany,
-    )
     .filter(
       (transaction) =>
         statusFilter === "all" ||
@@ -106,27 +64,31 @@ const IntercompanyAccounting = () => {
     .filter(
       (transaction) =>
         searchTerm === "" ||
-        transaction.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        transaction.fromEntity
+        transaction.transaction_ref
           .toLowerCase()
           .includes(searchTerm.toLowerCase()) ||
-        transaction.toEntity.toLowerCase().includes(searchTerm.toLowerCase()),
+        transaction.from_entity?.name
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        transaction.to_entity?.name
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()),
     )
     .sort((a, b) => {
       if (sortOrder === "newest") {
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return (
+          new Date(b.transaction_date).getTime() -
+          new Date(a.transaction_date).getTime()
+        );
       } else if (sortOrder === "oldest") {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+        return (
+          new Date(a.transaction_date).getTime() -
+          new Date(b.transaction_date).getTime()
+        );
       } else if (sortOrder === "amount-high") {
-        return (
-          parseFloat(b.amount.replace(/[^0-9.-]+/g, "")) -
-          parseFloat(a.amount.replace(/[^0-9.-]+/g, ""))
-        );
+        return b.amount - a.amount;
       } else if (sortOrder === "amount-low") {
-        return (
-          parseFloat(a.amount.replace(/[^0-9.-]+/g, "")) -
-          parseFloat(b.amount.replace(/[^0-9.-]+/g, ""))
-        );
+        return a.amount - b.amount;
       }
       return 0;
     });
@@ -154,174 +116,7 @@ const IntercompanyAccounting = () => {
             </Select>
           </div>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="bg-cyan-600 hover:bg-cyan-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2"
-              >
-                <path d="M12 5v14" />
-                <path d="M5 12h14" />
-              </svg>
-              Add New Company
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[900px] bg-slate-900 text-white border-slate-700">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-semibold text-white">
-                Add New Company
-              </DialogTitle>
-              <DialogDescription className="text-slate-400">
-                Configure a new company in the system
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid grid-cols-2 gap-6 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="company-name">Company Name</Label>
-                <Input id="company-name" placeholder="Enter company name" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="legal-structure">Legal Structure</Label>
-                <Select>
-                  <SelectTrigger id="legal-structure">
-                    <SelectValue placeholder="Select structure" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="llc">LLC</SelectItem>
-                    <SelectItem value="corporation">Corporation</SelectItem>
-                    <SelectItem value="partnership">Partnership</SelectItem>
-                    <SelectItem value="sole-proprietorship">
-                      Sole Proprietorship
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
-                <Input id="address" placeholder="Enter company address" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="country">Country</Label>
-                <Select>
-                  <SelectTrigger id="country">
-                    <SelectValue placeholder="Select country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="us">United States</SelectItem>
-                    <SelectItem value="uk">United Kingdom</SelectItem>
-                    <SelectItem value="ca">Canada</SelectItem>
-                    <SelectItem value="au">Australia</SelectItem>
-                    <SelectItem value="sg">Singapore</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="tax-id">Tax Identification Number</Label>
-                <Input id="tax-id" placeholder="Enter tax ID" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="fiscal-year">Fiscal Year End</Label>
-                <Select>
-                  <SelectTrigger id="fiscal-year">
-                    <SelectValue placeholder="Select month" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="jan">January</SelectItem>
-                    <SelectItem value="feb">February</SelectItem>
-                    <SelectItem value="mar">March</SelectItem>
-                    <SelectItem value="apr">April</SelectItem>
-                    <SelectItem value="may">May</SelectItem>
-                    <SelectItem value="jun">June</SelectItem>
-                    <SelectItem value="jul">July</SelectItem>
-                    <SelectItem value="aug">August</SelectItem>
-                    <SelectItem value="sep">September</SelectItem>
-                    <SelectItem value="oct">October</SelectItem>
-                    <SelectItem value="nov">November</SelectItem>
-                    <SelectItem value="dec">December</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="base-currency">Base Currency</Label>
-                <Select>
-                  <SelectTrigger id="base-currency">
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="usd">USD - US Dollar</SelectItem>
-                    <SelectItem value="eur">EUR - Euro</SelectItem>
-                    <SelectItem value="gbp">GBP - British Pound</SelectItem>
-                    <SelectItem value="jpy">JPY - Japanese Yen</SelectItem>
-                    <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="reporting-currency">Reporting Currency</Label>
-                <Select>
-                  <SelectTrigger id="reporting-currency">
-                    <SelectValue placeholder="Select currency" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="usd">USD - US Dollar</SelectItem>
-                    <SelectItem value="eur">EUR - Euro</SelectItem>
-                    <SelectItem value="gbp">GBP - British Pound</SelectItem>
-                    <SelectItem value="jpy">JPY - Japanese Yen</SelectItem>
-                    <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="coa-template">Chart of Accounts Template</Label>
-                <Select>
-                  <SelectTrigger id="coa-template">
-                    <SelectValue placeholder="Select template" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="standard">Standard Business</SelectItem>
-                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                    <SelectItem value="retail">Retail</SelectItem>
-                    <SelectItem value="service">Service Industry</SelectItem>
-                    <SelectItem value="custom">Custom Template</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="user-roles">Default User Role</Label>
-                <Select>
-                  <SelectTrigger id="user-roles">
-                    <SelectValue placeholder="Select role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="admin">Administrator</SelectItem>
-                    <SelectItem value="accountant">Accountant</SelectItem>
-                    <SelectItem value="manager">Manager</SelectItem>
-                    <SelectItem value="viewer">Viewer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline">Cancel</Button>
-              <Button className="bg-cyan-600 hover:bg-cyan-700">
-                Create Company
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <NewCompanyDialog onCompanyCreated={refetch} />
       </div>
 
       <Card className="border-slate-800 bg-slate-900">
@@ -350,24 +145,10 @@ const IntercompanyAccounting = () => {
                 </svg>
                 Export
               </Button>
-              <Button className="bg-cyan-600 hover:bg-cyan-700">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-2"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M12 5v14" />
-                </svg>
-                New Transaction
-              </Button>
+              <NewTransactionDialog
+                entities={entities}
+                onTransactionCreated={refetch}
+              />
               <Button className="bg-purple-600 hover:bg-purple-700">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -531,94 +312,104 @@ const IntercompanyAccounting = () => {
             </TabsList>
 
             <TabsContent value="transactions" className="mt-6 space-y-6">
-              <div className="rounded-md border border-slate-800">
-                <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
-                  <div className="col-span-1">Ref #</div>
-                  <div className="col-span-2">Date</div>
-                  <div className="col-span-2">From Entity</div>
-                  <div className="col-span-2">To Entity</div>
-                  <div className="col-span-1">Amount</div>
-                  <div className="col-span-1">Currency</div>
-                  <div className="col-span-1">Status</div>
-                  <div className="col-span-2">Actions</div>
+              {loading ? (
+                <div className="flex justify-center items-center py-12">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
                 </div>
-                <div className="divide-y divide-slate-800">
-                  {filteredTransactions.map((transaction, index) => (
-                    <div
-                      key={index}
-                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
-                    >
-                      <div className="col-span-1 font-medium">
-                        {transaction.id}
-                      </div>
-                      <div className="col-span-2">
-                        {new Date(transaction.date).toLocaleDateString()}
-                      </div>
-                      <div className="col-span-2">{transaction.fromEntity}</div>
-                      <div className="col-span-2">{transaction.toEntity}</div>
-                      <div className="col-span-1">{transaction.amount}</div>
-                      <div className="col-span-1">{transaction.currency}</div>
-                      <div className="col-span-1">
-                        <span
-                          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${transaction.status === "Matched" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
-                        >
-                          {transaction.status}
-                        </span>
-                      </div>
-                      <div className="col-span-2 flex space-x-2">
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M3 6h18" />
-                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+              ) : error ? (
+                <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-3 rounded-md">
+                  {error}
                 </div>
-              </div>
+              ) : filteredTransactions.length === 0 ? (
+                <div className="text-center py-12 text-slate-400">
+                  <p>
+                    No transactions found. Create a new transaction to get
+                    started.
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-md border border-slate-800">
+                  <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
+                    <div className="col-span-1">Ref #</div>
+                    <div className="col-span-2">Date</div>
+                    <div className="col-span-2">From Entity</div>
+                    <div className="col-span-2">To Entity</div>
+                    <div className="col-span-1">Amount</div>
+                    <div className="col-span-1">Currency</div>
+                    <div className="col-span-1">Status</div>
+                    <div className="col-span-2">Actions</div>
+                  </div>
+                  <div className="divide-y divide-slate-800">
+                    {filteredTransactions.map((transaction) => (
+                      <div
+                        key={transaction.id}
+                        className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                      >
+                        <div className="col-span-1 font-medium">
+                          {transaction.transaction_ref}
+                        </div>
+                        <div className="col-span-2">
+                          {new Date(
+                            transaction.transaction_date,
+                          ).toLocaleDateString()}
+                        </div>
+                        <div className="col-span-2">
+                          {transaction.from_entity?.name}
+                        </div>
+                        <div className="col-span-2">
+                          {transaction.to_entity?.name}
+                        </div>
+                        <div className="col-span-1">
+                          $
+                          {transaction.amount.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </div>
+                        <div className="col-span-1">{transaction.currency}</div>
+                        <div className="col-span-1">
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${transaction.status === "Matched" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
+                          >
+                            {transaction.status}
+                          </span>
+                        </div>
+                        <div className="col-span-2 flex space-x-2">
+                          <ViewTransactionDialog
+                            transactionId={transaction.id}
+                          />
+                          <EditTransactionDialog
+                            transactionId={transaction.id}
+                            onTransactionUpdated={refetch}
+                          />
+                          <button
+                            className="text-slate-400 hover:text-red-500 transition-colors"
+                            onClick={() =>
+                              handleDeleteTransaction(transaction.id)
+                            }
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M3 6h18" />
+                              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </TabsContent>
 
             <TabsContent value="reconciliation" className="mt-6 space-y-6">
@@ -732,108 +523,95 @@ const IntercompanyAccounting = () => {
             </TabsContent>
 
             <TabsContent value="entities" className="mt-6 space-y-6">
-              <div className="rounded-md border border-slate-800">
-                <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
-                  <div className="col-span-2">Entity Name</div>
-                  <div className="col-span-2">Type</div>
-                  <div className="col-span-2">Country</div>
-                  <div className="col-span-2">Currency</div>
-                  <div className="col-span-2">Ownership %</div>
-                  <div className="col-span-2">Actions</div>
-                </div>
-                <div className="divide-y divide-slate-800">
-                  {[
-                    {
-                      name: "Global Holdings Inc.",
-                      type: "Parent",
-                      country: "USA",
-                      currency: "USD",
-                      ownership: "100%",
-                    },
-                    {
-                      name: "European Operations Ltd.",
-                      type: "Subsidiary",
-                      country: "UK",
-                      currency: "GBP",
-                      ownership: "100%",
-                    },
-                    {
-                      name: "Asia Pacific Services Co.",
-                      type: "Subsidiary",
-                      country: "Singapore",
-                      currency: "SGD",
-                      ownership: "85%",
-                    },
-                    {
-                      name: "Latin America Division S.A.",
-                      type: "Subsidiary",
-                      country: "Mexico",
-                      currency: "MXN",
-                      ownership: "75%",
-                    },
-                    {
-                      name: "Middle East Branch LLC",
-                      type: "Branch",
-                      country: "UAE",
-                      currency: "AED",
-                      ownership: "100%",
-                    },
-                    {
-                      name: "African Operations Ltd.",
-                      type: "Joint Venture",
-                      country: "South Africa",
-                      currency: "ZAR",
-                      ownership: "51%",
-                    },
-                  ].map((entity, index) => (
-                    <div
-                      key={index}
-                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
-                    >
-                      <div className="col-span-2 font-medium">
-                        {entity.name}
-                      </div>
-                      <div className="col-span-2">{entity.type}</div>
-                      <div className="col-span-2">{entity.country}</div>
-                      <div className="col-span-2">{entity.currency}</div>
-                      <div className="col-span-2">{entity.ownership}</div>
-                      <div className="col-span-2 flex space-x-2">
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex justify-between mb-4">
+                <h3 className="text-lg font-medium text-white">
+                  Intercompany Entities
+                </h3>
+                <NewEntityDialog
+                  entities={entities}
+                  onEntityCreated={refetch}
+                />
               </div>
+
+              {loading ? (
+                <div className="flex justify-center items-center py-12">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+                </div>
+              ) : error ? (
+                <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-3 rounded-md">
+                  {error}
+                </div>
+              ) : entities.length === 0 ? (
+                <div className="text-center py-12 text-slate-400">
+                  <p>No entities found. Create a new entity to get started.</p>
+                </div>
+              ) : (
+                <div className="rounded-md border border-slate-800">
+                  <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
+                    <div className="col-span-2">Entity Name</div>
+                    <div className="col-span-2">Type</div>
+                    <div className="col-span-2">Country</div>
+                    <div className="col-span-2">Currency</div>
+                    <div className="col-span-2">Ownership %</div>
+                    <div className="col-span-2">Actions</div>
+                  </div>
+                  <div className="divide-y divide-slate-800">
+                    {entities.map((entity) => (
+                      <div
+                        key={entity.id}
+                        className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                      >
+                        <div className="col-span-2 font-medium">
+                          {entity.name}
+                        </div>
+                        <div className="col-span-2">{entity.entity_type}</div>
+                        <div className="col-span-2">
+                          {entity.country || "-"}
+                        </div>
+                        <div className="col-span-2">{entity.currency}</div>
+                        <div className="col-span-2">
+                          {entity.ownership_percentage
+                            ? `${entity.ownership_percentage}%`
+                            : "-"}
+                        </div>
+                        <div className="col-span-2 flex space-x-2">
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          </button>
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </TabsContent>
 
             <TabsContent value="reports" className="mt-6 space-y-6">

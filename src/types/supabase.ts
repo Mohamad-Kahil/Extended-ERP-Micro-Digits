@@ -9,7 +9,345 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      chart_of_accounts: {
+        Row: {
+          account_code: string
+          account_name: string
+          account_subtype: string | null
+          account_type: string
+          balance: number | null
+          company_id: string | null
+          created_at: string | null
+          currency: string
+          description: string | null
+          id: string
+          is_active: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          account_code: string
+          account_name: string
+          account_subtype?: string | null
+          account_type: string
+          balance?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          currency: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          account_code?: string
+          account_name?: string
+          account_subtype?: string | null
+          account_type?: string
+          balance?: number | null
+          company_id?: string | null
+          created_at?: string | null
+          currency?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chart_of_accounts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      companies: {
+        Row: {
+          address: string | null
+          base_currency: string
+          coa_template: string | null
+          country: string | null
+          created_at: string | null
+          default_role: string | null
+          fiscal_year_end: string | null
+          id: string
+          legal_structure: string
+          name: string
+          reporting_currency: string
+          tax_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          base_currency: string
+          coa_template?: string | null
+          country?: string | null
+          created_at?: string | null
+          default_role?: string | null
+          fiscal_year_end?: string | null
+          id?: string
+          legal_structure: string
+          name: string
+          reporting_currency: string
+          tax_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          base_currency?: string
+          coa_template?: string | null
+          country?: string | null
+          created_at?: string | null
+          default_role?: string | null
+          fiscal_year_end?: string | null
+          id?: string
+          legal_structure?: string
+          name?: string
+          reporting_currency?: string
+          tax_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      intercompany_entities: {
+        Row: {
+          country: string | null
+          created_at: string | null
+          currency: string
+          entity_type: string
+          id: string
+          name: string
+          ownership_percentage: number | null
+          parent_entity_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string | null
+          currency: string
+          entity_type: string
+          id?: string
+          name: string
+          ownership_percentage?: number | null
+          parent_entity_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string | null
+          currency?: string
+          entity_type?: string
+          id?: string
+          name?: string
+          ownership_percentage?: number | null
+          parent_entity_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intercompany_entities_parent_entity_id_fkey"
+            columns: ["parent_entity_id"]
+            isOneToOne: false
+            referencedRelation: "intercompany_entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      intercompany_transactions: {
+        Row: {
+          amount: number
+          created_at: string | null
+          currency: string
+          description: string | null
+          from_entity_id: string | null
+          id: string
+          status: string
+          to_entity_id: string | null
+          transaction_date: string
+          transaction_ref: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          currency: string
+          description?: string | null
+          from_entity_id?: string | null
+          id?: string
+          status: string
+          to_entity_id?: string | null
+          transaction_date: string
+          transaction_ref: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          currency?: string
+          description?: string | null
+          from_entity_id?: string | null
+          id?: string
+          status?: string
+          to_entity_id?: string | null
+          transaction_date?: string
+          transaction_ref?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intercompany_transactions_from_entity_id_fkey"
+            columns: ["from_entity_id"]
+            isOneToOne: false
+            referencedRelation: "intercompany_entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "intercompany_transactions_to_entity_id_fkey"
+            columns: ["to_entity_id"]
+            isOneToOne: false
+            referencedRelation: "intercompany_entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journal_entries: {
+        Row: {
+          approved_by: string | null
+          company_id: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          entry_date: string
+          entry_number: string
+          id: string
+          notes: string | null
+          posting_date: string | null
+          reference: string | null
+          status: string
+          total_credit: number
+          total_debit: number
+          updated_at: string | null
+        }
+        Insert: {
+          approved_by?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          entry_date: string
+          entry_number: string
+          id?: string
+          notes?: string | null
+          posting_date?: string | null
+          reference?: string | null
+          status: string
+          total_credit: number
+          total_debit: number
+          updated_at?: string | null
+        }
+        Update: {
+          approved_by?: string | null
+          company_id?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          entry_date?: string
+          entry_number?: string
+          id?: string
+          notes?: string | null
+          posting_date?: string | null
+          reference?: string | null
+          status?: string
+          total_credit?: number
+          total_debit?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entries_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journal_entry_lines: {
+        Row: {
+          account_id: string | null
+          created_at: string | null
+          credit: number | null
+          debit: number | null
+          description: string | null
+          id: string
+          journal_entry_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          account_id?: string | null
+          created_at?: string | null
+          credit?: number | null
+          debit?: number | null
+          description?: string | null
+          id?: string
+          journal_entry_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string | null
+          created_at?: string | null
+          credit?: number | null
+          debit?: number | null
+          description?: string | null
+          id?: string
+          journal_entry_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entry_lines_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "chart_of_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entry_lines_journal_entry_id_fkey"
+            columns: ["journal_entry_id"]
+            isOneToOne: false
+            referencedRelation: "journal_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          role: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id: string
+          role?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          role?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

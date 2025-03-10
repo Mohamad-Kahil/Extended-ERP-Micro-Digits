@@ -4,10 +4,13 @@ import Home from "./components/home";
 import routes from "tempo-routes";
 import AuthContainer from "./components/auth/AuthContainer";
 import LoginForm from "./components/auth/LoginForm";
+import RegisterForm from "./components/auth/RegisterForm";
 import ForgotPasswordForm from "./components/auth/ForgotPasswordForm";
 import ResetPasswordForm from "./components/auth/ResetPasswordForm";
 import { LoadingSpinner } from "./components/ui/loading-spinner";
 import { Card } from "./components/ui/card";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Custom loading component
 const LoadingFallback = () => (
@@ -128,71 +131,91 @@ function App() {
   }, []);
 
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      <>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route
-            path="/login"
-            element={
-              <AuthContainer>
-                <LoginForm />
-              </AuthContainer>
-            }
-          />
-          <Route
-            path="/forgot-password"
-            element={
-              <AuthContainer>
-                <ForgotPasswordForm />
-              </AuthContainer>
-            }
-          />
-          <Route
-            path="/reset-password"
-            element={
-              <AuthContainer>
-                <ResetPasswordForm />
-              </AuthContainer>
-            }
-          />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/finance" element={<FinanceDashboard />} />
-          <Route path="/hr" element={<HRDashboard />} />
-          <Route path="/supply-chain" element={<SupplyChainDashboard />} />
-          <Route path="/pos" element={<POSDashboard />} />
-          <Route path="/ecommerce" element={<EcommerceDashboard />} />
-          <Route path="/logistics" element={<LogisticsDashboard />} />
-          <Route path="/store-network" element={<StoreNetworkDashboard />} />
-          <Route path="/marketing" element={<MarketingDashboard />} />
-          <Route path="/operations" element={<OperationsDashboard />} />
-          <Route path="/production" element={<ProductionDashboard />} />
-          <Route path="/administration" element={<AdministrationDashboard />} />
-          <Route path="/crm" element={<CRMDashboard />} />
-          <Route path="/maintenance" element={<MaintenanceDashboard />} />
-          <Route path="/legal" element={<LegalDashboard />} />
-          <Route path="/executive" element={<ExecutiveDashboard />} />
-          <Route path="/inventory" element={<InventoryDashboard />} />
-          <Route path="/accounting" element={<AccountingDashboard />} />
-          <Route
-            path="/product-management"
-            element={<ProductManagementDashboard />}
-          />
-          <Route
-            path="/administrative-services"
-            element={<AdministrativeServicesDashboard />}
-          />
+    <AuthProvider>
+      <Suspense fallback={<LoadingFallback />}>
+        <>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route
+              path="/login"
+              element={
+                <AuthContainer>
+                  <LoginForm />
+                </AuthContainer>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <AuthContainer>
+                  <RegisterForm />
+                </AuthContainer>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <AuthContainer>
+                  <ForgotPasswordForm />
+                </AuthContainer>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <AuthContainer>
+                  <ResetPasswordForm />
+                </AuthContainer>
+              }
+            />
+            <Route
+              path="/dashboard/*"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/finance" element={<FinanceDashboard />} />
+            <Route path="/hr" element={<HRDashboard />} />
+            <Route path="/supply-chain" element={<SupplyChainDashboard />} />
+            <Route path="/pos" element={<POSDashboard />} />
+            <Route path="/ecommerce" element={<EcommerceDashboard />} />
+            <Route path="/logistics" element={<LogisticsDashboard />} />
+            <Route path="/store-network" element={<StoreNetworkDashboard />} />
+            <Route path="/marketing" element={<MarketingDashboard />} />
+            <Route path="/operations" element={<OperationsDashboard />} />
+            <Route path="/production" element={<ProductionDashboard />} />
+            <Route
+              path="/administration"
+              element={<AdministrationDashboard />}
+            />
+            <Route path="/crm" element={<CRMDashboard />} />
+            <Route path="/maintenance" element={<MaintenanceDashboard />} />
+            <Route path="/legal" element={<LegalDashboard />} />
+            <Route path="/executive" element={<ExecutiveDashboard />} />
+            <Route path="/inventory" element={<InventoryDashboard />} />
+            <Route path="/accounting" element={<AccountingDashboard />} />
+            <Route
+              path="/product-management"
+              element={<ProductManagementDashboard />}
+            />
+            <Route
+              path="/administrative-services"
+              element={<AdministrativeServicesDashboard />}
+            />
 
-          {/* Add this before the catchall route */}
-          {import.meta.env.VITE_TEMPO === "true" && (
-            <Route path="/tempobook/*" />
-          )}
+            {/* Add this before the catchall route */}
+            {import.meta.env.VITE_TEMPO === "true" && (
+              <Route path="/tempobook/*" />
+            )}
 
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-      </>
-    </Suspense>
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+          {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
+        </>
+      </Suspense>
+    </AuthProvider>
   );
 }
 

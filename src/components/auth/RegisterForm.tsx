@@ -6,40 +6,47 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/contexts/AuthContext";
 import SocialLogin from "./SocialLogin";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { signIn, signUp } = useAuth();
+  const { signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      // For development purposes, create a test user if it doesn't exist
-      if (email === "test@example.com") {
-        await signUp("test@example.com", "password123");
-      }
-
-      const { error } = await signIn(email, password);
+      const { error } = await signUp(email, password);
       if (error) {
-        // If the error is about email not confirmed, let's bypass it for now
-        if (error.message?.includes("Email not confirmed")) {
-          // Proceed anyway for development
-          navigate("/dashboard");
-        } else {
-          setError(error.message);
-        }
+        setError(error.message);
       } else {
+        // For development, redirect directly to dashboard
         navigate("/dashboard");
+
+        // In production, you would use this:
+        // navigate("/login", {
+        //   state: {
+        //     message:
+        //       "Registration successful! Please check your email to verify your account.",
+        //   },
+        // });
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
-      console.error("Login error:", err);
+      console.error("Registration error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -48,8 +55,8 @@ const LoginForm = () => {
   return (
     <div className="space-y-6 w-full max-w-md">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Welcome back</h1>
-        <p className="text-slate-400">Enter your credentials to sign in</p>
+        <h1 className="text-3xl font-bold">Create an account</h1>
+        <p className="text-slate-400">Enter your details to register</p>
       </div>
 
       {error && (
@@ -59,6 +66,18 @@ const LoginForm = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="full-name">Full Name</Label>
+          <Input
+            id="full-name"
+            type="text"
+            placeholder="John Doe"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -70,16 +89,9 @@ const LoginForm = () => {
             required
           />
         </div>
+
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="password">Password</Label>
-            <Link
-              to="/forgot-password"
-              className="text-sm text-cyan-500 hover:text-cyan-400"
-            >
-              Forgot password?
-            </Link>
-          </div>
+          <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             type="password"
@@ -87,6 +99,20 @@ const LoginForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            minLength={8}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="confirm-password">Confirm Password</Label>
+          <Input
+            id="confirm-password"
+            type="password"
+            placeholder="••••••••"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            minLength={8}
           />
         </div>
 
@@ -95,7 +121,7 @@ const LoginForm = () => {
           className="w-full bg-cyan-600 hover:bg-cyan-700"
           disabled={isLoading}
         >
-          {isLoading ? "Signing in..." : "Sign In"}
+          {isLoading ? "Creating account..." : "Create Account"}
         </Button>
       </form>
 
@@ -113,13 +139,13 @@ const LoginForm = () => {
       <SocialLogin />
 
       <div className="text-center text-sm">
-        <span className="text-slate-400">Don't have an account? </span>
-        <Link to="/register" className="text-cyan-500 hover:text-cyan-400">
-          Sign up
+        <span className="text-slate-400">Already have an account? </span>
+        <Link to="/login" className="text-cyan-500 hover:text-cyan-400">
+          Sign in
         </Link>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
