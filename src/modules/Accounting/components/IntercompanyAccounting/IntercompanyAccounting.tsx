@@ -25,9 +25,111 @@ const IntercompanyAccounting = () => {
   const [activeTab, setActiveTab] = useState("transactions");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("Parent Company");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
 
   // Company data
   const companies = ["Parent Company", "Subsidiary 1", "Subsidiary 2"];
+
+  // Transaction data
+  const transactions = [
+    {
+      id: "IC-2023-1001",
+      date: "2023-10-15",
+      fromEntity: "Parent Company",
+      toEntity: "Subsidiary 1",
+      amount: "$125,000.00",
+      currency: "USD",
+      status: "Matched",
+    },
+    {
+      id: "IC-2023-1002",
+      date: "2023-10-18",
+      fromEntity: "Subsidiary 2",
+      toEntity: "Parent Company",
+      amount: "$78,500.00",
+      currency: "USD",
+      status: "Matched",
+    },
+    {
+      id: "IC-2023-1003",
+      date: "2023-10-20",
+      fromEntity: "Subsidiary 1",
+      toEntity: "Subsidiary 2",
+      amount: "$45,200.00",
+      currency: "USD",
+      status: "Unmatched",
+    },
+    {
+      id: "IC-2023-1004",
+      date: "2023-10-22",
+      fromEntity: "Parent Company",
+      toEntity: "Subsidiary 2",
+      amount: "$92,800.00",
+      currency: "USD",
+      status: "Matched",
+    },
+    {
+      id: "IC-2023-1005",
+      date: "2023-10-25",
+      fromEntity: "Subsidiary 1",
+      toEntity: "Parent Company",
+      amount: "$37,350.00",
+      currency: "USD",
+      status: "Unmatched",
+    },
+    {
+      id: "IC-2023-1006",
+      date: "2023-10-28",
+      fromEntity: "Subsidiary 2",
+      toEntity: "Subsidiary 1",
+      amount: "$62,500.00",
+      currency: "USD",
+      status: "Matched",
+    },
+  ];
+
+  // Filter transactions based on selected filters
+  const filteredTransactions = transactions
+    .filter(
+      (transaction) =>
+        selectedCompany === "All Companies" ||
+        transaction.fromEntity === selectedCompany ||
+        transaction.toEntity === selectedCompany,
+    )
+    .filter(
+      (transaction) =>
+        statusFilter === "all" ||
+        transaction.status.toLowerCase() === statusFilter.toLowerCase(),
+    )
+    .filter(
+      (transaction) =>
+        searchTerm === "" ||
+        transaction.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.fromEntity
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        transaction.toEntity.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+    .sort((a, b) => {
+      if (sortOrder === "newest") {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      } else if (sortOrder === "oldest") {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else if (sortOrder === "amount-high") {
+        return (
+          parseFloat(b.amount.replace(/[^0-9.-]+/g, "")) -
+          parseFloat(a.amount.replace(/[^0-9.-]+/g, ""))
+        );
+      } else if (sortOrder === "amount-low") {
+        return (
+          parseFloat(a.amount.replace(/[^0-9.-]+/g, "")) -
+          parseFloat(b.amount.replace(/[^0-9.-]+/g, ""))
+        );
+      }
+      return 0;
+    });
 
   return (
     <div className="space-y-4">
@@ -36,9 +138,9 @@ const IntercompanyAccounting = () => {
           <h2 className="text-2xl font-bold text-white">
             Intercompany Accounting
           </h2>
-          <div className="bg-yellow-500 rounded-md px-3 py-1.5">
+          <div className="bg-emerald-600 rounded-md h-10 flex items-center shadow-md">
             <Select value={selectedCompany} onValueChange={setSelectedCompany}>
-              <SelectTrigger className="w-[180px] bg-transparent border-none focus:ring-0 text-black font-medium">
+              <SelectTrigger className="w-[180px] h-10 bg-transparent border-none focus:ring-0 text-white font-medium">
                 <SelectValue placeholder="Current Company" />
               </SelectTrigger>
               <SelectContent>
@@ -73,7 +175,7 @@ const IntercompanyAccounting = () => {
               Add New Company
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] bg-slate-900 text-white border-slate-700">
+          <DialogContent className="sm:max-w-[900px] bg-slate-900 text-white border-slate-700">
             <DialogHeader>
               <DialogTitle className="text-xl font-semibold text-white">
                 Add New Company
@@ -82,68 +184,94 @@ const IntercompanyAccounting = () => {
                 Configure a new company in the system
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-6 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="company-name">Company Name</Label>
-                  <Input id="company-name" placeholder="Enter company name" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="legal-structure">Legal Structure</Label>
-                  <Select>
-                    <SelectTrigger id="legal-structure">
-                      <SelectValue placeholder="Select structure" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="llc">LLC</SelectItem>
-                      <SelectItem value="corporation">Corporation</SelectItem>
-                      <SelectItem value="partnership">Partnership</SelectItem>
-                      <SelectItem value="sole-proprietorship">
-                        Sole Proprietorship
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div className="grid grid-cols-2 gap-6 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="company-name">Company Name</Label>
+                <Input id="company-name" placeholder="Enter company name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="legal-structure">Legal Structure</Label>
+                <Select>
+                  <SelectTrigger id="legal-structure">
+                    <SelectValue placeholder="Select structure" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="llc">LLC</SelectItem>
+                    <SelectItem value="corporation">Corporation</SelectItem>
+                    <SelectItem value="partnership">Partnership</SelectItem>
+                    <SelectItem value="sole-proprietorship">
+                      Sole Proprietorship
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
                 <Input id="address" placeholder="Enter company address" />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="country">Country</Label>
+                <Select>
+                  <SelectTrigger id="country">
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="us">United States</SelectItem>
+                    <SelectItem value="uk">United Kingdom</SelectItem>
+                    <SelectItem value="ca">Canada</SelectItem>
+                    <SelectItem value="au">Australia</SelectItem>
+                    <SelectItem value="sg">Singapore</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="tax-id">Tax Identification Number</Label>
-                  <Input id="tax-id" placeholder="Enter tax ID" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="fiscal-year">Fiscal Year End</Label>
-                  <Select>
-                    <SelectTrigger id="fiscal-year">
-                      <SelectValue placeholder="Select month" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="jan">January</SelectItem>
-                      <SelectItem value="feb">February</SelectItem>
-                      <SelectItem value="mar">March</SelectItem>
-                      <SelectItem value="apr">April</SelectItem>
-                      <SelectItem value="may">May</SelectItem>
-                      <SelectItem value="jun">June</SelectItem>
-                      <SelectItem value="jul">July</SelectItem>
-                      <SelectItem value="aug">August</SelectItem>
-                      <SelectItem value="sep">September</SelectItem>
-                      <SelectItem value="oct">October</SelectItem>
-                      <SelectItem value="nov">November</SelectItem>
-                      <SelectItem value="dec">December</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="tax-id">Tax Identification Number</Label>
+                <Input id="tax-id" placeholder="Enter tax ID" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="fiscal-year">Fiscal Year End</Label>
+                <Select>
+                  <SelectTrigger id="fiscal-year">
+                    <SelectValue placeholder="Select month" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="jan">January</SelectItem>
+                    <SelectItem value="feb">February</SelectItem>
+                    <SelectItem value="mar">March</SelectItem>
+                    <SelectItem value="apr">April</SelectItem>
+                    <SelectItem value="may">May</SelectItem>
+                    <SelectItem value="jun">June</SelectItem>
+                    <SelectItem value="jul">July</SelectItem>
+                    <SelectItem value="aug">August</SelectItem>
+                    <SelectItem value="sep">September</SelectItem>
+                    <SelectItem value="oct">October</SelectItem>
+                    <SelectItem value="nov">November</SelectItem>
+                    <SelectItem value="dec">December</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="base-currency">Base Currency</Label>
                 <Select>
                   <SelectTrigger id="base-currency">
+                    <SelectValue placeholder="Select currency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="usd">USD - US Dollar</SelectItem>
+                    <SelectItem value="eur">EUR - Euro</SelectItem>
+                    <SelectItem value="gbp">GBP - British Pound</SelectItem>
+                    <SelectItem value="jpy">JPY - Japanese Yen</SelectItem>
+                    <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="reporting-currency">Reporting Currency</Label>
+                <Select>
+                  <SelectTrigger id="reporting-currency">
                     <SelectValue placeholder="Select currency" />
                   </SelectTrigger>
                   <SelectContent>
@@ -171,7 +299,6 @@ const IntercompanyAccounting = () => {
                   </SelectContent>
                 </Select>
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="user-roles">Default User Role</Label>
                 <Select>
@@ -195,178 +322,6 @@ const IntercompanyAccounting = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </div>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <Card className="border-slate-800 bg-slate-900 p-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-medium text-slate-400">
-              Total Transactions
-            </h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-cyan-500"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </div>
-          <p className="mt-1 text-lg font-bold text-white">42</p>
-          <div className="flex items-center text-xs text-emerald-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-1"
-            >
-              <path d="m5 12 7-7 7 7" />
-              <path d="M12 19V5" />
-            </svg>
-            <span>8.3% vs last month</span>
-          </div>
-        </Card>
-
-        <Card className="border-slate-800 bg-slate-900 p-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-medium text-slate-400">
-              Matched Transactions
-            </h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-emerald-500"
-            >
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-          </div>
-          <p className="mt-1 text-lg font-bold text-emerald-500">34</p>
-          <div className="flex items-center text-xs text-emerald-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-1"
-            >
-              <path d="m5 12 7-7 7 7" />
-              <path d="M12 19V5" />
-            </svg>
-            <span>5.2% increase</span>
-          </div>
-        </Card>
-
-        <Card className="border-slate-800 bg-slate-900 p-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-medium text-slate-400">
-              Unmatched Transactions
-            </h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-amber-500"
-            >
-              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-              <line x1="12" y1="9" x2="12" y2="13" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-          </div>
-          <p className="mt-1 text-lg font-bold text-amber-500">8</p>
-          <div className="flex items-center text-xs text-amber-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-1"
-            >
-              <path d="m19 12-7 7-7-7" />
-              <path d="M12 19V5" />
-            </svg>
-            <span>Requires attention</span>
-          </div>
-        </Card>
-
-        <Card className="border-slate-800 bg-slate-900 p-2">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-medium text-slate-400">Total Value</h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-cyan-500"
-            >
-              <path d="M12 2v20" />
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-            </svg>
-          </div>
-          <p className="mt-1 text-lg font-bold text-white">$441,350.00</p>
-          <div className="flex items-center text-xs text-emerald-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-1"
-            >
-              <path d="m5 12 7-7 7 7" />
-              <path d="M12 19V5" />
-            </svg>
-            <span>3.1% increase</span>
-          </div>
-        </Card>
       </div>
 
       <Card className="border-slate-800 bg-slate-900">
@@ -413,12 +368,31 @@ const IntercompanyAccounting = () => {
                 </svg>
                 New Transaction
               </Button>
+              <Button className="bg-purple-600 hover:bg-purple-700">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2"
+                >
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+                Reconcile
+              </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="mb-6 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 flex-wrap gap-y-2">
               <div className="relative w-64">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -442,7 +416,7 @@ const IntercompanyAccounting = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <Select defaultValue="all">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-40">
                   <SelectValue placeholder="Filter Status" />
                 </SelectTrigger>
@@ -452,19 +426,93 @@ const IntercompanyAccounting = () => {
                   <SelectItem value="unmatched">Unmatched</SelectItem>
                 </SelectContent>
               </Select>
+              <Select value={dateFilter} onValueChange={setDateFilter}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Date Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Dates</SelectItem>
+                  <SelectItem value="current-month">Current Month</SelectItem>
+                  <SelectItem value="previous-month">Previous Month</SelectItem>
+                  <SelectItem value="current-quarter">
+                    Current Quarter
+                  </SelectItem>
+                  <SelectItem value="ytd">Year to Date</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={sortOrder} onValueChange={setSortOrder}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Sort By" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="oldest">Oldest First</SelectItem>
+                  <SelectItem value="amount-high">
+                    Amount (High to Low)
+                  </SelectItem>
+                  <SelectItem value="amount-low">
+                    Amount (Low to High)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" size="sm" className="h-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2"
+                >
+                  <path d="M3 3v18h18" />
+                  <path d="m19 9-5 5-4-4-3 3" />
+                </svg>
+                Analytics
+              </Button>
+              <Button variant="outline" size="sm" className="h-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2"
+                >
+                  <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+                  <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+                  <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+                </svg>
+                Batch Process
+              </Button>
             </div>
 
             <div className="flex space-x-3">
               <div className="flex items-center px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
                 <span className="text-xs font-medium text-emerald-500">
-                  Matched: 42
+                  Matched:{" "}
+                  {
+                    filteredTransactions.filter((t) => t.status === "Matched")
+                      .length
+                  }
                 </span>
               </div>
               <div className="flex items-center px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/20">
                 <span className="h-2 w-2 rounded-full bg-amber-500 mr-2"></span>
                 <span className="text-xs font-medium text-amber-500">
-                  Unmatched: 8
+                  Unmatched:{" "}
+                  {
+                    filteredTransactions.filter((t) => t.status === "Unmatched")
+                      .length
+                  }
                 </span>
               </div>
             </div>
@@ -475,10 +523,11 @@ const IntercompanyAccounting = () => {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="grid w-full max-w-md grid-cols-3 bg-slate-800">
+            <TabsList className="grid w-full max-w-md grid-cols-4 bg-slate-800">
               <TabsTrigger value="transactions">Transactions</TabsTrigger>
               <TabsTrigger value="reconciliation">Reconciliation</TabsTrigger>
               <TabsTrigger value="entities">Entities</TabsTrigger>
+              <TabsTrigger value="reports">Reports</TabsTrigger>
             </TabsList>
 
             <TabsContent value="transactions" className="mt-6 space-y-6">
@@ -494,62 +543,7 @@ const IntercompanyAccounting = () => {
                   <div className="col-span-2">Actions</div>
                 </div>
                 <div className="divide-y divide-slate-800">
-                  {[
-                    {
-                      id: "IC-2023-1001",
-                      date: "2023-10-15",
-                      fromEntity: "Parent Company",
-                      toEntity: "Subsidiary 1",
-                      amount: "$125,000.00",
-                      currency: "USD",
-                      status: "Matched",
-                    },
-                    {
-                      id: "IC-2023-1002",
-                      date: "2023-10-18",
-                      fromEntity: "Subsidiary 2",
-                      toEntity: "Parent Company",
-                      amount: "$78,500.00",
-                      currency: "USD",
-                      status: "Matched",
-                    },
-                    {
-                      id: "IC-2023-1003",
-                      date: "2023-10-20",
-                      fromEntity: "Subsidiary 1",
-                      toEntity: "Subsidiary 2",
-                      amount: "$45,200.00",
-                      currency: "USD",
-                      status: "Unmatched",
-                    },
-                    {
-                      id: "IC-2023-1004",
-                      date: "2023-10-22",
-                      fromEntity: "Parent Company",
-                      toEntity: "Subsidiary 2",
-                      amount: "$92,800.00",
-                      currency: "USD",
-                      status: "Matched",
-                    },
-                    {
-                      id: "IC-2023-1005",
-                      date: "2023-10-25",
-                      fromEntity: "Subsidiary 1",
-                      toEntity: "Parent Company",
-                      amount: "$37,350.00",
-                      currency: "USD",
-                      status: "Unmatched",
-                    },
-                    {
-                      id: "IC-2023-1006",
-                      date: "2023-10-28",
-                      fromEntity: "Subsidiary 2",
-                      toEntity: "Subsidiary 1",
-                      amount: "$62,500.00",
-                      currency: "USD",
-                      status: "Matched",
-                    },
-                  ].map((transaction, index) => (
+                  {filteredTransactions.map((transaction, index) => (
                     <div
                       key={index}
                       className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
@@ -839,6 +833,81 @@ const IntercompanyAccounting = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="reports" className="mt-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="border-slate-800 bg-slate-900">
+                  <CardHeader>
+                    <CardTitle className="text-lg font-semibold text-white">
+                      Intercompany Transaction Summary
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-64 flex items-center justify-center">
+                      <div className="text-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="mx-auto mb-4 text-slate-600"
+                        >
+                          <rect width="18" height="18" x="3" y="3" rx="2" />
+                          <path d="M3 9h18" />
+                          <path d="M9 21V9" />
+                        </svg>
+                        <p className="text-slate-400">
+                          Transaction summary report will be displayed here
+                        </p>
+                        <Button variant="outline" className="mt-4">
+                          Generate Report
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-slate-800 bg-slate-900">
+                  <CardHeader>
+                    <CardTitle className="text-lg font-semibold text-white">
+                      Reconciliation Status
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-64 flex items-center justify-center">
+                      <div className="text-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="mx-auto mb-4 text-slate-600"
+                        >
+                          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                          <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        <p className="text-slate-400">
+                          Reconciliation status report will be displayed here
+                        </p>
+                        <Button variant="outline" className="mt-4">
+                          Generate Report
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
           </Tabs>
