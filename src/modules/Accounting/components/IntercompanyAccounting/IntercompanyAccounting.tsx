@@ -103,10 +103,10 @@ const IntercompanyAccounting = () => {
           <div className="bg-emerald-600 rounded-md h-10 flex items-center shadow-md">
             <Select value={selectedCompany} onValueChange={setSelectedCompany}>
               <SelectTrigger className="w-[180px] h-10 bg-transparent border-none focus:ring-0 text-white font-medium">
-                <SelectValue placeholder="Current Company" />
+                <SelectValue placeholder="Current Entity" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="All Companies">All Companies</SelectItem>
+                <SelectItem value="All Companies">All Entities</SelectItem>
                 {companies.map((company) => (
                   <SelectItem key={company} value={company}>
                     {company}
@@ -116,7 +116,7 @@ const IntercompanyAccounting = () => {
             </Select>
           </div>
         </div>
-        <NewCompanyDialog onCompanyCreated={refetch} />
+        <NewEntityDialog entities={entities} onEntityCreated={refetch} />
       </div>
 
       <Card className="border-slate-800 bg-slate-900">

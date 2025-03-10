@@ -10,13 +10,29 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface HeaderProps {
   moduleTitle?: string;
   toggleSidebar?: () => void;
+  currentEntity?: string;
+  onEntityChange?: (entity: string) => void;
+  availableEntities?: string[];
 }
 
-const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
+const Header = ({
+  moduleTitle,
+  toggleSidebar,
+  currentEntity = "",
+  onEntityChange = () => {},
+  availableEntities = [],
+}: HeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -77,6 +93,26 @@ const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
           </button>
         )}
         <h1 className="text-xl font-bold text-white">Nexus {displayTitle}</h1>
+
+        {currentEntity && availableEntities.length > 0 && (
+          <div className="hidden md:flex items-center ml-4">
+            <div className="text-sm text-slate-400 mr-2">Current Entity:</div>
+            <div className="bg-emerald-600 rounded-md h-8 flex items-center shadow-md">
+              <Select value={currentEntity} onValueChange={onEntityChange}>
+                <SelectTrigger className="w-[180px] h-8 bg-transparent border-none focus:ring-0 text-white font-medium">
+                  <SelectValue placeholder="Select Entity" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableEntities.map((entity) => (
+                    <SelectItem key={entity} value={entity}>
+                      {entity}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex items-center space-x-3">
         <div className="relative w-64 hidden md:block">
@@ -150,6 +186,7 @@ const Header = ({ moduleTitle, toggleSidebar }: HeaderProps) => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
+              size="icon"
               className="relative h-8 w-8 rounded-full border border-slate-700 bg-slate-800/50"
             >
               <span className="sr-only">Open user menu</span>

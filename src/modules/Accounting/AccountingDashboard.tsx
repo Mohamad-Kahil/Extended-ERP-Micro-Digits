@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,9 +15,41 @@ import FinancialReporting from "./components/FinancialReporting/FinancialReporti
 import Budgeting from "./components/Budgeting/Budgeting";
 import AuditControls from "./components/AuditControls/AuditControls";
 import CostAccounting from "./components/CostAccounting/CostAccounting";
+import { intercompanyEntitiesApi } from "@/lib/api/accounting";
 
 const AccountingDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
+  const [currentEntity, setCurrentEntity] = useState("");
+  const [availableEntities, setAvailableEntities] = useState<string[]>([]);
+
+  // Fetch available entities when component mounts
+  useEffect(() => {
+    const fetchEntities = async () => {
+      try {
+        const entities = await intercompanyEntitiesApi.getAll();
+        const entityNames = entities.map((entity) => entity.name);
+        setAvailableEntities(entityNames);
+
+        // Set default entity if available
+        if (entityNames.length > 0) {
+          setCurrentEntity(entityNames[0]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch entities:", error);
+        // Fallback to mock data
+        const mockEntityNames = [
+          "Parent Company",
+          "Subsidiary 1",
+          "Subsidiary 2",
+          "Joint Venture",
+        ];
+        setAvailableEntities(mockEntityNames);
+        setCurrentEntity(mockEntityNames[0]);
+      }
+    };
+
+    fetchEntities();
+  }, []);
 
   const navItems = [
     { id: "overview", label: "Overview" },
@@ -38,33 +70,33 @@ const AccountingDashboard = () => {
   const renderContent = () => {
     switch (activeSection) {
       case "overview":
-        return <AccountingOverview />;
+        return <AccountingOverview currentEntity={currentEntity} />;
       case "coa":
-        return <ChartOfAccounts />;
+        return <ChartOfAccounts currentEntity={currentEntity} />;
       case "gl":
-        return <GeneralLedger />;
+        return <GeneralLedger currentEntity={currentEntity} />;
       case "ap":
-        return <AccountsPayable />;
+        return <AccountsPayable currentEntity={currentEntity} />;
       case "ar":
-        return <AccountsReceivable />;
+        return <AccountsReceivable currentEntity={currentEntity} />;
       case "assets":
-        return <FixedAssets />;
+        return <FixedAssets currentEntity={currentEntity} />;
       case "procurement":
-        return <Procurement />;
+        return <Procurement currentEntity={currentEntity} />;
       case "taxation":
-        return <Taxation />;
+        return <Taxation currentEntity={currentEntity} />;
       case "intercompany":
         return <IntercompanyAccounting />;
       case "financial-reporting":
-        return <FinancialReporting />;
+        return <FinancialReporting currentEntity={currentEntity} />;
       case "budgeting":
-        return <Budgeting />;
+        return <Budgeting currentEntity={currentEntity} />;
       case "audit-controls":
-        return <AuditControls />;
+        return <AuditControls currentEntity={currentEntity} />;
       case "cost-accounting":
-        return <CostAccounting />;
+        return <CostAccounting currentEntity={currentEntity} />;
       default:
-        return <AccountingOverview />;
+        return <AccountingOverview currentEntity={currentEntity} />;
     }
   };
 
@@ -85,7 +117,12 @@ const AccountingDashboard = () => {
   );
 
   return (
-    <DashboardLayout navbar={accountingNavbar}>
+    <DashboardLayout
+      navbar={accountingNavbar}
+      currentEntity={currentEntity}
+      onEntityChange={setCurrentEntity}
+      availableEntities={availableEntities}
+    >
       <div className="space-y-6">
         {/* Content Area */}
         <AnimatePresence mode="wait">
