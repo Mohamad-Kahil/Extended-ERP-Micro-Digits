@@ -24,10 +24,18 @@ import { Download, Upload, FileText } from "lucide-react";
 
 interface ChartOfAccountsProps {
   currentEntity?: string;
+  currentEntityId?: string;
+  entities?: { id: string; name: string }[];
 }
 
 const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
   currentEntity = "all",
+  currentEntityId = "1",
+  entities = [
+    { id: "1", name: "Parent Company" },
+    { id: "2", name: "Subsidiary 1" },
+    { id: "3", name: "Subsidiary 2" },
+  ],
 }) => {
   // Sample data for demonstration
   const [accounts, setAccounts] = useState<Account[]>([
@@ -36,6 +44,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
       accountNumber: "1000",
       accountName: "Assets",
       accountType: "asset",
+      entityId: "1",
       isActive: true,
       balance: 0,
       level: 0,
@@ -45,6 +54,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
           accountNumber: "1100",
           accountName: "Current Assets",
           accountType: "asset",
+          entityId: "1",
           parentAccountId: "1",
           isActive: true,
           balance: 0,
@@ -55,6 +65,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
               accountNumber: "1110",
               accountName: "Cash",
               accountType: "asset",
+              entityId: "1",
               parentAccountId: "1.1",
               isActive: true,
               balance: 125000,
@@ -325,19 +336,52 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
   const [viewMode, setViewMode] = useState<"list" | "details">("list");
   const [editMode, setEditMode] = useState(false);
 
-  // Flatten accounts for parent selection
-  const flattenAccounts = (accounts: Account[]): Account[] => {
+  // Filter accounts by entity and flatten for parent selection
+  const filterAndFlattenAccounts = (
+    accounts: Account[],
+    entityId: string,
+  ): Account[] => {
+    // First filter by entity
+    const filteredAccounts = accounts
+      .filter(
+        (account) => currentEntity === "all" || account.entityId === entityId,
+      )
+      .map((account) => {
+        if (account.children && account.children.length > 0) {
+          return {
+            ...account,
+            children: account.children.filter(
+              (child) => currentEntity === "all" || child.entityId === entityId,
+            ),
+          };
+        }
+        return account;
+      });
+
+    // Then flatten the filtered accounts
     let result: Account[] = [];
-    accounts.forEach((account) => {
+    filteredAccounts.forEach((account) => {
       result.push(account);
       if (account.children && account.children.length > 0) {
-        result = [...result, ...flattenAccounts(account.children)];
+        result = [
+          ...result,
+          ...filterAndFlattenAccounts(account.children, entityId),
+        ];
       }
     });
     return result;
   };
 
-  const parentAccountOptions = flattenAccounts(accounts).map((account) => ({
+  // Get filtered accounts based on current entity
+  const filteredAccounts =
+    currentEntity === "all"
+      ? accounts
+      : filterAndFlattenAccounts(accounts, currentEntityId);
+
+  const parentAccountOptions = filterAndFlattenAccounts(
+    accounts,
+    currentEntityId,
+  ).map((account) => ({
     id: account.id,
     name: account.accountName,
     accountNumber: account.accountNumber,
@@ -358,9 +402,10 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
 
   const handleDeleteAccount = (accountId: string) => {
     // Find the account to delete
-    const accountToDelete = flattenAccounts(accounts).find(
-      (account) => account.id === accountId,
-    );
+    const accountToDelete = filterAndFlattenAccounts(
+      accounts,
+      currentEntityId,
+    ).find((account) => account.id === accountId);
     if (accountToDelete) {
       setSelectedAccount(accountToDelete);
       setIsDeleteDialogOpen(true);
@@ -426,6 +471,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
         balance: 0,
         level: formData.parentAccount ? 1 : 0, // Simplified level calculation
         isActive: true,
+        entityId: formData.entityId || currentEntityId,
       };
 
       // If there's a parent account, add it as a child
@@ -495,7 +541,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
             </CardHeader>
             <CardContent className="pt-6">
               <AccountList
-                accounts={accounts}
+                accounts={filteredAccounts}
                 onAddAccount={handleAddAccount}
                 onEditAccount={handleEditAccount}
                 onDeleteAccount={handleDeleteAccount}
@@ -517,6 +563,8 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
                 onSubmit={handleFormSubmit}
                 onCancel={() => setIsFormOpen(false)}
                 parentAccounts={parentAccountOptions}
+                entities={entities}
+                currentEntityId={currentEntityId}
               />
             </DialogContent>
           </Dialog>

@@ -25,6 +25,7 @@ export interface Account {
   accountNumber: string;
   accountName: string;
   accountType: "asset" | "liability" | "equity" | "revenue" | "expense";
+  entityId: string;
   parentAccountId?: string;
   description?: string;
   isActive: boolean;

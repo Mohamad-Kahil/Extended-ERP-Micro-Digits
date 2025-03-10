@@ -26,6 +26,7 @@ const accountFormSchema = z.object({
   accountNumber: z.string().min(1, "Account number is required"),
   accountName: z.string().min(1, "Account name is required"),
   accountType: z.enum(["asset", "liability", "equity", "revenue", "expense"]),
+  entityId: z.string().min(1, "Entity is required"),
   parentAccount: z.string().optional(),
   description: z.string().optional(),
   isActive: z.boolean().default(true),
@@ -40,6 +41,8 @@ interface AccountFormProps {
   onSubmit: (data: AccountFormValues) => void;
   onCancel: () => void;
   parentAccounts?: { id: string; name: string; accountNumber: string }[];
+  entities?: { id: string; name: string }[];
+  currentEntityId?: string;
 }
 
 export function AccountForm({
@@ -47,6 +50,8 @@ export function AccountForm({
   onSubmit,
   onCancel,
   parentAccounts = [],
+  entities = [],
+  currentEntityId = "",
 }: AccountFormProps) {
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
@@ -54,6 +59,7 @@ export function AccountForm({
       accountNumber: "",
       accountName: "",
       accountType: "asset",
+      entityId: currentEntityId,
       parentAccount: "",
       description: "",
       isActive: true,
@@ -137,6 +143,39 @@ export function AccountForm({
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="entityId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Entity</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select entity" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {entities.map((entity) => (
+                      <SelectItem key={entity.id} value={entity.id}>
+                        {entity.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Entity this account belongs to
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="parentAccount"

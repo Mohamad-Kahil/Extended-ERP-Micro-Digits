@@ -15,12 +15,20 @@ import { Download, Upload, FileText } from "lucide-react";
 
 interface GeneralLedgerProps {
   currentEntity?: string;
+  currentEntityId?: string;
   accounts?: Account[];
+  entities?: { id: string; name: string }[];
 }
 
 const GeneralLedger: React.FC<GeneralLedgerProps> = ({
   currentEntity = "all",
+  currentEntityId = "1",
   accounts = [],
+  entities = [
+    { id: "1", name: "Parent Company" },
+    { id: "2", name: "Subsidiary 1" },
+    { id: "3", name: "Subsidiary 2" },
+  ],
 }) => {
   // Sample data for demonstration
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([
@@ -31,6 +39,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
       description: "Initial investment",
       reference: "INV-001",
       amount: 100000,
+      entityId: "1",
       status: "approved",
       createdBy: "John Doe",
       createdAt: "2023-07-01T09:00:00Z",
@@ -58,6 +67,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
       description: "Purchase of office equipment",
       reference: "PO-001",
       amount: 25000,
+      entityId: "1",
       status: "posted",
       createdBy: "Jane Smith",
       createdAt: "2023-07-15T10:30:00Z",
@@ -85,6 +95,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
       description: "Monthly rent payment",
       reference: "RENT-JUL",
       amount: 5000,
+      entityId: "2",
       status: "draft",
       createdBy: "John Doe",
       createdAt: "2023-07-31T14:15:00Z",
@@ -115,12 +126,27 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
   const [activeTab, setActiveTab] = useState("journal");
   const [selectedPeriod, setSelectedPeriod] = useState("current");
 
-  // Update selected entity when currentEntity changes
+  // Filter journal entries based on selected entity
+  const filteredJournalEntries =
+    currentEntity === "all"
+      ? journalEntries
+      : journalEntries.filter((entry) => entry.entityId === currentEntityId);
+
+  // Filter accounts based on selected entity
+  const filteredAccounts =
+    currentEntity === "all"
+      ? accounts
+      : accounts.filter((account) => account.entityId === currentEntityId);
+
+  // Update when currentEntity changes
   useEffect(() => {
     if (currentEntity) {
-      // Any initialization based on entity change
+      // Reset view to list when entity changes
+      setViewMode("list");
+      setSelectedEntry(null);
+      setIsFormOpen(false);
     }
-  }, [currentEntity]);
+  }, [currentEntity, currentEntityId]);
 
   // Handlers
   const handleAddEntry = () => {
@@ -225,6 +251,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
         date: formData.entryDate,
         description: formData.description,
         reference: formData.reference,
+        entityId: formData.entityId || currentEntityId,
         status: "draft",
         createdBy: "Current User", // In a real app, this would come from the auth context
         createdAt: new Date().toISOString(),
@@ -299,7 +326,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
             </CardHeader>
             <CardContent className="pt-6">
               <JournalEntryList
-                entries={journalEntries}
+                entries={filteredJournalEntries}
                 onAddEntry={handleAddEntry}
                 onViewEntry={handleViewEntry}
                 onEditEntry={handleEditEntry}
@@ -322,6 +349,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
                         entryDate: selectedEntry.date,
                         reference: selectedEntry.reference || "",
                         description: selectedEntry.description,
+                        entityId: selectedEntry.entityId,
                         lineItems: selectedEntry.lineItems.map((item) => ({
                           accountId: item.accountId,
                           description: item.description || "",
@@ -333,7 +361,9 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
                 }
                 onSubmit={handleFormSubmit}
                 onCancel={() => setIsFormOpen(false)}
-                accounts={accounts}
+                accounts={filteredAccounts}
+                entities={entities}
+                currentEntityId={currentEntityId}
               />
             </DialogContent>
           </Dialog>

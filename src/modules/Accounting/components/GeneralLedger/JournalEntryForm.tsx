@@ -49,6 +49,7 @@ const journalEntrySchema = z
     entryDate: z.string().min(1, "Date is required"),
     reference: z.string().optional(),
     description: z.string().min(1, "Description is required"),
+    entityId: z.string().min(1, "Entity is required"),
     lineItems: z
       .array(lineItemSchema)
       .min(2, "At least two line items are required"),
@@ -79,6 +80,8 @@ interface JournalEntryFormProps {
   onSubmit: (data: JournalEntryFormValues) => void;
   onCancel: () => void;
   accounts: Account[];
+  entities?: { id: string; name: string }[];
+  currentEntityId?: string;
 }
 
 export function JournalEntryForm({
@@ -86,6 +89,8 @@ export function JournalEntryForm({
   onSubmit,
   onCancel,
   accounts,
+  entities = [],
+  currentEntityId = "",
 }: JournalEntryFormProps) {
   const flattenedAccounts = flattenAccounts(accounts);
 
@@ -95,6 +100,7 @@ export function JournalEntryForm({
       entryDate: new Date().toISOString().split("T")[0],
       reference: "",
       description: "",
+      entityId: currentEntityId,
       lineItems: [
         { accountId: "", description: "", debit: "", credit: "" },
         { accountId: "", description: "", debit: "", credit: "" },
@@ -126,7 +132,7 @@ export function JournalEntryForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <FormField
             control={form.control}
             name="entryDate"
@@ -152,6 +158,37 @@ export function JournalEntryForm({
                 </FormControl>
                 <FormDescription>
                   Optional reference number or code
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="entityId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Entity</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select entity" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {entities.map((entity) => (
+                      <SelectItem key={entity.id} value={entity.id}>
+                        {entity.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Entity this journal entry belongs to
                 </FormDescription>
                 <FormMessage />
               </FormItem>

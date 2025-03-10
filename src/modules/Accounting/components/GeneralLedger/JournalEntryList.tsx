@@ -26,6 +26,7 @@ export interface JournalEntry {
   description: string;
   reference?: string;
   amount: number;
+  entityId: string;
   status: "draft" | "posted" | "approved" | "rejected";
   createdBy: string;
   createdAt: string;
