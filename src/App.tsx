@@ -133,87 +133,82 @@ function App() {
   return (
     <AuthProvider>
       <Suspense fallback={<LoadingFallback />}>
-        <>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route
-              path="/login"
-              element={
-                <AuthContainer>
-                  <LoginForm />
-                </AuthContainer>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <AuthContainer>
-                  <RegisterForm />
-                </AuthContainer>
-              }
-            />
-            <Route
-              path="/forgot-password"
-              element={
-                <AuthContainer>
-                  <ForgotPasswordForm />
-                </AuthContainer>
-              }
-            />
-            <Route
-              path="/reset-password"
-              element={
-                <AuthContainer>
-                  <ResetPasswordForm />
-                </AuthContainer>
-              }
-            />
-            <Route
-              path="/dashboard/*"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/finance" element={<FinanceDashboard />} />
-            <Route path="/hr" element={<HRDashboard />} />
-            <Route path="/supply-chain" element={<SupplyChainDashboard />} />
-            <Route path="/pos" element={<POSDashboard />} />
-            <Route path="/ecommerce" element={<EcommerceDashboard />} />
-            <Route path="/logistics" element={<LogisticsDashboard />} />
-            <Route path="/store-network" element={<StoreNetworkDashboard />} />
-            <Route path="/marketing" element={<MarketingDashboard />} />
-            <Route path="/operations" element={<OperationsDashboard />} />
-            <Route path="/production" element={<ProductionDashboard />} />
-            <Route
-              path="/administration"
-              element={<AdministrationDashboard />}
-            />
-            <Route path="/crm" element={<CRMDashboard />} />
-            <Route path="/maintenance" element={<MaintenanceDashboard />} />
-            <Route path="/legal" element={<LegalDashboard />} />
-            <Route path="/executive" element={<ExecutiveDashboard />} />
-            <Route path="/inventory" element={<InventoryDashboard />} />
-            <Route path="/accounting" element={<AccountingDashboard />} />
-            <Route
-              path="/product-management"
-              element={<ProductManagementDashboard />}
-            />
-            <Route
-              path="/administrative-services"
-              element={<AdministrativeServicesDashboard />}
-            />
+        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route
+            path="/login"
+            element={
+              <AuthContainer>
+                <LoginForm />
+              </AuthContainer>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <AuthContainer>
+                <RegisterForm />
+              </AuthContainer>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <AuthContainer>
+                <ForgotPasswordForm />
+              </AuthContainer>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <AuthContainer>
+                <ResetPasswordForm />
+              </AuthContainer>
+            }
+          />
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/finance" element={<FinanceDashboard />} />
+          <Route path="/hr" element={<HRDashboard />} />
+          <Route path="/supply-chain" element={<SupplyChainDashboard />} />
+          <Route path="/pos" element={<POSDashboard />} />
+          <Route path="/ecommerce" element={<EcommerceDashboard />} />
+          <Route path="/logistics" element={<LogisticsDashboard />} />
+          <Route path="/store-network" element={<StoreNetworkDashboard />} />
+          <Route path="/marketing" element={<MarketingDashboard />} />
+          <Route path="/operations" element={<OperationsDashboard />} />
+          <Route path="/production" element={<ProductionDashboard />} />
+          <Route path="/administration" element={<AdministrationDashboard />} />
+          <Route path="/crm" element={<CRMDashboard />} />
+          <Route path="/maintenance" element={<MaintenanceDashboard />} />
+          <Route path="/legal" element={<LegalDashboard />} />
+          <Route path="/executive" element={<ExecutiveDashboard />} />
+          <Route path="/inventory" element={<InventoryDashboard />} />
+          <Route path="/accounting" element={<AccountingDashboard />} />
+          <Route
+            path="/product-management"
+            element={<ProductManagementDashboard />}
+          />
+          <Route
+            path="/administrative-services"
+            element={<AdministrativeServicesDashboard />}
+          />
 
-            {/* Add this before the catchall route */}
-            {import.meta.env.VITE_TEMPO === "true" && (
-              <Route path="/tempobook/*" />
-            )}
+          {/* Add this before the catchall route */}
+          {import.meta.env.VITE_TEMPO === "true" && (
+            <Route path="/tempobook/*" />
+          )}
 
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-          {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-        </>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
       </Suspense>
     </AuthProvider>
   );

@@ -162,8 +162,12 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
   };
 
   const handleViewEntry = (entry: JournalEntry) => {
-    setSelectedEntry(entry);
+    // Make a deep copy of the entry to avoid reference issues
+    const entryCopy = JSON.parse(JSON.stringify(entry));
+    setSelectedEntry(entryCopy);
     setViewMode("details");
+    // Close any open dialogs
+    setIsFormOpen(false);
   };
 
   const handlePostEntry = (entry: JournalEntry) => {
@@ -371,8 +375,14 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({
       ) : (
         <JournalEntryDetails
           entry={selectedEntry!}
-          onBack={() => setViewMode("list")}
-          onEdit={handleEditEntry}
+          onBack={() => {
+            setViewMode("list");
+            setSelectedEntry(null);
+          }}
+          onEdit={(entry) => {
+            handleEditEntry(entry);
+            setViewMode("list");
+          }}
           onPost={handlePostEntry}
           onApprove={handleApproveEntry}
           onReject={handleRejectEntry}

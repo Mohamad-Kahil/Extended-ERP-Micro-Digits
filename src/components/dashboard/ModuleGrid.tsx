@@ -1,6 +1,10 @@
 import React from "react";
 import ModuleCard from "./ModuleCard";
 
+interface ModuleGridProps {
+  currentEntityId?: string;
+}
+
 const modules = [
   {
     id: "finance",
@@ -409,7 +413,7 @@ const modules = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+        <path d="m2 7 4.41-4.9A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
         <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
         <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
         <path d="M2 7h20" />
@@ -444,7 +448,13 @@ const modules = [
   },
 ];
 
-const ModuleGrid = () => {
+const ModuleGrid: React.FC<ModuleGridProps> = ({ currentEntityId = "1" }) => {
+  // Add entity ID to module routes
+  const modulesWithEntityId = modules.map((module) => ({
+    ...module,
+    href: `${module.href}?entityId=${currentEntityId}`,
+  }));
+
   return (
     <div>
       <div className="flex items-center justify-between mb-3">
@@ -490,13 +500,13 @@ const ModuleGrid = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-3">
-        {modules.map((module) => (
+        {modulesWithEntityId.map((module) => (
           <ModuleCard
             key={module.id}
             title={module.title}
             description={module.description}
             icon={module.icon}
-            href={`/${module.id}`}
+            href={module.href}
             color={module.color}
           />
         ))}

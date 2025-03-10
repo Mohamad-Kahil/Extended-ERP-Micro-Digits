@@ -1,0 +1,16 @@
+import React from 'react';
+import { AuthProvider } from '@/contexts/AuthContext';
+import LoginForm from '@/components/auth/LoginForm';
+import AuthContainer from '@/components/auth/AuthContainer';
+
+export default function LoginWithEntitySelectorStoryboard() {
+  return (
+    <AuthProvider>
+      <div className="min-h-screen bg-slate-950">
+        <AuthContainer>
+          <LoginForm />
+        </AuthContainer>
+      </div>
+    </AuthProvider>
+  );
+}

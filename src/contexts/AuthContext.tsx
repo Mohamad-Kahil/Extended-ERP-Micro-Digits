@@ -7,13 +7,27 @@ type AuthContextType = {
   user: User | null;
   loading: boolean;
   error: string | null;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  currentEntity: string;
+  currentEntityName: string;
+  signIn: (
+    email: string,
+    password: string,
+    entityId: string,
+  ) => Promise<{ error: any }>;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   resetPassword: (email: string) => Promise<{ error: any }>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// Entity name mapping
+const entityNames: Record<string, string> = {
+  "1": "Parent Company",
+  "2": "Subsidiary 1",
+  "3": "Subsidiary 2",
+  all: "All Entities",
+};
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -22,6 +36,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentEntity, setCurrentEntity] = useState<string>("1"); // Default to Parent Company
+  const [currentEntityName, setCurrentEntityName] =
+    useState<string>("Parent Company");
 
   useEffect(() => {
     // Get initial session
@@ -31,6 +48,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const { data } = await auth.getSession();
         setSession(data.session);
         setUser(data.session?.user ?? null);
+
+        // Get stored entity from localStorage if available
+        const storedEntity = localStorage.getItem("currentEntity");
+        if (storedEntity) {
+          setCurrentEntity(storedEntity);
+          setCurrentEntityName(entityNames[storedEntity] || storedEntity);
+        }
 
         // For development: create a fake user if no session exists
         if (!data.session) {
@@ -79,13 +103,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     };
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string, entityId: string) => {
     setLoading(true);
     setError(null);
     try {
       const { error } = await auth.signIn(email, password);
-      if (error) setError(error.message);
-      return { error };
+      if (error) {
+        setError(error.message);
+        return { error };
+      }
+
+      // Store selected entity
+      setCurrentEntity(entityId);
+      setCurrentEntityName(entityNames[entityId] || entityId);
+      localStorage.setItem("currentEntity", entityId);
+
+      return { error: null };
     } catch (err: any) {
       setError(err.message);
       return { error: err };
@@ -114,6 +147,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const { error } = await auth.signOut();
       if (error) setError(error.message);
+
+      // Clear stored entity on logout
+      localStorage.removeItem("currentEntity");
+
       return { error };
     } catch (err: any) {
       setError(err.message);
@@ -143,6 +180,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     user,
     loading,
     error,
+    currentEntity,
+    currentEntityName,
     signIn,
     signUp,
     signOut,

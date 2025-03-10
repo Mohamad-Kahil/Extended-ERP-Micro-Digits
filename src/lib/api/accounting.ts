@@ -1,417 +1,434 @@
 import { supabase } from "@/lib/supabase";
+import { Account } from "@/modules/Accounting/components/ChartOfAccounts/AccountList";
+import { JournalEntry } from "@/modules/Accounting/components/GeneralLedger/JournalEntryList";
 
 // Companies API
 export const companiesApi = {
-  getAll: async (entityId?: string) => {
-    let query = supabase.from("companies").select("*").order("name");
-
-    if (entityId) {
-      query = query.eq("entity_id", entityId);
-    }
-
-    const { data, error } = await query;
+  getAll: async () => {
+    const { data, error } = await supabase.from("companies").select("*");
     if (error) throw error;
     return data;
   },
-
   getById: async (id: string) => {
     const { data, error } = await supabase
       .from("companies")
       .select("*")
       .eq("id", id)
       .single();
-
     if (error) throw error;
     return data;
   },
-
   create: async (company: any) => {
-    try {
-      // Ensure entity_id is set if available
-      if (!company.entity_id && company.entity_name) {
-        // Try to find entity_id by name
-        const { data: entities } = await supabase
-          .from("intercompany_entities")
-          .select("id")
-          .eq("name", company.entity_name)
-          .limit(1);
-
-        if (entities && entities.length > 0) {
-          company.entity_id = entities[0].id;
-        }
-        delete company.entity_name; // Remove the temporary field
-      }
-
-      const { data, error } = await supabase
-        .from("companies")
-        .insert(company)
-        .select();
-
-      if (error) throw error;
-      return data[0];
-    } catch (err) {
-      console.error("Error in companiesApi.create:", err);
-
-      // For development: return mock data instead of throwing
-      // In production, you would remove this and let the error propagate
-      return {
-        id: `mock-${Date.now()}`,
-        name: company.name,
-        legal_structure: company.legal_structure,
-        base_currency: company.base_currency,
-        reporting_currency: company.reporting_currency,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        ...company,
-      };
-    }
+    const { data, error } = await supabase
+      .from("companies")
+      .insert(company)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
   },
-
   update: async (id: string, company: any) => {
     const { data, error } = await supabase
       .from("companies")
       .update(company)
       .eq("id", id)
-      .select();
-
+      .select()
+      .single();
     if (error) throw error;
-    return data[0];
+    return data;
   },
-
   delete: async (id: string) => {
     const { error } = await supabase.from("companies").delete().eq("id", id);
+    if (error) throw error;
+    return true;
+  },
+};
 
+// Entities API
+export const intercompanyTransactionsApi = {
+  getAll: async () => {
+    const { data, error } = await supabase
+      .from("intercompany_transactions")
+      .select("*");
+    if (error) throw error;
+    return data;
+  },
+  getById: async (id: string) => {
+    const { data, error } = await supabase
+      .from("intercompany_transactions")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  create: async (transaction: any) => {
+    const { data, error } = await supabase
+      .from("intercompany_transactions")
+      .insert(transaction)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  update: async (id: string, transaction: any) => {
+    const { data, error } = await supabase
+      .from("intercompany_transactions")
+      .update(transaction)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  delete: async (id: string) => {
+    const { error } = await supabase
+      .from("intercompany_transactions")
+      .delete()
+      .eq("id", id);
+    if (error) throw error;
+    return true;
+  },
+};
+
+export const intercompanyEntitiesApi = {
+  getAll: async () => {
+    const { data, error } = await supabase.from("entities").select("*");
+    if (error) throw error;
+    return data;
+  },
+  getById: async (id: string) => {
+    const { data, error } = await supabase
+      .from("entities")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  create: async (entity: any) => {
+    const { data, error } = await supabase
+      .from("entities")
+      .insert(entity)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  update: async (id: string, entity: any) => {
+    const { data, error } = await supabase
+      .from("entities")
+      .update(entity)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  },
+  delete: async (id: string) => {
+    const { error } = await supabase.from("entities").delete().eq("id", id);
     if (error) throw error;
     return true;
   },
 };
 
 // Chart of Accounts API
-export const chartOfAccountsApi = {
-  getAll: async (companyId?: string, entityId?: string) => {
-    let query = supabase
-      .from("chart_of_accounts")
-      .select("*")
-      .order("account_code");
+export const fetchAccounts = async (entityId?: string) => {
+  let query = supabase.from("accounts").select("*");
 
-    if (companyId) {
-      query = query.eq("company_id", companyId);
-    }
+  if (entityId && entityId !== "all") {
+    query = query.eq("entity_id", entityId);
+  }
 
-    if (entityId) {
-      query = query.eq("entity_id", entityId);
-    }
+  const { data, error } = await query.order("account_number");
 
-    const { data, error } = await query;
-    if (error) throw error;
-    return data;
-  },
+  if (error) {
+    console.error("Error fetching accounts:", error);
+    throw error;
+  }
 
-  getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from("chart_of_accounts")
-      .select("*")
-      .eq("id", id)
-      .single();
+  // Convert flat structure to hierarchical
+  return buildAccountHierarchy(data || []);
+};
 
-    if (error) throw error;
-    return data;
-  },
+export const createAccount = async (
+  account: Omit<Account, "id" | "balance" | "level" | "children">,
+) => {
+  const { data, error } = await supabase
+    .from("accounts")
+    .insert({
+      account_number: account.accountNumber,
+      account_name: account.accountName,
+      account_type: account.accountType,
+      entity_id: account.entityId,
+      parent_account_id: account.parentAccountId,
+      description: account.description,
+      is_active: account.isActive,
+      reporting_category: account.reportingCategory,
+      tax_code: account.taxCode,
+      balance: 0,
+      level: account.parentAccountId ? 1 : 0, // This will be recalculated properly on the server
+    })
+    .select()
+    .single();
 
-  create: async (account: any) => {
-    // Ensure entity_id is set if available
-    if (!account.entity_id && account.entity_name) {
-      // Try to find entity_id by name
-      const { data: entities } = await supabase
-        .from("intercompany_entities")
-        .select("id")
-        .eq("name", account.entity_name)
-        .limit(1);
+  if (error) {
+    console.error("Error creating account:", error);
+    throw error;
+  }
 
-      if (entities && entities.length > 0) {
-        account.entity_id = entities[0].id;
-      }
-      delete account.entity_name; // Remove the temporary field
-    }
+  return data;
+};
 
-    const { data, error } = await supabase
-      .from("chart_of_accounts")
-      .insert(account)
-      .select();
+export const updateAccount = async (
+  id: string,
+  account: Partial<Omit<Account, "id" | "balance" | "level" | "children">>,
+) => {
+  const { data, error } = await supabase
+    .from("accounts")
+    .update({
+      account_number: account.accountNumber,
+      account_name: account.accountName,
+      account_type: account.accountType,
+      entity_id: account.entityId,
+      parent_account_id: account.parentAccountId,
+      description: account.description,
+      is_active: account.isActive,
+      reporting_category: account.reportingCategory,
+      tax_code: account.taxCode,
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-    if (error) throw error;
-    return data[0];
-  },
+  if (error) {
+    console.error("Error updating account:", error);
+    throw error;
+  }
 
-  update: async (id: string, account: any) => {
-    const { data, error } = await supabase
-      .from("chart_of_accounts")
-      .update(account)
-      .eq("id", id)
-      .select();
+  return data;
+};
 
-    if (error) throw error;
-    return data[0];
-  },
+export const deleteAccount = async (id: string) => {
+  const { error } = await supabase.from("accounts").delete().eq("id", id);
 
-  delete: async (id: string) => {
-    const { error } = await supabase
-      .from("chart_of_accounts")
-      .delete()
-      .eq("id", id);
+  if (error) {
+    console.error("Error deleting account:", error);
+    throw error;
+  }
 
-    if (error) throw error;
-    return true;
-  },
+  return true;
+};
+
+export const getAccountById = async (id: string) => {
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching account:", error);
+    throw error;
+  }
+
+  return data;
 };
 
 // Journal Entries API
-export const journalEntriesApi = {
-  getAll: async (companyId: string, entityId?: string) => {
-    let query = supabase
-      .from("journal_entries")
-      .select("*")
-      .eq("company_id", companyId)
-      .order("entry_date", { ascending: false });
+export const fetchJournalEntries = async (entityId?: string) => {
+  let query = supabase.from("journal_entries").select(`
+    *,
+    journal_entry_items:journal_entry_items(*, account:accounts(*))
+  `);
 
-    if (entityId) {
-      query = query.eq("entity_id", entityId);
-    }
+  if (entityId && entityId !== "all") {
+    query = query.eq("entity_id", entityId);
+  }
 
-    const { data, error } = await query;
-    if (error) throw error;
-    return data;
-  },
+  const { data, error } = await query.order("date", { ascending: false });
 
-  getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from("journal_entries")
-      .select("*, journal_entry_lines(*)")
-      .eq("id", id)
-      .single();
+  if (error) {
+    console.error("Error fetching journal entries:", error);
+    throw error;
+  }
 
-    if (error) throw error;
-    return data;
-  },
-
-  create: async (journalEntry: any, journalLines: any[]) => {
-    // Ensure entity_id is set if available
-    if (!journalEntry.entity_id && journalEntry.entity_name) {
-      // Try to find entity_id by name
-      const { data: entities } = await supabase
-        .from("intercompany_entities")
-        .select("id")
-        .eq("name", journalEntry.entity_name)
-        .limit(1);
-
-      if (entities && entities.length > 0) {
-        journalEntry.entity_id = entities[0].id;
-      }
-      delete journalEntry.entity_name; // Remove the temporary field
-    }
-
-    // Start a transaction
-    const { data: entry, error: entryError } = await supabase
-      .from("journal_entries")
-      .insert(journalEntry)
-      .select();
-
-    if (entryError) throw entryError;
-
-    // Add the journal entry ID and entity_id to each line
-    const linesWithEntryId = journalLines.map((line) => ({
-      ...line,
-      journal_entry_id: entry[0].id,
-      entity_id: journalEntry.entity_id, // Propagate entity_id to lines
-    }));
-
-    const { error: linesError } = await supabase
-      .from("journal_entry_lines")
-      .insert(linesWithEntryId);
-
-    if (linesError) throw linesError;
-
-    return entry[0];
-  },
-
-  update: async (id: string, journalEntry: any) => {
-    const { data, error } = await supabase
-      .from("journal_entries")
-      .update(journalEntry)
-      .eq("id", id)
-      .select();
-
-    if (error) throw error;
-    return data[0];
-  },
-
-  delete: async (id: string) => {
-    // Journal entry lines will be deleted automatically due to CASCADE
-    const { error } = await supabase
-      .from("journal_entries")
-      .delete()
-      .eq("id", id);
-
-    if (error) throw error;
-    return true;
-  },
+  return data;
 };
 
-// Intercompany Entities API
-export const intercompanyEntitiesApi = {
-  getAll: async () => {
-    const { data, error } = await supabase
-      .from("intercompany_entities")
-      .select("*")
-      .order("name");
+export const createJournalEntry = async (
+  entry: Omit<JournalEntry, "id" | "createdAt">,
+) => {
+  // Start a transaction
+  const { data, error } = await supabase.rpc("create_journal_entry", {
+    p_entry_number: entry.entryNumber,
+    p_date: entry.date,
+    p_description: entry.description,
+    p_reference: entry.reference || null,
+    p_amount: entry.amount,
+    p_entity_id: entry.entityId,
+    p_status: entry.status,
+    p_created_by:
+      supabase.auth.getUser().then((res) => res.data.user?.id) || null,
+    p_line_items: entry.lineItems.map((item) => ({
+      account_id: item.accountId,
+      description: item.description || null,
+      debit: item.debit || null,
+      credit: item.credit || null,
+    })),
+  });
 
-    if (error) throw error;
-    return data;
-  },
+  if (error) {
+    console.error("Error creating journal entry:", error);
+    throw error;
+  }
 
-  getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from("intercompany_entities")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if (error) throw error;
-    return data;
-  },
-
-  create: async (entity: any) => {
-    const { data, error } = await supabase
-      .from("intercompany_entities")
-      .insert(entity)
-      .select();
-
-    if (error) throw error;
-    return data[0];
-  },
-
-  update: async (id: string, entity: any) => {
-    const { data, error } = await supabase
-      .from("intercompany_entities")
-      .update(entity)
-      .eq("id", id)
-      .select();
-
-    if (error) throw error;
-    return data[0];
-  },
-
-  delete: async (id: string) => {
-    const { error } = await supabase
-      .from("intercompany_entities")
-      .delete()
-      .eq("id", id);
-
-    if (error) throw error;
-    return true;
-  },
+  return data;
 };
 
-// Intercompany Transactions API
-export const intercompanyTransactionsApi = {
-  getAll: async (entityId?: string) => {
-    let query = supabase
-      .from("intercompany_transactions")
-      .select(
-        `
-        *,
-        from_entity:intercompany_entities!intercompany_transactions_from_entity_id_fkey(name),
-        to_entity:intercompany_entities!intercompany_transactions_to_entity_id_fkey(name)
-      `,
-      )
-      .order("transaction_date", { ascending: false });
+export const updateJournalEntry = async (
+  id: string,
+  entry: Partial<Omit<JournalEntry, "id" | "createdAt">>,
+) => {
+  // Start a transaction
+  const { data, error } = await supabase.rpc("update_journal_entry", {
+    p_id: id,
+    p_date: entry.date,
+    p_description: entry.description,
+    p_reference: entry.reference || null,
+    p_entity_id: entry.entityId,
+    p_line_items:
+      entry.lineItems?.map((item) => ({
+        id: item.id,
+        account_id: item.accountId,
+        description: item.description || null,
+        debit: item.debit || null,
+        credit: item.credit || null,
+      })) || [],
+  });
 
-    if (entityId) {
-      query = query.or(
-        `from_entity_id.eq.${entityId},to_entity_id.eq.${entityId}`,
-      );
-    }
+  if (error) {
+    console.error("Error updating journal entry:", error);
+    throw error;
+  }
 
-    const { data, error } = await query;
-    if (error) throw error;
-    return data;
-  },
-
-  getByEntity: async (entityId: string) => {
-    const { data, error } = await supabase
-      .from("intercompany_transactions")
-      .select(
-        `
-        *,
-        from_entity:intercompany_entities!intercompany_transactions_from_entity_id_fkey(name),
-        to_entity:intercompany_entities!intercompany_transactions_to_entity_id_fkey(name)
-      `,
-      )
-      .or(`from_entity_id.eq.${entityId},to_entity_id.eq.${entityId}`)
-      .order("transaction_date", { ascending: false });
-
-    if (error) throw error;
-    return data;
-  },
-
-  getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from("intercompany_transactions")
-      .select(
-        `
-        *,
-        from_entity:intercompany_entities!intercompany_transactions_from_entity_id_fkey(*),
-        to_entity:intercompany_entities!intercompany_transactions_to_entity_id_fkey(*)
-      `,
-      )
-      .eq("id", id)
-      .single();
-
-    if (error) throw error;
-    return data;
-  },
-
-  create: async (transaction: any) => {
-    const { data, error } = await supabase
-      .from("intercompany_transactions")
-      .insert(transaction)
-      .select();
-
-    if (error) throw error;
-    return data[0];
-  },
-
-  update: async (id: string, transaction: any) => {
-    try {
-      const { data, error } = await supabase
-        .from("intercompany_transactions")
-        .update(transaction)
-        .eq("id", id)
-        .select();
-
-      if (error) throw error;
-      return data[0];
-    } catch (err) {
-      console.error("Error in intercompanyTransactionsApi.update:", err);
-
-      // For development: return mock data instead of throwing
-      return {
-        id,
-        ...transaction,
-        transaction_ref: `IC-2023-${1000 + parseInt(id)}`,
-        transaction_date: new Date().toISOString().split("T")[0],
-        updated_at: new Date().toISOString(),
-      };
-    }
-  },
-
-  delete: async (id: string) => {
-    const { error } = await supabase
-      .from("intercompany_transactions")
-      .delete()
-      .eq("id", id);
-
-    if (error) throw error;
-    return true;
-  },
+  return data;
 };
+
+export const deleteJournalEntry = async (id: string) => {
+  const { error } = await supabase
+    .from("journal_entries")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting journal entry:", error);
+    throw error;
+  }
+
+  return true;
+};
+
+export const getJournalEntryById = async (id: string) => {
+  const { data, error } = await supabase
+    .from("journal_entries")
+    .select(
+      `
+    *,
+    journal_entry_items:journal_entry_items(*, account:accounts(*))
+  `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Error fetching journal entry:", error);
+    throw error;
+  }
+
+  return data;
+};
+
+export const postJournalEntry = async (id: string) => {
+  const { data, error } = await supabase.rpc("post_journal_entry", {
+    p_id: id,
+  });
+
+  if (error) {
+    console.error("Error posting journal entry:", error);
+    throw error;
+  }
+
+  return data;
+};
+
+export const approveJournalEntry = async (id: string, notes?: string) => {
+  const { data, error } = await supabase.rpc("approve_journal_entry", {
+    p_id: id,
+    p_notes: notes || null,
+  });
+
+  if (error) {
+    console.error("Error approving journal entry:", error);
+    throw error;
+  }
+
+  return data;
+};
+
+export const rejectJournalEntry = async (id: string, notes?: string) => {
+  const { data, error } = await supabase.rpc("reject_journal_entry", {
+    p_id: id,
+    p_notes: notes || null,
+  });
+
+  if (error) {
+    console.error("Error rejecting journal entry:", error);
+    throw error;
+  }
+
+  return data;
+};
+
+// Helper function to build account hierarchy
+function buildAccountHierarchy(accounts: any[]): Account[] {
+  const accountMap = new Map();
+  const rootAccounts: Account[] = [];
+
+  // First pass: Create all account objects and store in map
+  accounts.forEach((account) => {
+    accountMap.set(account.id, {
+      id: account.id,
+      accountNumber: account.account_number,
+      accountName: account.account_name,
+      accountType: account.account_type,
+      entityId: account.entity_id,
+      parentAccountId: account.parent_account_id,
+      description: account.description,
+      isActive: account.is_active,
+      reportingCategory: account.reporting_category,
+      taxCode: account.tax_code,
+      balance: parseFloat(account.balance) || 0,
+      level: account.level || 0,
+      children: [],
+    });
+  });
+
+  // Second pass: Build the hierarchy
+  accounts.forEach((account) => {
+    const accountObj = accountMap.get(account.id);
+    if (
+      account.parent_account_id &&
+      accountMap.has(account.parent_account_id)
+    ) {
+      const parent = accountMap.get(account.parent_account_id);
+      parent.children.push(accountObj);
+      // Update level based on parent
+      accountObj.level = parent.level + 1;
+    } else {
+      rootAccounts.push(accountObj);
+    }
+  });
+
+  return rootAccounts;
+}

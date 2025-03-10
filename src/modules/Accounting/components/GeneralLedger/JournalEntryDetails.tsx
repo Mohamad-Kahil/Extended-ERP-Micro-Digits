@@ -30,6 +30,18 @@ export function JournalEntryDetails({
   onApprove,
   onReject,
 }: JournalEntryDetailsProps) {
+  // Ensure we have a valid entry object
+  if (!entry) {
+    return (
+      <div className="p-4 text-center">
+        <p>Journal entry not found or data is loading...</p>
+        <Button variant="ghost" onClick={onBack} className="mt-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Journal Entries
+        </Button>
+      </div>
+    );
+  }
   const getStatusColor = (status: string) => {
     switch (status) {
       case "draft":

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,13 @@ import { AccountList, Account } from "./AccountList";
 import { AccountForm } from "./AccountForm";
 import { AccountDetails } from "./AccountDetails";
 import { Download, Upload, FileText } from "lucide-react";
+import {
+  fetchAccounts,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+} from "@/lib/api/accounting";
+import { useToast } from "@/components/ui/use-toast";
 
 interface ChartOfAccountsProps {
   currentEntity?: string;
@@ -37,297 +44,9 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
     { id: "3", name: "Subsidiary 2" },
   ],
 }) => {
-  // Sample data for demonstration
-  const [accounts, setAccounts] = useState<Account[]>([
-    {
-      id: "1",
-      accountNumber: "1000",
-      accountName: "Assets",
-      accountType: "asset",
-      entityId: "1",
-      isActive: true,
-      balance: 0,
-      level: 0,
-      children: [
-        {
-          id: "1.1",
-          accountNumber: "1100",
-          accountName: "Current Assets",
-          accountType: "asset",
-          entityId: "1",
-          parentAccountId: "1",
-          isActive: true,
-          balance: 0,
-          level: 1,
-          children: [
-            {
-              id: "1.1.1",
-              accountNumber: "1110",
-              accountName: "Cash",
-              accountType: "asset",
-              entityId: "1",
-              parentAccountId: "1.1",
-              isActive: true,
-              balance: 125000,
-              level: 2,
-            },
-            {
-              id: "1.1.2",
-              accountNumber: "1120",
-              accountName: "Accounts Receivable",
-              accountType: "asset",
-              parentAccountId: "1.1",
-              isActive: true,
-              balance: 75000,
-              level: 2,
-            },
-            {
-              id: "1.1.3",
-              accountNumber: "1130",
-              accountName: "Inventory",
-              accountType: "asset",
-              parentAccountId: "1.1",
-              isActive: true,
-              balance: 50000,
-              level: 2,
-            },
-          ],
-        },
-        {
-          id: "1.2",
-          accountNumber: "1200",
-          accountName: "Fixed Assets",
-          accountType: "asset",
-          parentAccountId: "1",
-          isActive: true,
-          balance: 0,
-          level: 1,
-          children: [
-            {
-              id: "1.2.1",
-              accountNumber: "1210",
-              accountName: "Property & Equipment",
-              accountType: "asset",
-              parentAccountId: "1.2",
-              isActive: true,
-              balance: 200000,
-              level: 2,
-            },
-            {
-              id: "1.2.2",
-              accountNumber: "1220",
-              accountName: "Accumulated Depreciation",
-              accountType: "asset",
-              parentAccountId: "1.2",
-              isActive: true,
-              balance: -50000,
-              level: 2,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "2",
-      accountNumber: "2000",
-      accountName: "Liabilities",
-      accountType: "liability",
-      isActive: true,
-      balance: 0,
-      level: 0,
-      children: [
-        {
-          id: "2.1",
-          accountNumber: "2100",
-          accountName: "Current Liabilities",
-          accountType: "liability",
-          parentAccountId: "2",
-          isActive: true,
-          balance: 0,
-          level: 1,
-          children: [
-            {
-              id: "2.1.1",
-              accountNumber: "2110",
-              accountName: "Accounts Payable",
-              accountType: "liability",
-              parentAccountId: "2.1",
-              isActive: true,
-              balance: 45000,
-              level: 2,
-            },
-            {
-              id: "2.1.2",
-              accountNumber: "2120",
-              accountName: "Accrued Expenses",
-              accountType: "liability",
-              parentAccountId: "2.1",
-              isActive: true,
-              balance: 15000,
-              level: 2,
-            },
-          ],
-        },
-        {
-          id: "2.2",
-          accountNumber: "2200",
-          accountName: "Long-term Liabilities",
-          accountType: "liability",
-          parentAccountId: "2",
-          isActive: true,
-          balance: 0,
-          level: 1,
-          children: [
-            {
-              id: "2.2.1",
-              accountNumber: "2210",
-              accountName: "Long-term Debt",
-              accountType: "liability",
-              parentAccountId: "2.2",
-              isActive: true,
-              balance: 150000,
-              level: 2,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "3",
-      accountNumber: "3000",
-      accountName: "Equity",
-      accountType: "equity",
-      isActive: true,
-      balance: 0,
-      level: 0,
-      children: [
-        {
-          id: "3.1",
-          accountNumber: "3100",
-          accountName: "Common Stock",
-          accountType: "equity",
-          parentAccountId: "3",
-          isActive: true,
-          balance: 100000,
-          level: 1,
-        },
-        {
-          id: "3.2",
-          accountNumber: "3200",
-          accountName: "Retained Earnings",
-          accountType: "equity",
-          parentAccountId: "3",
-          isActive: true,
-          balance: 90000,
-          level: 1,
-        },
-      ],
-    },
-    {
-      id: "4",
-      accountNumber: "4000",
-      accountName: "Revenue",
-      accountType: "revenue",
-      isActive: true,
-      balance: 0,
-      level: 0,
-      children: [
-        {
-          id: "4.1",
-          accountNumber: "4100",
-          accountName: "Product Sales",
-          accountType: "revenue",
-          parentAccountId: "4",
-          isActive: true,
-          balance: 250000,
-          level: 1,
-        },
-        {
-          id: "4.2",
-          accountNumber: "4200",
-          accountName: "Service Revenue",
-          accountType: "revenue",
-          parentAccountId: "4",
-          isActive: true,
-          balance: 150000,
-          level: 1,
-        },
-      ],
-    },
-    {
-      id: "5",
-      accountNumber: "5000",
-      accountName: "Expenses",
-      accountType: "expense",
-      isActive: true,
-      balance: 0,
-      level: 0,
-      children: [
-        {
-          id: "5.1",
-          accountNumber: "5100",
-          accountName: "Cost of Goods Sold",
-          accountType: "expense",
-          parentAccountId: "5",
-          isActive: true,
-          balance: 125000,
-          level: 1,
-        },
-        {
-          id: "5.2",
-          accountNumber: "5200",
-          accountName: "Operating Expenses",
-          accountType: "expense",
-          parentAccountId: "5",
-          isActive: true,
-          balance: 0,
-          level: 1,
-          children: [
-            {
-              id: "5.2.1",
-              accountNumber: "5210",
-              accountName: "Salaries & Wages",
-              accountType: "expense",
-              parentAccountId: "5.2",
-              isActive: true,
-              balance: 85000,
-              level: 2,
-            },
-            {
-              id: "5.2.2",
-              accountNumber: "5220",
-              accountName: "Rent",
-              accountType: "expense",
-              parentAccountId: "5.2",
-              isActive: true,
-              balance: 25000,
-              level: 2,
-            },
-            {
-              id: "5.2.3",
-              accountNumber: "5230",
-              accountName: "Utilities",
-              accountType: "expense",
-              parentAccountId: "5.2",
-              isActive: true,
-              balance: 10000,
-              level: 2,
-            },
-            {
-              id: "5.2.4",
-              accountNumber: "5240",
-              accountName: "Marketing & Advertising",
-              accountType: "expense",
-              parentAccountId: "5.2",
-              isActive: true,
-              balance: 15000,
-              level: 2,
-            },
-          ],
-        },
-      ],
-    },
-  ]);
+  // State for accounts data
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // State for UI management
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -335,6 +54,32 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [viewMode, setViewMode] = useState<"list" | "details">("list");
   const [editMode, setEditMode] = useState(false);
+
+  const { toast } = useToast();
+
+  // Fetch accounts when component mounts or entity changes
+  useEffect(() => {
+    const loadAccounts = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchAccounts(currentEntityId);
+        setAccounts(data);
+      } catch (error) {
+        console.error("Error loading accounts:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load accounts. Please try again.",
+          variant: "destructive",
+        });
+        // Fallback to empty array
+        setAccounts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAccounts();
+  }, [currentEntityId, toast]);
 
   // Filter accounts by entity and flatten for parent selection
   const filterAndFlattenAccounts = (
@@ -392,12 +137,16 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
     setSelectedAccount(null);
     setEditMode(false);
     setIsFormOpen(true);
+    // Reset view mode to list in case we were in details view
+    setViewMode("list");
   };
 
   const handleEditAccount = (account: Account) => {
     setSelectedAccount(account);
     setEditMode(true);
     setIsFormOpen(true);
+    // Reset view mode to list in case we were in details view
+    setViewMode("list");
   };
 
   const handleDeleteAccount = (accountId: string) => {
@@ -412,11 +161,13 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
     }
   };
 
-  const confirmDeleteAccount = () => {
-    // In a real app, you would call an API to delete the account
-    // For now, we'll just update the state
-    if (selectedAccount) {
-      // This is a simplified version - in a real app, you'd need to handle the hierarchy properly
+  const confirmDeleteAccount = async () => {
+    if (!selectedAccount) return;
+
+    try {
+      await deleteAccount(selectedAccount.id);
+
+      // Update local state
       const removeAccount = (accounts: Account[]): Account[] => {
         return accounts
           .filter((account) => account.id !== selectedAccount.id)
@@ -432,80 +183,113 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
       };
 
       setAccounts(removeAccount(accounts));
+      toast({
+        title: "Success",
+        description: "Account deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete account. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
       setIsDeleteDialogOpen(false);
       setSelectedAccount(null);
     }
   };
 
   const handleViewAccount = (account: Account) => {
-    setSelectedAccount(account);
+    setSelectedAccount({ ...account });
     setViewMode("details");
+    // Close any open dialogs
+    setIsFormOpen(false);
+    setIsDeleteDialogOpen(false);
   };
 
-  const handleFormSubmit = (formData: any) => {
-    // In a real app, you would call an API to save the account
-    // For now, we'll just update the state
-    if (editMode && selectedAccount) {
-      // Update existing account
-      const updateAccount = (accounts: Account[]): Account[] => {
-        return accounts.map((account) => {
-          if (account.id === selectedAccount.id) {
-            return { ...account, ...formData, balance: account.balance };
-          }
-          if (account.children && account.children.length > 0) {
-            return {
-              ...account,
-              children: updateAccount(account.children),
-            };
-          }
-          return account;
+  const handleFormSubmit = async (formData: any) => {
+    try {
+      if (editMode && selectedAccount) {
+        // Update existing account
+        const updatedAccount = await updateAccount(selectedAccount.id, {
+          accountNumber: formData.accountNumber,
+          accountName: formData.accountName,
+          accountType: formData.accountType,
+          entityId: formData.entityId,
+          parentAccountId: formData.parentAccount || null,
+          description: formData.description,
+          isActive: formData.isActive,
+          reportingCategory: formData.reportingCategory,
+          taxCode: formData.taxCode,
         });
-      };
 
-      setAccounts(updateAccount(accounts));
-    } else {
-      // Create new account
-      const newAccount: Account = {
-        id: `new-${Date.now()}`, // In a real app, this would come from the backend
-        ...formData,
-        balance: 0,
-        level: formData.parentAccount ? 1 : 0, // Simplified level calculation
-        isActive: true,
-        entityId: formData.entityId || currentEntityId,
-      };
-
-      // If there's a parent account, add it as a child
-      if (formData.parentAccount) {
-        const addChildAccount = (accounts: Account[]): Account[] => {
+        // Update local state
+        const updateAccountInState = (accounts: Account[]): Account[] => {
           return accounts.map((account) => {
-            if (account.id === formData.parentAccount) {
+            if (account.id === selectedAccount.id) {
               return {
                 ...account,
-                children: [
-                  ...(account.children || []),
-                  { ...newAccount, level: account.level + 1 },
-                ],
+                accountNumber: formData.accountNumber,
+                accountName: formData.accountName,
+                accountType: formData.accountType,
+                entityId: formData.entityId,
+                parentAccountId: formData.parentAccount || null,
+                description: formData.description,
+                isActive: formData.isActive,
+                reportingCategory: formData.reportingCategory,
+                taxCode: formData.taxCode,
               };
             }
             if (account.children && account.children.length > 0) {
               return {
                 ...account,
-                children: addChildAccount(account.children),
+                children: updateAccountInState(account.children),
               };
             }
             return account;
           });
         };
 
-        setAccounts(addChildAccount(accounts));
+        setAccounts(updateAccountInState(accounts));
+        toast({
+          title: "Success",
+          description: "Account updated successfully",
+        });
       } else {
-        // Add as a top-level account
-        setAccounts([...accounts, newAccount]);
-      }
-    }
+        // Create new account
+        const newAccount = await createAccount({
+          accountNumber: formData.accountNumber,
+          accountName: formData.accountName,
+          accountType: formData.accountType,
+          entityId: formData.entityId || currentEntityId,
+          parentAccountId: formData.parentAccount || null,
+          description: formData.description,
+          isActive: formData.isActive,
+          reportingCategory: formData.reportingCategory,
+          taxCode: formData.taxCode,
+        });
 
-    setIsFormOpen(false);
-    setSelectedAccount(null);
+        // Refresh accounts to get the updated hierarchy
+        const updatedAccounts = await fetchAccounts(currentEntityId);
+        setAccounts(updatedAccounts);
+
+        toast({
+          title: "Success",
+          description: "Account created successfully",
+        });
+      }
+    } catch (error) {
+      console.error("Error saving account:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save account. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsFormOpen(false);
+      setSelectedAccount(null);
+    }
   };
 
   return (
@@ -540,13 +324,19 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
               </div>
             </CardHeader>
             <CardContent className="pt-6">
-              <AccountList
-                accounts={filteredAccounts}
-                onAddAccount={handleAddAccount}
-                onEditAccount={handleEditAccount}
-                onDeleteAccount={handleDeleteAccount}
-                onViewAccount={handleViewAccount}
-              />
+              {loading ? (
+                <div className="flex justify-center items-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+                </div>
+              ) : (
+                <AccountList
+                  accounts={filteredAccounts}
+                  onAddAccount={handleAddAccount}
+                  onEditAccount={handleEditAccount}
+                  onDeleteAccount={handleDeleteAccount}
+                  onViewAccount={handleViewAccount}
+                />
+              )}
             </CardContent>
           </Card>
 
@@ -559,7 +349,22 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
                 </DialogTitle>
               </DialogHeader>
               <AccountForm
-                initialData={selectedAccount || undefined}
+                initialData={
+                  selectedAccount
+                    ? {
+                        accountNumber: selectedAccount.accountNumber,
+                        accountName: selectedAccount.accountName,
+                        accountType: selectedAccount.accountType,
+                        entityId: selectedAccount.entityId,
+                        parentAccount: selectedAccount.parentAccountId || "",
+                        description: selectedAccount.description || "",
+                        isActive: selectedAccount.isActive,
+                        reportingCategory:
+                          selectedAccount.reportingCategory || "",
+                        taxCode: selectedAccount.taxCode || "",
+                      }
+                    : undefined
+                }
                 onSubmit={handleFormSubmit}
                 onCancel={() => setIsFormOpen(false)}
                 parentAccounts={parentAccountOptions}
@@ -604,8 +409,14 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
       ) : (
         <AccountDetails
           account={selectedAccount!}
-          onBack={() => setViewMode("list")}
-          onEdit={handleEditAccount}
+          onBack={() => {
+            setViewMode("list");
+            setSelectedAccount(null);
+          }}
+          onEdit={(account) => {
+            handleEditAccount(account);
+            setViewMode("list");
+          }}
         />
       )}
     </div>

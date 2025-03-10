@@ -16,6 +16,18 @@ export function AccountDetails({
   onBack,
   onEdit,
 }: AccountDetailsProps) {
+  // Ensure we have a valid account object
+  if (!account) {
+    return (
+      <div className="p-4 text-center">
+        <p>Account not found or data is loading...</p>
+        <Button variant="ghost" onClick={onBack} className="mt-4">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Chart of Accounts
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">

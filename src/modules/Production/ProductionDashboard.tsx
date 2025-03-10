@@ -3,13 +3,6 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import ProductionOverview from "./components/ProductionOverview";
-import ProductionPlanning from "./components/ProductionPlanning/ProductionPlanning";
-import ProductionScheduling from "./components/Scheduling/ProductionScheduling";
-import QualityControl from "./components/QualityControl/QualityControl";
-import MaintenanceManagement from "./components/Maintenance/MaintenanceManagement";
-import AssemblyLineManagement from "./components/AssemblyLines/AssemblyLineManagement";
-import ProductionInventory from "./components/ProductionInventory/ProductionInventory";
-import ProductionReporting from "./components/ProductionReporting/ProductionReporting";
 
 const ProductionDashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
@@ -29,20 +22,6 @@ const ProductionDashboard = () => {
     switch (activeSection) {
       case "overview":
         return <ProductionOverview />;
-      case "planning":
-        return <ProductionPlanning />;
-      case "scheduling":
-        return <ProductionScheduling />;
-      case "quality":
-        return <QualityControl />;
-      case "maintenance":
-        return <MaintenanceManagement />;
-      case "assembly":
-        return <AssemblyLineManagement />;
-      case "inventory":
-        return <ProductionInventory />;
-      case "reporting":
-        return <ProductionReporting />;
       default:
         return <ProductionOverview />;
     }

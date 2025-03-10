@@ -66,6 +66,14 @@ const Header = ({
 
   const displayTitle = moduleTitle || getDefaultModuleTitle();
 
+  // Entity name mapping
+  const entityMap = {
+    "1": "Parent Company",
+    "2": "Subsidiary 1",
+    "3": "Subsidiary 2",
+    all: "All Entities",
+  };
+
   return (
     <header className="flex h-12 items-center justify-between border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm px-3 py-1">
       <div className="flex items-center space-x-4">
@@ -92,27 +100,16 @@ const Header = ({
             </svg>
           </button>
         )}
-        <h1 className="text-xl font-bold text-white">Nexus {displayTitle}</h1>
+        <div className="flex items-center">
+          <h1 className="text-xl font-bold text-white">Nexus {displayTitle}</h1>
+        </div>
 
-        {currentEntity && availableEntities.length > 0 && (
-          <div className="hidden md:flex items-center ml-4">
-            <div className="text-sm text-slate-400 mr-2">Current Entity:</div>
-            <div className="bg-emerald-600 rounded-md h-8 flex items-center shadow-md">
-              <Select value={currentEntity} onValueChange={onEntityChange}>
-                <SelectTrigger className="w-[180px] h-8 bg-transparent border-none focus:ring-0 text-white font-medium">
-                  <SelectValue placeholder="Select Entity" />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableEntities.map((entity) => (
-                    <SelectItem key={entity} value={entity}>
-                      {entity}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        )}
+        <div className="absolute left-1/2 transform -translate-x-1/2 bg-yellow-500/20 px-4 py-1 rounded-md border border-yellow-500/30">
+          <span className="text-yellow-400 font-bold text-sm">
+            {entityMap[currentEntity as keyof typeof entityMap] ||
+              currentEntity}
+          </span>
+        </div>
       </div>
       <div className="flex items-center space-x-3">
         <div className="relative w-64 hidden md:block">
