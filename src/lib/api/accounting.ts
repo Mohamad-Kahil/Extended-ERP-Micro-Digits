@@ -134,13 +134,13 @@ export const intercompanyEntitiesApi = {
 
 // Chart of Accounts API
 export const fetchAccounts = async (entityId?: string) => {
-  let query = supabase.from("accounts").select("*");
+  let query = supabase.from("chart_of_accounts").select("*");
 
   if (entityId && entityId !== "all") {
-    query = query.eq("entity_id", entityId);
+    query = query.eq("company_id", entityId);
   }
 
-  const { data, error } = await query.order("account_number");
+  const { data, error } = await query.order("account_code");
 
   if (error) {
     console.error("Error fetching accounts:", error);
@@ -155,19 +155,19 @@ export const createAccount = async (
   account: Omit<Account, "id" | "balance" | "level" | "children">,
 ) => {
   const { data, error } = await supabase
-    .from("accounts")
+    .from("chart_of_accounts")
     .insert({
-      account_number: account.accountNumber,
+      account_code: account.accountNumber,
       account_name: account.accountName,
       account_type: account.accountType,
-      entity_id: account.entityId,
-      parent_account_id: account.parentAccountId,
+      company_id: account.entityId,
+      parent_id: account.parentAccountId,
       description: account.description,
       is_active: account.isActive,
       reporting_category: account.reportingCategory,
       tax_code: account.taxCode,
       balance: 0,
-      level: account.parentAccountId ? 1 : 0, // This will be recalculated properly on the server
+      account_level: account.parentAccountId ? 1 : 0, // This will be recalculated properly on the server
     })
     .select()
     .single();
@@ -185,13 +185,13 @@ export const updateAccount = async (
   account: Partial<Omit<Account, "id" | "balance" | "level" | "children">>,
 ) => {
   const { data, error } = await supabase
-    .from("accounts")
+    .from("chart_of_accounts")
     .update({
-      account_number: account.accountNumber,
+      account_code: account.accountNumber,
       account_name: account.accountName,
       account_type: account.accountType,
-      entity_id: account.entityId,
-      parent_account_id: account.parentAccountId,
+      company_id: account.entityId,
+      parent_id: account.parentAccountId,
       description: account.description,
       is_active: account.isActive,
       reporting_category: account.reportingCategory,
@@ -210,7 +210,10 @@ export const updateAccount = async (
 };
 
 export const deleteAccount = async (id: string) => {
-  const { error } = await supabase.from("accounts").delete().eq("id", id);
+  const { error } = await supabase
+    .from("chart_of_accounts")
+    .delete()
+    .eq("id", id);
 
   if (error) {
     console.error("Error deleting account:", error);
@@ -222,7 +225,7 @@ export const deleteAccount = async (id: string) => {
 
 export const getAccountById = async (id: string) => {
   const { data, error } = await supabase
-    .from("accounts")
+    .from("chart_of_accounts")
     .select("*")
     .eq("id", id)
     .single();
@@ -239,7 +242,7 @@ export const getAccountById = async (id: string) => {
 export const fetchJournalEntries = async (entityId?: string) => {
   let query = supabase.from("journal_entries").select(`
     *,
-    journal_entry_items:journal_entry_items(*, account:accounts(*))
+    journal_entry_items:journal_entry_lines(*, account:chart_of_accounts(*))
   `);
 
   if (entityId && entityId !== "all") {
@@ -259,57 +262,102 @@ export const fetchJournalEntries = async (entityId?: string) => {
 export const createJournalEntry = async (
   entry: Omit<JournalEntry, "id" | "createdAt">,
 ) => {
-  // Start a transaction
-  const { data, error } = await supabase.rpc("create_journal_entry", {
-    p_entry_number: entry.entryNumber,
-    p_date: entry.date,
-    p_description: entry.description,
-    p_reference: entry.reference || null,
-    p_amount: entry.amount,
-    p_entity_id: entry.entityId,
-    p_status: entry.status,
-    p_created_by:
-      supabase.auth.getUser().then((res) => res.data.user?.id) || null,
-    p_line_items: entry.lineItems.map((item) => ({
+  // Insert the journal entry directly
+  const { data: journalEntry, error: journalError } = await supabase
+    .from("journal_entries")
+    .insert({
+      entry_number: entry.entryNumber,
+      date: entry.date,
+      description: entry.description,
+      reference: entry.reference || null,
+      amount: entry.amount,
+      entity_id: entry.entityId,
+      status: entry.status,
+    })
+    .select()
+    .single();
+
+  if (journalError) {
+    console.error("Error creating journal entry:", journalError);
+    throw journalError;
+  }
+
+  // Insert the line items
+  if (journalEntry) {
+    const lineItems = entry.lineItems.map((item) => ({
+      journal_entry_id: journalEntry.id,
       account_id: item.accountId,
       description: item.description || null,
       debit: item.debit || null,
       credit: item.credit || null,
-    })),
-  });
+    }));
 
-  if (error) {
-    console.error("Error creating journal entry:", error);
-    throw error;
+    const { error: itemsError } = await supabase
+      .from("journal_entry_lines")
+      .insert(lineItems);
+
+    if (itemsError) {
+      console.error("Error creating journal entry items:", itemsError);
+      throw itemsError;
+    }
   }
 
-  return data;
+  return journalEntry;
 };
 
 export const updateJournalEntry = async (
   id: string,
   entry: Partial<Omit<JournalEntry, "id" | "createdAt">>,
 ) => {
-  // Start a transaction
-  const { data, error } = await supabase.rpc("update_journal_entry", {
-    p_id: id,
-    p_date: entry.date,
-    p_description: entry.description,
-    p_reference: entry.reference || null,
-    p_entity_id: entry.entityId,
-    p_line_items:
-      entry.lineItems?.map((item) => ({
-        id: item.id,
-        account_id: item.accountId,
-        description: item.description || null,
-        debit: item.debit || null,
-        credit: item.credit || null,
-      })) || [],
-  });
+  // Update the journal entry
+  const { data, error: journalError } = await supabase
+    .from("journal_entries")
+    .update({
+      date: entry.date,
+      description: entry.description,
+      reference: entry.reference || null,
+      entity_id: entry.entityId,
+      amount: entry.amount,
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-  if (error) {
-    console.error("Error updating journal entry:", error);
-    throw error;
+  if (journalError) {
+    console.error("Error updating journal entry:", journalError);
+    throw journalError;
+  }
+
+  // Update line items if provided
+  if (entry.lineItems && entry.lineItems.length > 0) {
+    // First delete existing line items
+    const { error: deleteError } = await supabase
+      .from("journal_entry_lines")
+      .delete()
+      .eq("journal_entry_id", id);
+
+    if (deleteError) {
+      console.error("Error deleting journal entry items:", deleteError);
+      throw deleteError;
+    }
+
+    // Then insert new line items
+    const lineItems = entry.lineItems.map((item) => ({
+      journal_entry_id: id,
+      account_id: item.accountId,
+      description: item.description || null,
+      debit: item.debit || null,
+      credit: item.credit || null,
+    }));
+
+    const { error: insertError } = await supabase
+      .from("journal_entry_lines")
+      .insert(lineItems);
+
+    if (insertError) {
+      console.error("Error inserting journal entry items:", insertError);
+      throw insertError;
+    }
   }
 
   return data;
@@ -335,7 +383,7 @@ export const getJournalEntryById = async (id: string) => {
     .select(
       `
     *,
-    journal_entry_items:journal_entry_items(*, account:accounts(*))
+    journal_entry_items:journal_entry_lines(*, account:chart_of_accounts(*))
   `,
     )
     .eq("id", id)
@@ -350,9 +398,11 @@ export const getJournalEntryById = async (id: string) => {
 };
 
 export const postJournalEntry = async (id: string) => {
-  const { data, error } = await supabase.rpc("post_journal_entry", {
-    p_id: id,
-  });
+  const { data, error } = await supabase
+    .from("journal_entries")
+    .update({ status: "posted" })
+    .eq("id", id)
+    .select();
 
   if (error) {
     console.error("Error posting journal entry:", error);
@@ -363,10 +413,14 @@ export const postJournalEntry = async (id: string) => {
 };
 
 export const approveJournalEntry = async (id: string, notes?: string) => {
-  const { data, error } = await supabase.rpc("approve_journal_entry", {
-    p_id: id,
-    p_notes: notes || null,
-  });
+  const { data, error } = await supabase
+    .from("journal_entries")
+    .update({
+      status: "approved",
+      notes: notes || null,
+    })
+    .eq("id", id)
+    .select();
 
   if (error) {
     console.error("Error approving journal entry:", error);
@@ -377,10 +431,14 @@ export const approveJournalEntry = async (id: string, notes?: string) => {
 };
 
 export const rejectJournalEntry = async (id: string, notes?: string) => {
-  const { data, error } = await supabase.rpc("reject_journal_entry", {
-    p_id: id,
-    p_notes: notes || null,
-  });
+  const { data, error } = await supabase
+    .from("journal_entries")
+    .update({
+      status: "rejected",
+      notes: notes || null,
+    })
+    .eq("id", id)
+    .select();
 
   if (error) {
     console.error("Error rejecting journal entry:", error);
@@ -399,17 +457,17 @@ function buildAccountHierarchy(accounts: any[]): Account[] {
   accounts.forEach((account) => {
     accountMap.set(account.id, {
       id: account.id,
-      accountNumber: account.account_number,
+      accountNumber: account.account_code,
       accountName: account.account_name,
       accountType: account.account_type,
-      entityId: account.entity_id,
-      parentAccountId: account.parent_account_id,
+      entityId: account.company_id,
+      parentAccountId: account.parent_id,
       description: account.description,
       isActive: account.is_active,
       reportingCategory: account.reporting_category,
       taxCode: account.tax_code,
       balance: parseFloat(account.balance) || 0,
-      level: account.level || 0,
+      level: account.account_level || 0,
       children: [],
     });
   });
@@ -417,11 +475,8 @@ function buildAccountHierarchy(accounts: any[]): Account[] {
   // Second pass: Build the hierarchy
   accounts.forEach((account) => {
     const accountObj = accountMap.get(account.id);
-    if (
-      account.parent_account_id &&
-      accountMap.has(account.parent_account_id)
-    ) {
-      const parent = accountMap.get(account.parent_account_id);
+    if (account.parent_id && accountMap.has(account.parent_id)) {
+      const parent = accountMap.get(account.parent_id);
       parent.children.push(accountObj);
       // Update level based on parent
       accountObj.level = parent.level + 1;

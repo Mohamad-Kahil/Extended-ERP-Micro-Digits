@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 const accountFormSchema = z.object({
   accountNumber: z.string().min(1, "Account number is required"),
@@ -59,7 +60,7 @@ export function AccountForm({
       accountNumber: "",
       accountName: "",
       accountType: "asset",
-      entityId: currentEntityId,
+      entityId: currentEntityId || "1",
       parentAccount: "",
       description: "",
       isActive: true,
@@ -207,6 +208,28 @@ export function AccountForm({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="isActive"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                <div className="space-y-0.5">
+                  <FormLabel>Active</FormLabel>
+                  <FormDescription>
+                    Whether this account is active and can be used in
+                    transactions
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
         </div>
 
         <FormField
@@ -220,6 +243,7 @@ export function AccountForm({
                   placeholder="Enter account description"
                   className="resize-none"
                   {...field}
+                  value={field.value || ""}
                 />
               </FormControl>
               <FormDescription>
