@@ -12,7 +12,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const AccountsPayable = () => {
+interface AccountsPayableProps {
+  currentEntity?: string;
+}
+
+const AccountsPayable: React.FC<AccountsPayableProps> = ({ currentEntity }) => {
   const [activeTab, setActiveTab] = useState("invoices");
   const [searchTerm, setSearchTerm] = useState("");
 

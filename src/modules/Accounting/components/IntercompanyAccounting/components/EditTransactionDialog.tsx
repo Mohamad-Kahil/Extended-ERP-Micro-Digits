@@ -217,7 +217,7 @@ const EditTransactionDialog: React.FC<EditTransactionDialogProps> = ({
           </svg>
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[550px] bg-slate-900 text-white border-slate-700">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto bg-slate-900 text-white border-slate-700">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-white">
             Edit Transaction

@@ -60,7 +60,7 @@ const AccountingDashboard = () => {
     { id: "assets", label: "Fixed Assets" },
     { id: "procurement", label: "Procurement" },
     { id: "taxation", label: "Taxation" },
-    { id: "intercompany", label: "Intercompany" },
+    { id: "intercompany", label: "Inter Entities" },
     { id: "financial-reporting", label: "Financial Reporting" },
     { id: "budgeting", label: "Budgeting" },
     { id: "audit-controls", label: "Audit Controls" },

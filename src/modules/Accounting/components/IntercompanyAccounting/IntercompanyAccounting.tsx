@@ -106,7 +106,7 @@ const IntercompanyAccounting: React.FC<IntercompanyAccountingProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <h2 className="text-2xl font-bold text-white">
-            Intercompany Accounting
+            Inter Entities Accounting
           </h2>
         </div>
         <NewEntityDialog entities={allEntities} onEntityCreated={refetch} />
@@ -116,7 +116,7 @@ const IntercompanyAccounting: React.FC<IntercompanyAccountingProps> = ({
         <CardHeader className="border-b border-slate-800 pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold text-white">
-              Intercompany Transactions
+              Inter Entity Transactions
             </CardTitle>
             <div className="flex space-x-2">
               <Button variant="outline">
@@ -523,7 +523,7 @@ const IntercompanyAccounting: React.FC<IntercompanyAccountingProps> = ({
             <TabsContent value="entities" className="mt-6 space-y-6">
               <div className="flex justify-between mb-4">
                 <h3 className="text-lg font-medium text-white">
-                  Intercompany Entities
+                  Entity Management
                 </h3>
                 <NewEntityDialog
                   entities={allEntities}
@@ -617,7 +617,7 @@ const IntercompanyAccounting: React.FC<IntercompanyAccountingProps> = ({
                 <Card className="border-slate-800 bg-slate-900">
                   <CardHeader>
                     <CardTitle className="text-lg font-semibold text-white">
-                      Intercompany Transaction Summary
+                      Inter-Entity Transaction Summary
                     </CardTitle>
                   </CardHeader>
                   <CardContent>

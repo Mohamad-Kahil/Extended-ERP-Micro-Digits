@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +11,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const ChartOfAccounts = () => {
+interface ChartOfAccountsProps {
+  currentEntity?: string;
+}
+
+const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
   const [activeTab, setActiveTab] = useState("accounts");
-  const [selectedEntity, setSelectedEntity] = useState("all");
+  const [selectedEntity, setSelectedEntity] = useState(currentEntity || "all");
+
+  // Update selected entity when currentEntity changes
+  useEffect(() => {
+    if (currentEntity) {
+      setSelectedEntity(currentEntity);
+    }
+  }, [currentEntity]);
   const [searchTerm, setSearchTerm] = useState("");
 
   return (

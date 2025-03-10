@@ -128,7 +128,7 @@ const NewCompanyDialog: React.FC<NewCompanyDialogProps> = ({
           Add New Company
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[900px] bg-slate-900 text-white border-slate-700">
+      <DialogContent className="sm:max-w-[1000px] max-h-[90vh] overflow-y-auto bg-slate-900 text-white border-slate-700">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-white">
             Add New Company
@@ -145,7 +145,7 @@ const NewCompanyDialog: React.FC<NewCompanyDialogProps> = ({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="company-name">Company Name *</Label>
               <Input
