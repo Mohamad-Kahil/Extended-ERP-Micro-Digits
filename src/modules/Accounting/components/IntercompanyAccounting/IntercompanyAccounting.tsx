@@ -10,18 +10,370 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 
 const IntercompanyAccounting = () => {
   const [activeTab, setActiveTab] = useState("transactions");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState("Parent Company");
+
+  // Company data
+  const companies = ["Parent Company", "Subsidiary 1", "Subsidiary 2"];
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <h2 className="text-2xl font-bold text-white">
+            Intercompany Accounting
+          </h2>
+          <div className="bg-yellow-500 rounded-md px-3 py-1.5">
+            <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+              <SelectTrigger className="w-[180px] bg-transparent border-none focus:ring-0 text-black font-medium">
+                <SelectValue placeholder="Current Company" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="All Companies">All Companies</SelectItem>
+                {companies.map((company) => (
+                  <SelectItem key={company} value={company}>
+                    {company}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-cyan-600 hover:bg-cyan-700">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-2"
+              >
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+              </svg>
+              Add New Company
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px] bg-slate-900 text-white border-slate-700">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-semibold text-white">
+                Add New Company
+              </DialogTitle>
+              <DialogDescription className="text-slate-400">
+                Configure a new company in the system
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-6 py-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="company-name">Company Name</Label>
+                  <Input id="company-name" placeholder="Enter company name" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="legal-structure">Legal Structure</Label>
+                  <Select>
+                    <SelectTrigger id="legal-structure">
+                      <SelectValue placeholder="Select structure" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="llc">LLC</SelectItem>
+                      <SelectItem value="corporation">Corporation</SelectItem>
+                      <SelectItem value="partnership">Partnership</SelectItem>
+                      <SelectItem value="sole-proprietorship">
+                        Sole Proprietorship
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <Input id="address" placeholder="Enter company address" />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tax-id">Tax Identification Number</Label>
+                  <Input id="tax-id" placeholder="Enter tax ID" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="fiscal-year">Fiscal Year End</Label>
+                  <Select>
+                    <SelectTrigger id="fiscal-year">
+                      <SelectValue placeholder="Select month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="jan">January</SelectItem>
+                      <SelectItem value="feb">February</SelectItem>
+                      <SelectItem value="mar">March</SelectItem>
+                      <SelectItem value="apr">April</SelectItem>
+                      <SelectItem value="may">May</SelectItem>
+                      <SelectItem value="jun">June</SelectItem>
+                      <SelectItem value="jul">July</SelectItem>
+                      <SelectItem value="aug">August</SelectItem>
+                      <SelectItem value="sep">September</SelectItem>
+                      <SelectItem value="oct">October</SelectItem>
+                      <SelectItem value="nov">November</SelectItem>
+                      <SelectItem value="dec">December</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="base-currency">Base Currency</Label>
+                <Select>
+                  <SelectTrigger id="base-currency">
+                    <SelectValue placeholder="Select currency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="usd">USD - US Dollar</SelectItem>
+                    <SelectItem value="eur">EUR - Euro</SelectItem>
+                    <SelectItem value="gbp">GBP - British Pound</SelectItem>
+                    <SelectItem value="jpy">JPY - Japanese Yen</SelectItem>
+                    <SelectItem value="cad">CAD - Canadian Dollar</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="coa-template">Chart of Accounts Template</Label>
+                <Select>
+                  <SelectTrigger id="coa-template">
+                    <SelectValue placeholder="Select template" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="standard">Standard Business</SelectItem>
+                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="retail">Retail</SelectItem>
+                    <SelectItem value="service">Service Industry</SelectItem>
+                    <SelectItem value="custom">Custom Template</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="user-roles">Default User Role</Label>
+                <Select>
+                  <SelectTrigger id="user-roles">
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="admin">Administrator</SelectItem>
+                    <SelectItem value="accountant">Accountant</SelectItem>
+                    <SelectItem value="manager">Manager</SelectItem>
+                    <SelectItem value="viewer">Viewer</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline">Cancel</Button>
+              <Button className="bg-cyan-600 hover:bg-cyan-700">
+                Create Company
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <Card className="border-slate-800 bg-slate-900 p-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-medium text-slate-400">
+              Total Transactions
+            </h3>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-cyan-500"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <p className="mt-1 text-lg font-bold text-white">42</p>
+          <div className="flex items-center text-xs text-emerald-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1"
+            >
+              <path d="m5 12 7-7 7 7" />
+              <path d="M12 19V5" />
+            </svg>
+            <span>8.3% vs last month</span>
+          </div>
+        </Card>
+
+        <Card className="border-slate-800 bg-slate-900 p-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-medium text-slate-400">
+              Matched Transactions
+            </h3>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-emerald-500"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <p className="mt-1 text-lg font-bold text-emerald-500">34</p>
+          <div className="flex items-center text-xs text-emerald-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1"
+            >
+              <path d="m5 12 7-7 7 7" />
+              <path d="M12 19V5" />
+            </svg>
+            <span>5.2% increase</span>
+          </div>
+        </Card>
+
+        <Card className="border-slate-800 bg-slate-900 p-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-medium text-slate-400">
+              Unmatched Transactions
+            </h3>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-amber-500"
+            >
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <p className="mt-1 text-lg font-bold text-amber-500">8</p>
+          <div className="flex items-center text-xs text-amber-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1"
+            >
+              <path d="m19 12-7 7-7-7" />
+              <path d="M12 19V5" />
+            </svg>
+            <span>Requires attention</span>
+          </div>
+        </Card>
+
+        <Card className="border-slate-800 bg-slate-900 p-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-medium text-slate-400">Total Value</h3>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-cyan-500"
+            >
+              <path d="M12 2v20" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+          </div>
+          <p className="mt-1 text-lg font-bold text-white">$441,350.00</p>
+          <div className="flex items-center text-xs text-emerald-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1"
+            >
+              <path d="m5 12 7-7 7 7" />
+              <path d="M12 19V5" />
+            </svg>
+            <span>3.1% increase</span>
+          </div>
+        </Card>
+      </div>
+
       <Card className="border-slate-800 bg-slate-900">
         <CardHeader className="border-b border-slate-800 pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold text-white">
-              Intercompany Accounting
+              Intercompany Transactions
             </CardTitle>
             <div className="flex space-x-2">
               <Button variant="outline">
@@ -92,13 +444,12 @@ const IntercompanyAccounting = () => {
               </div>
               <Select defaultValue="all">
                 <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Entity" />
+                  <SelectValue placeholder="Filter Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Entities</SelectItem>
-                  <SelectItem value="parent">Parent Company</SelectItem>
-                  <SelectItem value="subsidiary1">Subsidiary 1</SelectItem>
-                  <SelectItem value="subsidiary2">Subsidiary 2</SelectItem>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  <SelectItem value="matched">Matched</SelectItem>
+                  <SelectItem value="unmatched">Unmatched</SelectItem>
                 </SelectContent>
               </Select>
             </div>
