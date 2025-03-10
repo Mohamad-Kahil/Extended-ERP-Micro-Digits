@@ -1,0 +1,233 @@
+[
+  {
+    "id": "ACC-1001",
+    "name": "Cash",
+    "type": "Asset",
+    "subtype": "Current Asset",
+    "balance": 125000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-1002",
+    "name": "Accounts Receivable",
+    "type": "Asset",
+    "subtype": "Current Asset",
+    "balance": 78500.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-1003",
+    "name": "Inventory",
+    "type": "Asset",
+    "subtype": "Current Asset",
+    "balance": 245000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-1004",
+    "name": "Prepaid Expenses",
+    "type": "Asset",
+    "subtype": "Current Asset",
+    "balance": 12500.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-1005",
+    "name": "Equipment",
+    "type": "Asset",
+    "subtype": "Fixed Asset",
+    "balance": 350000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-1006",
+    "name": "Accumulated Depreciation",
+    "type": "Asset",
+    "subtype": "Fixed Asset",
+    "balance": -75000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-2001",
+    "name": "Accounts Payable",
+    "type": "Liability",
+    "subtype": "Current Liability",
+    "balance": 65000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-2002",
+    "name": "Accrued Expenses",
+    "type": "Liability",
+    "subtype": "Current Liability",
+    "balance": 18500.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-2003",
+    "name": "Short-term Loans",
+    "type": "Liability",
+    "subtype": "Current Liability",
+    "balance": 50000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-2004",
+    "name": "Long-term Loans",
+    "type": "Liability",
+    "subtype": "Long-term Liability",
+    "balance": 250000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-3001",
+    "name": "Common Stock",
+    "type": "Equity",
+    "subtype": "Capital",
+    "balance": 500000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-3002",
+    "name": "Retained Earnings",
+    "type": "Equity",
+    "subtype": "Capital",
+    "balance": 175000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-4001",
+    "name": "Sales Revenue",
+    "type": "Revenue",
+    "subtype": "Operating Revenue",
+    "balance": 850000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-4002",
+    "name": "Service Revenue",
+    "type": "Revenue",
+    "subtype": "Operating Revenue",
+    "balance": 125000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-4003",
+    "name": "Interest Income",
+    "type": "Revenue",
+    "subtype": "Non-operating Revenue",
+    "balance": 5000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5001",
+    "name": "Cost of Goods Sold",
+    "type": "Expense",
+    "subtype": "Operating Expense",
+    "balance": 425000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5002",
+    "name": "Salaries Expense",
+    "type": "Expense",
+    "subtype": "Operating Expense",
+    "balance": 275000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5003",
+    "name": "Rent Expense",
+    "type": "Expense",
+    "subtype": "Operating Expense",
+    "balance": 48000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5004",
+    "name": "Utilities Expense",
+    "type": "Expense",
+    "subtype": "Operating Expense",
+    "balance": 18000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5005",
+    "name": "Depreciation Expense",
+    "type": "Expense",
+    "subtype": "Operating Expense",
+    "balance": 35000.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  },
+  {
+    "id": "ACC-5006",
+    "name": "Interest Expense",
+    "type": "Expense",
+    "subtype": "Non-operating Expense",
+    "balance": 12500.00,
+    "currency": "USD",
+    "status": "Active",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z"
+  }
+]

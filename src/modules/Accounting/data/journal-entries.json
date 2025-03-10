@@ -1,0 +1,399 @@
+[
+  {
+    "id": "JE-10001",
+    "date": "2023-10-01T00:00:00Z",
+    "description": "Sales transaction",
+    "reference": "INV-5001",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-01T10:15:00Z",
+    "updatedAt": "2023-10-01T14:30:00Z",
+    "postingDate": "2023-10-01T14:30:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-1002",
+        "accountName": "Accounts Receivable",
+        "debit": 5000.00,
+        "credit": 0.00,
+        "description": "Customer invoice"
+      },
+      {
+        "accountId": "ACC-4001",
+        "accountName": "Sales Revenue",
+        "debit": 0.00,
+        "credit": 5000.00,
+        "description": "Product sales"
+      }
+    ],
+    "totalDebit": 5000.00,
+    "totalCredit": 5000.00,
+    "attachments": [
+      {
+        "name": "Invoice-5001.pdf",
+        "url": "https://example.com/attachments/invoice-5001.pdf",
+        "type": "application/pdf",
+        "size": 256000
+      }
+    ],
+    "notes": "Monthly sales transaction"
+  },
+  {
+    "id": "JE-10002",
+    "date": "2023-10-02T00:00:00Z",
+    "description": "Utility payment",
+    "reference": "UTIL-1025",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-02T09:45:00Z",
+    "updatedAt": "2023-10-02T11:20:00Z",
+    "postingDate": "2023-10-02T11:20:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-5004",
+        "accountName": "Utilities Expense",
+        "debit": 1200.00,
+        "credit": 0.00,
+        "description": "Monthly electricity bill"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 1200.00,
+        "description": "Payment for utilities"
+      }
+    ],
+    "totalDebit": 1200.00,
+    "totalCredit": 1200.00,
+    "attachments": [
+      {
+        "name": "Utility-Bill-1025.pdf",
+        "url": "https://example.com/attachments/utility-bill-1025.pdf",
+        "type": "application/pdf",
+        "size": 128000
+      }
+    ],
+    "notes": "Monthly utility payment"
+  },
+  {
+    "id": "JE-10003",
+    "date": "2023-10-05T00:00:00Z",
+    "description": "Payroll processing",
+    "reference": "PR-2023-10",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-05T08:30:00Z",
+    "updatedAt": "2023-10-05T10:15:00Z",
+    "postingDate": "2023-10-05T10:15:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-5002",
+        "accountName": "Salaries Expense",
+        "debit": 25000.00,
+        "credit": 0.00,
+        "description": "Monthly salaries"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 25000.00,
+        "description": "Salary payments"
+      }
+    ],
+    "totalDebit": 25000.00,
+    "totalCredit": 25000.00,
+    "attachments": [
+      {
+        "name": "Payroll-Oct-2023.xlsx",
+        "url": "https://example.com/attachments/payroll-oct-2023.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 350000
+      }
+    ],
+    "notes": "Monthly payroll processing"
+  },
+  {
+    "id": "JE-10004",
+    "date": "2023-10-08T00:00:00Z",
+    "description": "Inventory purchase",
+    "reference": "PO-3045",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-08T11:20:00Z",
+    "updatedAt": "2023-10-08T13:45:00Z",
+    "postingDate": "2023-10-08T13:45:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-1003",
+        "accountName": "Inventory",
+        "debit": 15000.00,
+        "credit": 0.00,
+        "description": "Purchase of inventory items"
+      },
+      {
+        "accountId": "ACC-2001",
+        "accountName": "Accounts Payable",
+        "debit": 0.00,
+        "credit": 15000.00,
+        "description": "Supplier invoice"
+      }
+    ],
+    "totalDebit": 15000.00,
+    "totalCredit": 15000.00,
+    "attachments": [
+      {
+        "name": "PO-3045.pdf",
+        "url": "https://example.com/attachments/po-3045.pdf",
+        "type": "application/pdf",
+        "size": 180000
+      }
+    ],
+    "notes": "Inventory restocking"
+  },
+  {
+    "id": "JE-10005",
+    "date": "2023-10-10T00:00:00Z",
+    "description": "Rent payment",
+    "reference": "RENT-OCT-2023",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-10T09:00:00Z",
+    "updatedAt": "2023-10-10T10:30:00Z",
+    "postingDate": "2023-10-10T10:30:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-5003",
+        "accountName": "Rent Expense",
+        "debit": 4000.00,
+        "credit": 0.00,
+        "description": "Monthly office rent"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 4000.00,
+        "description": "Rent payment"
+      }
+    ],
+    "totalDebit": 4000.00,
+    "totalCredit": 4000.00,
+    "attachments": [
+      {
+        "name": "Rent-Receipt-Oct-2023.pdf",
+        "url": "https://example.com/attachments/rent-receipt-oct-2023.pdf",
+        "type": "application/pdf",
+        "size": 120000
+      }
+    ],
+    "notes": "Monthly rent payment"
+  },
+  {
+    "id": "JE-10006",
+    "date": "2023-10-12T00:00:00Z",
+    "description": "Equipment purchase",
+    "reference": "PO-3050",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-12T14:15:00Z",
+    "updatedAt": "2023-10-12T16:30:00Z",
+    "postingDate": "2023-10-12T16:30:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-1005",
+        "accountName": "Equipment",
+        "debit": 20000.00,
+        "credit": 0.00,
+        "description": "Purchase of new equipment"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 20000.00,
+        "description": "Payment for equipment"
+      }
+    ],
+    "totalDebit": 20000.00,
+    "totalCredit": 20000.00,
+    "attachments": [
+      {
+        "name": "Equipment-Invoice.pdf",
+        "url": "https://example.com/attachments/equipment-invoice.pdf",
+        "type": "application/pdf",
+        "size": 210000
+      }
+    ],
+    "notes": "Purchase of new manufacturing equipment"
+  },
+  {
+    "id": "JE-10007",
+    "date": "2023-10-15T00:00:00Z",
+    "description": "Loan payment",
+    "reference": "LOAN-OCT-2023",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-15T10:00:00Z",
+    "updatedAt": "2023-10-15T11:45:00Z",
+    "postingDate": "2023-10-15T11:45:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-2004",
+        "accountName": "Long-term Loans",
+        "debit": 5000.00,
+        "credit": 0.00,
+        "description": "Principal payment"
+      },
+      {
+        "accountId": "ACC-5006",
+        "accountName": "Interest Expense",
+        "debit": 1250.00,
+        "credit": 0.00,
+        "description": "Interest payment"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 6250.00,
+        "description": "Loan payment"
+      }
+    ],
+    "totalDebit": 6250.00,
+    "totalCredit": 6250.00,
+    "attachments": [
+      {
+        "name": "Loan-Payment-Receipt.pdf",
+        "url": "https://example.com/attachments/loan-payment-receipt.pdf",
+        "type": "application/pdf",
+        "size": 150000
+      }
+    ],
+    "notes": "Monthly loan payment"
+  },
+  {
+    "id": "JE-10008",
+    "date": "2023-10-18T00:00:00Z",
+    "description": "Customer payment",
+    "reference": "RCPT-2045",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-18T09:30:00Z",
+    "updatedAt": "2023-10-18T11:15:00Z",
+    "postingDate": "2023-10-18T11:15:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 4500.00,
+        "credit": 0.00,
+        "description": "Customer payment received"
+      },
+      {
+        "accountId": "ACC-1002",
+        "accountName": "Accounts Receivable",
+        "debit": 0.00,
+        "credit": 4500.00,
+        "description": "Payment against invoice"
+      }
+    ],
+    "totalDebit": 4500.00,
+    "totalCredit": 4500.00,
+    "attachments": [
+      {
+        "name": "Payment-Receipt-2045.pdf",
+        "url": "https://example.com/attachments/payment-receipt-2045.pdf",
+        "type": "application/pdf",
+        "size": 130000
+      }
+    ],
+    "notes": "Payment received from customer ABC Corp"
+  },
+  {
+    "id": "JE-10009",
+    "date": "2023-10-20T00:00:00Z",
+    "description": "Supplier payment",
+    "reference": "AP-1050",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-20T13:45:00Z",
+    "updatedAt": "2023-10-20T15:30:00Z",
+    "postingDate": "2023-10-20T15:30:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-2001",
+        "accountName": "Accounts Payable",
+        "debit": 12500.00,
+        "credit": 0.00,
+        "description": "Payment to supplier"
+      },
+      {
+        "accountId": "ACC-1001",
+        "accountName": "Cash",
+        "debit": 0.00,
+        "credit": 12500.00,
+        "description": "Supplier payment"
+      }
+    ],
+    "totalDebit": 12500.00,
+    "totalCredit": 12500.00,
+    "attachments": [
+      {
+        "name": "Supplier-Payment-1050.pdf",
+        "url": "https://example.com/attachments/supplier-payment-1050.pdf",
+        "type": "application/pdf",
+        "size": 145000
+      }
+    ],
+    "notes": "Payment to supplier XYZ Inc"
+  },
+  {
+    "id": "JE-10010",
+    "date": "2023-10-25T00:00:00Z",
+    "description": "Depreciation expense",
+    "reference": "DEP-OCT-2023",
+    "status": "Posted",
+    "createdBy": "john.doe@example.com",
+    "approvedBy": "jane.smith@example.com",
+    "createdAt": "2023-10-25T10:00:00Z",
+    "updatedAt": "2023-10-25T11:30:00Z",
+    "postingDate": "2023-10-25T11:30:00Z",
+    "entries": [
+      {
+        "accountId": "ACC-5005",
+        "accountName": "Depreciation Expense",
+        "debit": 3000.00,
+        "credit": 0.00,
+        "description": "Monthly depreciation"
+      },
+      {
+        "accountId": "ACC-1006",
+        "accountName": "Accumulated Depreciation",
+        "debit": 0.00,
+        "credit": 3000.00,
+        "description": "Accumulated depreciation"
+      }
+    ],
+    "totalDebit": 3000.00,
+    "totalCredit": 3000.00,
+    "attachments": [
+      {
+        "name": "Depreciation-Schedule.xlsx",
+        "url": "https://example.com/attachments/depreciation-schedule.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 175000
+      }
+    ],
+    "notes": "Monthly depreciation entry"
+  }
+]

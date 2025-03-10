@@ -1,0 +1,310 @@
+[
+  {
+    "id": "FR-2023-Q3",
+    "name": "Q3 2023 Financial Report",
+    "type": "Quarterly",
+    "period": "Q3 2023",
+    "startDate": "2023-07-01T00:00:00Z",
+    "endDate": "2023-09-30T23:59:59Z",
+    "status": "Published",
+    "createdBy": "jane.smith@example.com",
+    "approvedBy": "michael.johnson@example.com",
+    "createdAt": "2023-10-10T09:00:00Z",
+    "updatedAt": "2023-10-15T14:30:00Z",
+    "publishedAt": "2023-10-15T14:30:00Z",
+    "sections": [
+      {
+        "name": "Income Statement",
+        "data": {
+          "revenue": 980000.00,
+          "costOfGoodsSold": 425000.00,
+          "grossProfit": 555000.00,
+          "operatingExpenses": 376000.00,
+          "operatingIncome": 179000.00,
+          "otherIncome": 5000.00,
+          "otherExpenses": 12500.00,
+          "incomeBeforeTax": 171500.00,
+          "incomeTax": 42875.00,
+          "netIncome": 128625.00
+        }
+      },
+      {
+        "name": "Balance Sheet",
+        "data": {
+          "assets": {
+            "currentAssets": 461000.00,
+            "fixedAssets": 275000.00,
+            "totalAssets": 736000.00
+          },
+          "liabilities": {
+            "currentLiabilities": 133500.00,
+            "longTermLiabilities": 250000.00,
+            "totalLiabilities": 383500.00
+          },
+          "equity": {
+            "capital": 500000.00,
+            "retainedEarnings": 175000.00,
+            "totalEquity": 675000.00
+          }
+        }
+      },
+      {
+        "name": "Cash Flow Statement",
+        "data": {
+          "operatingActivities": 145000.00,
+          "investingActivities": -35000.00,
+          "financingActivities": -15000.00,
+          "netCashFlow": 95000.00,
+          "beginningCashBalance": 30000.00,
+          "endingCashBalance": 125000.00
+        }
+      }
+    ],
+    "notes": "Q3 2023 showed strong performance with 15% growth in revenue compared to Q2 2023.",
+    "attachments": [
+      {
+        "name": "Q3-2023-Financial-Report.pdf",
+        "url": "https://example.com/attachments/q3-2023-financial-report.pdf",
+        "type": "application/pdf",
+        "size": 2500000
+      },
+      {
+        "name": "Q3-2023-Financial-Data.xlsx",
+        "url": "https://example.com/attachments/q3-2023-financial-data.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1800000
+      }
+    ]
+  },
+  {
+    "id": "FR-2023-Q2",
+    "name": "Q2 2023 Financial Report",
+    "type": "Quarterly",
+    "period": "Q2 2023",
+    "startDate": "2023-04-01T00:00:00Z",
+    "endDate": "2023-06-30T23:59:59Z",
+    "status": "Published",
+    "createdBy": "jane.smith@example.com",
+    "approvedBy": "michael.johnson@example.com",
+    "createdAt": "2023-07-10T09:00:00Z",
+    "updatedAt": "2023-07-15T14:30:00Z",
+    "publishedAt": "2023-07-15T14:30:00Z",
+    "sections": [
+      {
+        "name": "Income Statement",
+        "data": {
+          "revenue": 850000.00,
+          "costOfGoodsSold": 380000.00,
+          "grossProfit": 470000.00,
+          "operatingExpenses": 350000.00,
+          "operatingIncome": 120000.00,
+          "otherIncome": 4500.00,
+          "otherExpenses": 12000.00,
+          "incomeBeforeTax": 112500.00,
+          "incomeTax": 28125.00,
+          "netIncome": 84375.00
+        }
+      },
+      {
+        "name": "Balance Sheet",
+        "data": {
+          "assets": {
+            "currentAssets": 425000.00,
+            "fixedAssets": 260000.00,
+            "totalAssets": 685000.00
+          },
+          "liabilities": {
+            "currentLiabilities": 125000.00,
+            "longTermLiabilities": 255000.00,
+            "totalLiabilities": 380000.00
+          },
+          "equity": {
+            "capital": 500000.00,
+            "retainedEarnings": 125000.00,
+            "totalEquity": 625000.00
+          }
+        }
+      },
+      {
+        "name": "Cash Flow Statement",
+        "data": {
+          "operatingActivities": 110000.00,
+          "investingActivities": -25000.00,
+          "financingActivities": -15000.00,
+          "netCashFlow": 70000.00,
+          "beginningCashBalance": 25000.00,
+          "endingCashBalance": 95000.00
+        }
+      }
+    ],
+    "notes": "Q2 2023 showed steady growth with 10% increase in revenue compared to Q1 2023.",
+    "attachments": [
+      {
+        "name": "Q2-2023-Financial-Report.pdf",
+        "url": "https://example.com/attachments/q2-2023-financial-report.pdf",
+        "type": "application/pdf",
+        "size": 2300000
+      },
+      {
+        "name": "Q2-2023-Financial-Data.xlsx",
+        "url": "https://example.com/attachments/q2-2023-financial-data.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1700000
+      }
+    ]
+  },
+  {
+    "id": "FR-2023-Q1",
+    "name": "Q1 2023 Financial Report",
+    "type": "Quarterly",
+    "period": "Q1 2023",
+    "startDate": "2023-01-01T00:00:00Z",
+    "endDate": "2023-03-31T23:59:59Z",
+    "status": "Published",
+    "createdBy": "jane.smith@example.com",
+    "approvedBy": "michael.johnson@example.com",
+    "createdAt": "2023-04-10T09:00:00Z",
+    "updatedAt": "2023-04-15T14:30:00Z",
+    "publishedAt": "2023-04-15T14:30:00Z",
+    "sections": [
+      {
+        "name": "Income Statement",
+        "data": {
+          "revenue": 775000.00,
+          "costOfGoodsSold": 350000.00,
+          "grossProfit": 425000.00,
+          "operatingExpenses": 325000.00,
+          "operatingIncome": 100000.00,
+          "otherIncome": 4000.00,
+          "otherExpenses": 11500.00,
+          "incomeBeforeTax": 92500.00,
+          "incomeTax": 23125.00,
+          "netIncome": 69375.00
+        }
+      },
+      {
+        "name": "Balance Sheet",
+        "data": {
+          "assets": {
+            "currentAssets": 400000.00,
+            "fixedAssets": 250000.00,
+            "totalAssets": 650000.00
+          },
+          "liabilities": {
+            "currentLiabilities": 115000.00,
+            "longTermLiabilities": 260000.00,
+            "totalLiabilities": 375000.00
+          },
+          "equity": {
+            "capital": 500000.00,
+            "retainedEarnings": 100000.00,
+            "totalEquity": 600000.00
+          }
+        }
+      },
+      {
+        "name": "Cash Flow Statement",
+        "data": {
+          "operatingActivities": 95000.00,
+          "investingActivities": -20000.00,
+          "financingActivities": -15000.00,
+          "netCashFlow": 60000.00,
+          "beginningCashBalance": 20000.00,
+          "endingCashBalance": 80000.00
+        }
+      }
+    ],
+    "notes": "Q1 2023 showed positive results with 8% growth in revenue compared to Q4 2022.",
+    "attachments": [
+      {
+        "name": "Q1-2023-Financial-Report.pdf",
+        "url": "https://example.com/attachments/q1-2023-financial-report.pdf",
+        "type": "application/pdf",
+        "size": 2200000
+      },
+      {
+        "name": "Q1-2023-Financial-Data.xlsx",
+        "url": "https://example.com/attachments/q1-2023-financial-data.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1650000
+      }
+    ]
+  },
+  {
+    "id": "FR-2022-ANNUAL",
+    "name": "2022 Annual Financial Report",
+    "type": "Annual",
+    "period": "FY 2022",
+    "startDate": "2022-01-01T00:00:00Z",
+    "endDate": "2022-12-31T23:59:59Z",
+    "status": "Published",
+    "createdBy": "jane.smith@example.com",
+    "approvedBy": "michael.johnson@example.com",
+    "createdAt": "2023-02-15T09:00:00Z",
+    "updatedAt": "2023-02-28T14:30:00Z",
+    "publishedAt": "2023-02-28T14:30:00Z",
+    "sections": [
+      {
+        "name": "Income Statement",
+        "data": {
+          "revenue": 2850000.00,
+          "costOfGoodsSold": 1275000.00,
+          "grossProfit": 1575000.00,
+          "operatingExpenses": 1150000.00,
+          "operatingIncome": 425000.00,
+          "otherIncome": 15000.00,
+          "otherExpenses": 45000.00,
+          "incomeBeforeTax": 395000.00,
+          "incomeTax": 98750.00,
+          "netIncome": 296250.00
+        }
+      },
+      {
+        "name": "Balance Sheet",
+        "data": {
+          "assets": {
+            "currentAssets": 375000.00,
+            "fixedAssets": 240000.00,
+            "totalAssets": 615000.00
+          },
+          "liabilities": {
+            "currentLiabilities": 105000.00,
+            "longTermLiabilities": 265000.00,
+            "totalLiabilities": 370000.00
+          },
+          "equity": {
+            "capital": 500000.00,
+            "retainedEarnings": 75000.00,
+            "totalEquity": 575000.00
+          }
+        }
+      },
+      {
+        "name": "Cash Flow Statement",
+        "data": {
+          "operatingActivities": 350000.00,
+          "investingActivities": -75000.00,
+          "financingActivities": -60000.00,
+          "netCashFlow": 215000.00,
+          "beginningCashBalance": 15000.00,
+          "endingCashBalance": 230000.00
+        }
+      }
+    ],
+    "notes": "2022 was a successful year with 12% growth in revenue compared to 2021.",
+    "attachments": [
+      {
+        "name": "2022-Annual-Financial-Report.pdf",
+        "url": "https://example.com/attachments/2022-annual-financial-report.pdf",
+        "type": "application/pdf",
+        "size": 3500000
+      },
+      {
+        "name": "2022-Annual-Financial-Data.xlsx",
+        "url": "https://example.com/attachments/2022-annual-financial-data.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 2500000
+      }
+    ]
+  }
+]

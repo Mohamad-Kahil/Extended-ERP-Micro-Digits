@@ -1,0 +1,408 @@
+[
+  {
+    "id": "FA-1001",
+    "name": "Manufacturing Equipment - Line 1",
+    "description": "Primary manufacturing equipment for production line 1",
+    "category": "Manufacturing Equipment",
+    "location": "Main Factory - Floor 1",
+    "acquisitionDate": "2020-03-15T00:00:00Z",
+    "acquisitionCost": 120000.00,
+    "salvageValue": 15000.00,
+    "usefulLife": 10,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 93000.00,
+    "accumulatedDepreciation": 27000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "ME-L1-2020-001",
+    "warrantyExpiryDate": "2025-03-15T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-15T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-15T00:00:00Z",
+    "notes": "Regular maintenance required to maintain warranty",
+    "createdAt": "2020-03-15T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1001-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2500000
+      },
+      {
+        "name": "Warranty-Certificate.pdf",
+        "url": "https://example.com/attachments/fa-1001-warranty-certificate.pdf",
+        "type": "application/pdf",
+        "size": 1800000
+      },
+      {
+        "name": "Maintenance-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1001-maintenance-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1500000
+      }
+    ]
+  },
+  {
+    "id": "FA-1002",
+    "name": "Manufacturing Equipment - Line 2",
+    "description": "Primary manufacturing equipment for production line 2",
+    "category": "Manufacturing Equipment",
+    "location": "Main Factory - Floor 1",
+    "acquisitionDate": "2020-03-15T00:00:00Z",
+    "acquisitionCost": 125000.00,
+    "salvageValue": 15000.00,
+    "usefulLife": 10,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 97000.00,
+    "accumulatedDepreciation": 28000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "ME-L2-2020-002",
+    "warrantyExpiryDate": "2025-03-15T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-15T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-15T00:00:00Z",
+    "notes": "Regular maintenance required to maintain warranty",
+    "createdAt": "2020-03-15T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1002-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2600000
+      },
+      {
+        "name": "Warranty-Certificate.pdf",
+        "url": "https://example.com/attachments/fa-1002-warranty-certificate.pdf",
+        "type": "application/pdf",
+        "size": 1850000
+      },
+      {
+        "name": "Maintenance-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1002-maintenance-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1550000
+      }
+    ]
+  },
+  {
+    "id": "FA-1003",
+    "name": "Office Building",
+    "description": "Main office building",
+    "category": "Real Estate",
+    "location": "123 Business Park Drive",
+    "acquisitionDate": "2018-05-20T00:00:00Z",
+    "acquisitionCost": 750000.00,
+    "salvageValue": 250000.00,
+    "usefulLife": 30,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 683333.33,
+    "accumulatedDepreciation": 66666.67,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": null,
+    "warrantyExpiryDate": null,
+    "maintenanceSchedule": "Annual",
+    "lastMaintenanceDate": "2023-01-15T00:00:00Z",
+    "nextMaintenanceDate": "2024-01-15T00:00:00Z",
+    "notes": "Property tax due annually in January",
+    "createdAt": "2018-05-20T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Property-Deed.pdf",
+        "url": "https://example.com/attachments/fa-1003-property-deed.pdf",
+        "type": "application/pdf",
+        "size": 3500000
+      },
+      {
+        "name": "Property-Insurance.pdf",
+        "url": "https://example.com/attachments/fa-1003-property-insurance.pdf",
+        "type": "application/pdf",
+        "size": 2800000
+      },
+      {
+        "name": "Property-Tax-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1003-property-tax-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1700000
+      }
+    ]
+  },
+  {
+    "id": "FA-1004",
+    "name": "Delivery Truck - 1",
+    "description": "Delivery truck for local deliveries",
+    "category": "Vehicles",
+    "location": "Main Factory - Parking Lot",
+    "acquisitionDate": "2021-08-10T00:00:00Z",
+    "acquisitionCost": 45000.00,
+    "salvageValue": 10000.00,
+    "usefulLife": 7,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 38571.43,
+    "accumulatedDepreciation": 6428.57,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "VIN-12345678901234567",
+    "warrantyExpiryDate": "2024-08-10T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-20T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-20T00:00:00Z",
+    "notes": "Regular maintenance required to maintain warranty",
+    "createdAt": "2021-08-10T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Vehicle-Title.pdf",
+        "url": "https://example.com/attachments/fa-1004-vehicle-title.pdf",
+        "type": "application/pdf",
+        "size": 2200000
+      },
+      {
+        "name": "Vehicle-Insurance.pdf",
+        "url": "https://example.com/attachments/fa-1004-vehicle-insurance.pdf",
+        "type": "application/pdf",
+        "size": 1900000
+      },
+      {
+        "name": "Maintenance-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1004-maintenance-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1400000
+      }
+    ]
+  },
+  {
+    "id": "FA-1005",
+    "name": "Delivery Truck - 2",
+    "description": "Delivery truck for regional deliveries",
+    "category": "Vehicles",
+    "location": "Main Factory - Parking Lot",
+    "acquisitionDate": "2021-08-10T00:00:00Z",
+    "acquisitionCost": 48000.00,
+    "salvageValue": 10000.00,
+    "usefulLife": 7,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 41142.86,
+    "accumulatedDepreciation": 6857.14,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "VIN-23456789012345678",
+    "warrantyExpiryDate": "2024-08-10T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-20T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-20T00:00:00Z",
+    "notes": "Regular maintenance required to maintain warranty",
+    "createdAt": "2021-08-10T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Vehicle-Title.pdf",
+        "url": "https://example.com/attachments/fa-1005-vehicle-title.pdf",
+        "type": "application/pdf",
+        "size": 2250000
+      },
+      {
+        "name": "Vehicle-Insurance.pdf",
+        "url": "https://example.com/attachments/fa-1005-vehicle-insurance.pdf",
+        "type": "application/pdf",
+        "size": 1950000
+      },
+      {
+        "name": "Maintenance-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1005-maintenance-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1450000
+      }
+    ]
+  },
+  {
+    "id": "FA-1006",
+    "name": "Office Furniture - HQ",
+    "description": "Office furniture for headquarters",
+    "category": "Furniture & Fixtures",
+    "location": "Main Office - All Floors",
+    "acquisitionDate": "2019-11-15T00:00:00Z",
+    "acquisitionCost": 85000.00,
+    "salvageValue": 5000.00,
+    "usefulLife": 8,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 55000.00,
+    "accumulatedDepreciation": 30000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": null,
+    "warrantyExpiryDate": "2022-11-15T00:00:00Z",
+    "maintenanceSchedule": "Annual",
+    "lastMaintenanceDate": "2023-01-10T00:00:00Z",
+    "nextMaintenanceDate": "2024-01-10T00:00:00Z",
+    "notes": "Includes desks, chairs, conference tables, and filing cabinets",
+    "createdAt": "2019-11-15T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1006-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2100000
+      },
+      {
+        "name": "Inventory-List.xlsx",
+        "url": "https://example.com/attachments/fa-1006-inventory-list.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1600000
+      }
+    ]
+  },
+  {
+    "id": "FA-1007",
+    "name": "Computer Equipment - HQ",
+    "description": "Computer equipment for headquarters",
+    "category": "IT Equipment",
+    "location": "Main Office - All Floors",
+    "acquisitionDate": "2022-02-20T00:00:00Z",
+    "acquisitionCost": 120000.00,
+    "salvageValue": 10000.00,
+    "usefulLife": 5,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 98000.00,
+    "accumulatedDepreciation": 22000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": null,
+    "warrantyExpiryDate": "2025-02-20T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-15T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-15T00:00:00Z",
+    "notes": "Includes desktop computers, laptops, servers, and networking equipment",
+    "createdAt": "2022-02-20T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1007-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2300000
+      },
+      {
+        "name": "Warranty-Information.pdf",
+        "url": "https://example.com/attachments/fa-1007-warranty-information.pdf",
+        "type": "application/pdf",
+        "size": 1950000
+      },
+      {
+        "name": "IT-Asset-Inventory.xlsx",
+        "url": "https://example.com/attachments/fa-1007-it-asset-inventory.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1750000
+      }
+    ]
+  },
+  {
+    "id": "FA-1008",
+    "name": "Warehouse Equipment",
+    "description": "Equipment for warehouse operations",
+    "category": "Warehouse Equipment",
+    "location": "Main Warehouse",
+    "acquisitionDate": "2020-09-05T00:00:00Z",
+    "acquisitionCost": 65000.00,
+    "salvageValue": 5000.00,
+    "usefulLife": 10,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 53000.00,
+    "accumulatedDepreciation": 12000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": null,
+    "warrantyExpiryDate": "2023-09-05T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-10T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-10T00:00:00Z",
+    "notes": "Includes forklifts, pallet jacks, and shelving systems",
+    "createdAt": "2020-09-05T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1008-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2150000
+      },
+      {
+        "name": "Maintenance-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1008-maintenance-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1650000
+      }
+    ]
+  },
+  {
+    "id": "FA-1009",
+    "name": "Quality Control Equipment",
+    "description": "Equipment for quality control operations",
+    "category": "Manufacturing Equipment",
+    "location": "Main Factory - QC Department",
+    "acquisitionDate": "2021-04-15T00:00:00Z",
+    "acquisitionCost": 85000.00,
+    "salvageValue": 10000.00,
+    "usefulLife": 8,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 73125.00,
+    "accumulatedDepreciation": 11875.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "QC-2021-001",
+    "warrantyExpiryDate": "2024-04-15T00:00:00Z",
+    "maintenanceSchedule": "Quarterly",
+    "lastMaintenanceDate": "2023-07-15T00:00:00Z",
+    "nextMaintenanceDate": "2023-10-15T00:00:00Z",
+    "notes": "Includes testing equipment and measurement devices",
+    "createdAt": "2021-04-15T00:00:00Z",
+    "updatedAt": "2023-09-30T00:00:00Z",
+    "documents": [
+      {
+        "name": "Purchase-Invoice.pdf",
+        "url": "https://example.com/attachments/fa-1009-purchase-invoice.pdf",
+        "type": "application/pdf",
+        "size": 2250000
+      },
+      {
+        "name": "Warranty-Certificate.pdf",
+        "url": "https://example.com/attachments/fa-1009-warranty-certificate.pdf",
+        "type": "application/pdf",
+        "size": 1850000
+      },
+      {
+        "name": "Calibration-Records.xlsx",
+        "url": "https://example.com/attachments/fa-1009-calibration-records.xlsx",
+        "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "size": 1550000
+      }
+    ]
+  },
+  {
+    "id": "FA-1010",
+    "name": "Software Licenses - ERP System",
+    "description": "Enterprise Resource Planning system licenses",
+    "category": "Intangible Assets",
+    "location": "IT Department",
+    "acquisitionDate": "2022-01-01T00:00:00Z",
+    "acquisitionCost": 150000.00,
+    "salvageValue": 0.00,
+    "usefulLife": 5,
+    "depreciationMethod": "Straight Line",
+    "currentValue": 120000.00,
+    "accumulatedDepreciation": 30000.00,
+    "lastDepreciationDate": "2023-09-30T00:00:00Z",
+    "status": "Active",
+    "serialNumber": "ERP-LIC-2022-001",
+    "warrantyExpiryDate": null,
+    "maintenanceSchedule": "Annual",
+    "lastMaintenanceDate": "2023-01-01T00:00:00Z",
+    "nextMaintenanceDate": "2024-01-01T00:00:00Z",
+    "notes": "Annual maintenance fee includes software updates and support",
+    "createdAt": "2022-01-01T00:00:00Z",
+    "updatedAt": "2023-09-
