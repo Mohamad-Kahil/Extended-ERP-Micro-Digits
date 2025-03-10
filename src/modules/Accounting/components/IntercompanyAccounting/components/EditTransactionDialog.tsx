@@ -87,6 +87,8 @@ const EditTransactionDialog: React.FC<EditTransactionDialogProps> = ({
             entity_type: "Parent",
             country: "USA",
             currency: "USD",
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
           },
           {
             id: "2",
@@ -94,6 +96,8 @@ const EditTransactionDialog: React.FC<EditTransactionDialogProps> = ({
             entity_type: "Subsidiary",
             country: "UK",
             currency: "GBP",
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
           },
           {
             id: "3",
@@ -101,6 +105,8 @@ const EditTransactionDialog: React.FC<EditTransactionDialogProps> = ({
             entity_type: "Subsidiary",
             country: "Germany",
             currency: "EUR",
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
           },
         ];
         setEntities(mockEntities);
@@ -116,6 +122,8 @@ const EditTransactionDialog: React.FC<EditTransactionDialogProps> = ({
           currency: "USD",
           status: "Matched",
           description: "Capital investment",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         };
         setTransaction(mockTransaction);
 

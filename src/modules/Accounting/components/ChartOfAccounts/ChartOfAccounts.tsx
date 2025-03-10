@@ -161,9 +161,9 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Entities</SelectItem>
-                  <SelectItem value="parent">Parent Company</SelectItem>
-                  <SelectItem value="subsidiary1">Subsidiary 1</SelectItem>
-                  <SelectItem value="subsidiary2">Subsidiary 2</SelectItem>
+                  <SelectItem value="Parent Company">Parent Company</SelectItem>
+                  <SelectItem value="Subsidiary 1">Subsidiary 1</SelectItem>
+                  <SelectItem value="Subsidiary 2">Subsidiary 2</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -215,7 +215,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Asset",
                       category: "Current Asset",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Parent Company",
                       status: "Active",
                     },
                     {
@@ -224,7 +224,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Asset",
                       category: "Current Asset",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Parent Company",
                       status: "Active",
                     },
                     {
@@ -233,7 +233,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Asset",
                       category: "Current Asset",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 1",
                       status: "Active",
                     },
                     {
@@ -242,7 +242,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Asset",
                       category: "Non-Current Asset",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 1",
                       status: "Active",
                     },
                     {
@@ -251,7 +251,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Liability",
                       category: "Current Liability",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 1",
                       status: "Active",
                     },
                     {
@@ -260,7 +260,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Liability",
                       category: "Current Liability",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 2",
                       status: "Active",
                     },
                     {
@@ -269,7 +269,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Liability",
                       category: "Non-Current Liability",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 2",
                       status: "Active",
                     },
                     {
@@ -278,7 +278,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Equity",
                       category: "Equity",
                       currency: "USD",
-                      entity: "Parent",
+                      entity: "Parent Company",
                       status: "Active",
                     },
                     {
@@ -287,7 +287,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Equity",
                       category: "Equity",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Parent Company",
                       status: "Active",
                     },
                     {
@@ -296,7 +296,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Revenue",
                       category: "Income",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 2",
                       status: "Active",
                     },
                     {
@@ -305,7 +305,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Expense",
                       category: "Cost of Sales",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 2",
                       status: "Active",
                     },
                     {
@@ -314,65 +314,71 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({ currentEntity }) => {
                       type: "Expense",
                       category: "Expense",
                       currency: "USD",
-                      entity: "All",
+                      entity: "Subsidiary 2",
                       status: "Active",
                     },
-                  ].map((account, index) => (
-                    <div
-                      key={index}
-                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
-                    >
-                      <div className="col-span-1 font-medium">
-                        {account.code}
-                      </div>
-                      <div className="col-span-3">{account.name}</div>
-                      <div className="col-span-2">{account.type}</div>
-                      <div className="col-span-2">{account.category}</div>
-                      <div className="col-span-1">{account.currency}</div>
-                      <div className="col-span-1">{account.entity}</div>
-                      <div className="col-span-1">
-                        <span
-                          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${account.status === "Active" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
-                        >
-                          {account.status}
-                        </span>
-                      </div>
-                      <div className="col-span-1 flex space-x-2">
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                  ]
+                    .filter(
+                      (account) =>
+                        selectedEntity === "all" ||
+                        account.entity === selectedEntity,
+                    )
+                    .map((account, index) => (
+                      <div
+                        key={index}
+                        className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                      >
+                        <div className="col-span-1 font-medium">
+                          {account.code}
+                        </div>
+                        <div className="col-span-3">{account.name}</div>
+                        <div className="col-span-2">{account.type}</div>
+                        <div className="col-span-2">{account.category}</div>
+                        <div className="col-span-1">{account.currency}</div>
+                        <div className="col-span-1">{account.entity}</div>
+                        <div className="col-span-1">
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${account.status === "Active" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
                           >
-                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M3 6h18" />
-                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                          </svg>
-                        </button>
+                            {account.status}
+                          </span>
+                        </div>
+                        <div className="col-span-1 flex space-x-2">
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                            </svg>
+                          </button>
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M3 6h18" />
+                              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </TabsContent>

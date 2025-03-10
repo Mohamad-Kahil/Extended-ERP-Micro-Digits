@@ -7,6 +7,8 @@
     "balance": 125000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -18,6 +20,8 @@
     "balance": 78500.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -29,6 +33,8 @@
     "balance": 245000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -40,6 +46,8 @@
     "balance": 12500.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -51,6 +59,8 @@
     "balance": 350000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -62,6 +72,8 @@
     "balance": -75000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -73,6 +85,8 @@
     "balance": 65000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -84,6 +98,8 @@
     "balance": 18500.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -95,6 +111,8 @@
     "balance": 50000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -106,6 +124,8 @@
     "balance": 250000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -117,6 +137,8 @@
     "balance": 500000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -128,6 +150,8 @@
     "balance": 175000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -139,6 +163,8 @@
     "balance": 850000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -150,6 +176,8 @@
     "balance": 125000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -161,6 +189,8 @@
     "balance": 5000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -172,6 +202,8 @@
     "balance": 425000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -183,6 +215,8 @@
     "balance": 275000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -194,6 +228,8 @@
     "balance": 48000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -205,6 +241,8 @@
     "balance": 18000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -216,6 +254,8 @@
     "balance": 35000.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   },
@@ -227,6 +267,8 @@
     "balance": 12500.00,
     "currency": "USD",
     "status": "Active",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "createdAt": "2023-01-01T00:00:00Z",
     "updatedAt": "2023-10-15T14:30:00Z"
   }

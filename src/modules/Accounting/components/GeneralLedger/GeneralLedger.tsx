@@ -160,10 +160,11 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                 <div className="bg-slate-800/50 p-3 text-xs font-medium text-slate-300 grid grid-cols-12 gap-4">
                   <div className="col-span-1">Entry #</div>
                   <div className="col-span-2">Date</div>
-                  <div className="col-span-3">Description</div>
+                  <div className="col-span-2">Description</div>
                   <div className="col-span-1">Debit</div>
                   <div className="col-span-1">Credit</div>
                   <div className="col-span-1">Currency</div>
+                  <div className="col-span-1">Entity</div>
                   <div className="col-span-1">Status</div>
                   <div className="col-span-2">Actions</div>
                 </div>
@@ -176,6 +177,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$2,500.00",
                       credit: "$2,500.00",
                       currency: "USD",
+                      entity: "Parent Company",
                       status: "Posted",
                     },
                     {
@@ -185,6 +187,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$850.00",
                       credit: "$850.00",
                       currency: "USD",
+                      entity: "Parent Company",
                       status: "Posted",
                     },
                     {
@@ -194,6 +197,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$12,450.00",
                       credit: "$12,450.00",
                       currency: "USD",
+                      entity: "Parent Company",
                       status: "Posted",
                     },
                     {
@@ -203,6 +207,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$18,750.00",
                       credit: "$18,750.00",
                       currency: "USD",
+                      entity: "Subsidiary 1",
                       status: "Posted",
                     },
                     {
@@ -212,6 +217,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$5,200.00",
                       credit: "$5,200.00",
                       currency: "USD",
+                      entity: "Subsidiary 1",
                       status: "Posted",
                     },
                     {
@@ -221,6 +227,7 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$3,500.00",
                       credit: "$3,500.00",
                       currency: "USD",
+                      entity: "Subsidiary 2",
                       status: "Pending",
                     },
                     {
@@ -230,80 +237,88 @@ const GeneralLedger: React.FC<GeneralLedgerProps> = ({ currentEntity }) => {
                       debit: "$8,750.00",
                       credit: "$8,750.00",
                       currency: "USD",
+                      entity: "Subsidiary 2",
                       status: "Pending",
                     },
-                  ].map((entry, index) => (
-                    <div
-                      key={index}
-                      className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
-                    >
-                      <div className="col-span-1 font-medium">{entry.id}</div>
-                      <div className="col-span-2">
-                        {new Date(entry.date).toLocaleDateString()}
-                      </div>
-                      <div className="col-span-3">{entry.description}</div>
-                      <div className="col-span-1">{entry.debit}</div>
-                      <div className="col-span-1">{entry.credit}</div>
-                      <div className="col-span-1">{entry.currency}</div>
-                      <div className="col-span-1">
-                        <span
-                          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${entry.status === "Posted" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
-                        >
-                          {entry.status}
-                        </span>
-                      </div>
-                      <div className="col-span-2 flex space-x-2">
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                  ]
+                    .filter(
+                      (entry) =>
+                        selectedEntity === "all" ||
+                        entry.entity === selectedEntity,
+                    )
+                    .map((entry, index) => (
+                      <div
+                        key={index}
+                        className="p-3 text-sm text-slate-300 grid grid-cols-12 gap-4 hover:bg-slate-800/30 transition-colors"
+                      >
+                        <div className="col-span-1 font-medium">{entry.id}</div>
+                        <div className="col-span-2">
+                          {new Date(entry.date).toLocaleDateString()}
+                        </div>
+                        <div className="col-span-2">{entry.description}</div>
+                        <div className="col-span-1">{entry.debit}</div>
+                        <div className="col-span-1">{entry.credit}</div>
+                        <div className="col-span-1">{entry.currency}</div>
+                        <div className="col-span-1">{entry.entity}</div>
+                        <div className="col-span-1">
+                          <span
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${entry.status === "Posted" ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"}`}
                           >
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                            <circle cx="12" cy="12" r="3" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-                          </svg>
-                        </button>
-                        <button className="text-slate-400 hover:text-white transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <path d="M3 6h18" />
-                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                          </svg>
-                        </button>
+                            {entry.status}
+                          </span>
+                        </div>
+                        <div className="col-span-2 flex space-x-2">
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          </button>
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                            </svg>
+                          </button>
+                          <button className="text-slate-400 hover:text-white transition-colors">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M3 6h18" />
+                              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               </div>
             </TabsContent>

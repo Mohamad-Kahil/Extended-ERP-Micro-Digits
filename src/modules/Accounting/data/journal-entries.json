@@ -10,6 +10,8 @@
     "createdAt": "2023-10-01T10:15:00Z",
     "updatedAt": "2023-10-01T14:30:00Z",
     "postingDate": "2023-10-01T14:30:00Z",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "entries": [
       {
         "accountId": "ACC-1002",
@@ -49,6 +51,8 @@
     "createdAt": "2023-10-02T09:45:00Z",
     "updatedAt": "2023-10-02T11:20:00Z",
     "postingDate": "2023-10-02T11:20:00Z",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "entries": [
       {
         "accountId": "ACC-5004",
@@ -88,6 +92,8 @@
     "createdAt": "2023-10-05T08:30:00Z",
     "updatedAt": "2023-10-05T10:15:00Z",
     "postingDate": "2023-10-05T10:15:00Z",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "entries": [
       {
         "accountId": "ACC-5002",
@@ -127,6 +133,8 @@
     "createdAt": "2023-10-08T11:20:00Z",
     "updatedAt": "2023-10-08T13:45:00Z",
     "postingDate": "2023-10-08T13:45:00Z",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "entries": [
       {
         "accountId": "ACC-1003",
@@ -166,6 +174,8 @@
     "createdAt": "2023-10-10T09:00:00Z",
     "updatedAt": "2023-10-10T10:30:00Z",
     "postingDate": "2023-10-10T10:30:00Z",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "entries": [
       {
         "accountId": "ACC-5003",
@@ -205,6 +215,8 @@
     "createdAt": "2023-10-12T14:15:00Z",
     "updatedAt": "2023-10-12T16:30:00Z",
     "postingDate": "2023-10-12T16:30:00Z",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "entries": [
       {
         "accountId": "ACC-1005",
@@ -244,6 +256,8 @@
     "createdAt": "2023-10-15T10:00:00Z",
     "updatedAt": "2023-10-15T11:45:00Z",
     "postingDate": "2023-10-15T11:45:00Z",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "entries": [
       {
         "accountId": "ACC-2004",
@@ -290,6 +304,8 @@
     "createdAt": "2023-10-18T09:30:00Z",
     "updatedAt": "2023-10-18T11:15:00Z",
     "postingDate": "2023-10-18T11:15:00Z",
+    "entity_id": "1",
+    "entity_name": "Parent Company",
     "entries": [
       {
         "accountId": "ACC-1001",
@@ -329,6 +345,8 @@
     "createdAt": "2023-10-20T13:45:00Z",
     "updatedAt": "2023-10-20T15:30:00Z",
     "postingDate": "2023-10-20T15:30:00Z",
+    "entity_id": "2",
+    "entity_name": "Subsidiary 1",
     "entries": [
       {
         "accountId": "ACC-2001",
@@ -368,6 +386,8 @@
     "createdAt": "2023-10-25T10:00:00Z",
     "updatedAt": "2023-10-25T11:30:00Z",
     "postingDate": "2023-10-25T11:30:00Z",
+    "entity_id": "3",
+    "entity_name": "Subsidiary 2",
     "entries": [
       {
         "accountId": "ACC-5005",

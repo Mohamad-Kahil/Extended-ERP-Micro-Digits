@@ -2,7 +2,13 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
-const AccountingOverview = () => {
+interface AccountingOverviewProps {
+  currentEntity?: string;
+}
+
+const AccountingOverview: React.FC<AccountingOverviewProps> = ({
+  currentEntity = "all",
+}) => {
   return (
     <div className="space-y-6">
       {/* KPI Cards */}
@@ -475,6 +481,37 @@ const AccountingOverview = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Entity Information */}
+      {currentEntity && currentEntity !== "all" && (
+        <Card className="border-slate-800 bg-slate-900">
+          <CardContent className="p-3">
+            <h3 className="text-xs font-medium text-white mb-1.5">
+              Entity Information: {currentEntity}
+            </h3>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-slate-400">Entity Type:</p>
+                <p className="text-white">
+                  {currentEntity === "Parent Company" ? "Parent" : "Subsidiary"}
+                </p>
+              </div>
+              <div>
+                <p className="text-slate-400">Currency:</p>
+                <p className="text-white">USD</p>
+              </div>
+              <div>
+                <p className="text-slate-400">Fiscal Year End:</p>
+                <p className="text-white">December 31</p>
+              </div>
+              <div>
+                <p className="text-slate-400">Tax ID:</p>
+                <p className="text-white">XX-XXXXXXX</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
