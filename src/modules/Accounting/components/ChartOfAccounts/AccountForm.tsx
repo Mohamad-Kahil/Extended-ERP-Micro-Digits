@@ -28,11 +28,11 @@ const accountFormSchema = z.object({
   accountName: z.string().min(1, "Account name is required"),
   accountType: z.enum(["asset", "liability", "equity", "revenue", "expense"]),
   entityId: z.string().min(1, "Entity is required"),
-  parentAccount: z.string().optional(),
-  description: z.string().optional(),
+  parentAccount: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
   isActive: z.boolean().default(true),
-  reportingCategory: z.string().optional(),
-  taxCode: z.string().optional(),
+  reportingCategory: z.string().optional().nullable(),
+  taxCode: z.string().optional().nullable(),
 });
 
 type AccountFormValues = z.infer<typeof accountFormSchema>;
@@ -61,7 +61,7 @@ export function AccountForm({
       accountName: "",
       accountType: "asset",
       entityId: currentEntityId || "1",
-      parentAccount: "",
+      parentAccount: "null",
       description: "",
       isActive: true,
       reportingCategory: "",
@@ -193,7 +193,7 @@ export function AccountForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="">None (Top Level)</SelectItem>
+                    <SelectItem value="null">None (Top Level)</SelectItem>
                     {parentAccounts.map((account) => (
                       <SelectItem key={account.id} value={account.id}>
                         {account.accountNumber} - {account.name}

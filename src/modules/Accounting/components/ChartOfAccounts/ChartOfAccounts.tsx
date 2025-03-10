@@ -208,7 +208,17 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
     setIsDeleteDialogOpen(false);
   };
 
-  const handleFormSubmit = async (formData: any) => {
+  const handleFormSubmit = async (formData: {
+    accountNumber: string;
+    accountName: string;
+    accountType: "asset" | "liability" | "equity" | "revenue" | "expense";
+    entityId: string;
+    parentAccount?: string;
+    description?: string;
+    isActive: boolean;
+    reportingCategory?: string;
+    taxCode?: string;
+  }) => {
     try {
       if (editMode && selectedAccount) {
         // Update existing account
@@ -217,7 +227,8 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
           accountName: formData.accountName,
           accountType: formData.accountType,
           entityId: formData.entityId,
-          parentAccountId: formData.parentAccount || null,
+          parentAccountId:
+            formData.parentAccount === "null" ? null : formData.parentAccount,
           description: formData.description,
           isActive: formData.isActive,
           reportingCategory: formData.reportingCategory,
@@ -234,7 +245,10 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
                 accountName: formData.accountName,
                 accountType: formData.accountType,
                 entityId: formData.entityId,
-                parentAccountId: formData.parentAccount || null,
+                parentAccountId:
+                  formData.parentAccount === "null"
+                    ? null
+                    : formData.parentAccount,
                 description: formData.description,
                 isActive: formData.isActive,
                 reportingCategory: formData.reportingCategory,
@@ -263,7 +277,8 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
           accountName: formData.accountName,
           accountType: formData.accountType,
           entityId: formData.entityId || currentEntityId,
-          parentAccountId: formData.parentAccount || null,
+          parentAccountId:
+            formData.parentAccount === "null" ? null : formData.parentAccount,
           description: formData.description,
           isActive: formData.isActive,
           reportingCategory: formData.reportingCategory,
@@ -356,7 +371,8 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
                         accountName: selectedAccount.accountName,
                         accountType: selectedAccount.accountType,
                         entityId: selectedAccount.entityId,
-                        parentAccount: selectedAccount.parentAccountId || "",
+                        parentAccount:
+                          selectedAccount.parentAccountId || "null",
                         description: selectedAccount.description || "",
                         isActive: selectedAccount.isActive,
                         reportingCategory:

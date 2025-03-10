@@ -26,13 +26,13 @@ export interface Account {
   accountName: string;
   accountType: "asset" | "liability" | "equity" | "revenue" | "expense";
   entityId: string;
-  parentAccountId?: string;
-  description?: string;
+  parentAccountId?: string | null;
+  description?: string | null;
   isActive: boolean;
-  reportingCategory?: string;
-  taxCode?: string;
+  reportingCategory?: string | null;
+  taxCode?: string | null;
   balance: number;
-  children?: Account[];
+  children: Account[];
   level: number;
 }
 

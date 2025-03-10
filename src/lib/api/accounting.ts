@@ -152,7 +152,9 @@ export const fetchAccounts = async (entityId?: string) => {
 };
 
 export const createAccount = async (
-  account: Omit<Account, "id" | "balance" | "level" | "children">,
+  account: Omit<Account, "id" | "balance" | "level" | "children"> & {
+    parentAccountId?: string | null;
+  },
 ) => {
   const { data, error } = await supabase
     .from("chart_of_accounts")
@@ -182,7 +184,11 @@ export const createAccount = async (
 
 export const updateAccount = async (
   id: string,
-  account: Partial<Omit<Account, "id" | "balance" | "level" | "children">>,
+  account: Partial<
+    Omit<Account, "id" | "balance" | "level" | "children"> & {
+      parentAccountId?: string | null;
+    }
+  >,
 ) => {
   const { data, error } = await supabase
     .from("chart_of_accounts")
