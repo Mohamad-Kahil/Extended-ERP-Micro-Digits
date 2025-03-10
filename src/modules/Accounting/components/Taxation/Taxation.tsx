@@ -11,7 +11,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Taxation = () => {
+interface TaxationProps {
+  currentEntity?: string;
+}
+
+const Taxation: React.FC<TaxationProps> = ({ currentEntity = "all" }) => {
   const [activeTab, setActiveTab] = useState("tax-compliance");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -22,6 +26,11 @@ const Taxation = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold text-white">
               Taxation & Compliance
+              {currentEntity !== "all" && (
+                <span className="ml-2 text-sm text-slate-400">
+                  ({currentEntity})
+                </span>
+              )}
             </CardTitle>
             <div className="flex space-x-2">
               <Button variant="outline">

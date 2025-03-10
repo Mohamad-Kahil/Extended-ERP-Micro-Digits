@@ -12,7 +12,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const Budgeting = () => {
+interface BudgetingProps {
+  currentEntity?: string;
+}
+
+const Budgeting: React.FC<BudgetingProps> = ({ currentEntity = "all" }) => {
   const [activeTab, setActiveTab] = useState("budget-overview");
   const [selectedPeriod, setSelectedPeriod] = useState("current-year");
 
@@ -192,6 +196,11 @@ const Budgeting = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold text-white">
               Budgeting & Forecasting
+              {currentEntity !== "all" && (
+                <span className="ml-2 text-sm text-slate-400">
+                  ({currentEntity})
+                </span>
+              )}
             </CardTitle>
             <div className="flex space-x-2">
               <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>

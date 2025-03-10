@@ -11,7 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const FinancialReporting = () => {
+interface FinancialReportingProps {
+  currentEntity?: string;
+}
+
+const FinancialReporting: React.FC<FinancialReportingProps> = ({
+  currentEntity = "all",
+}) => {
   const [activeTab, setActiveTab] = useState("income-statement");
   const [selectedPeriod, setSelectedPeriod] = useState("current-month");
 
@@ -191,6 +197,11 @@ const FinancialReporting = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-semibold text-white">
               Financial Reports
+              {currentEntity !== "all" && (
+                <span className="ml-2 text-sm text-slate-400">
+                  ({currentEntity})
+                </span>
+              )}
             </CardTitle>
             <div className="flex space-x-2">
               <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
