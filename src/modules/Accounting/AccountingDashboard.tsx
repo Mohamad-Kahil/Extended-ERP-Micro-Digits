@@ -86,7 +86,7 @@ const AccountingDashboard = () => {
       case "taxation":
         return <Taxation currentEntity={currentEntity} />;
       case "intercompany":
-        return <IntercompanyAccounting />;
+        return <IntercompanyAccounting currentEntity={currentEntity} />;
       case "financial-reporting":
         return <FinancialReporting currentEntity={currentEntity} />;
       case "budgeting":

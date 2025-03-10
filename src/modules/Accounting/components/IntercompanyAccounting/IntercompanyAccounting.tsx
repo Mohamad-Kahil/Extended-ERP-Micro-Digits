@@ -14,32 +14,40 @@ import { Label } from "@/components/ui/label";
 import { useIntercompanyData } from "./hooks/useIntercompanyData";
 import NewTransactionDialog from "./components/NewTransactionDialog";
 import NewEntityDialog from "./components/NewEntityDialog";
-import NewCompanyDialog from "./components/NewCompanyDialog";
 import ViewTransactionDialog from "./components/ViewTransactionDialog";
 import EditTransactionDialog from "./components/EditTransactionDialog";
 import { intercompanyTransactionsApi } from "@/lib/api/accounting";
 
-const IntercompanyAccounting = () => {
+interface IntercompanyAccountingProps {
+  currentEntity?: string;
+}
+
+const IntercompanyAccounting: React.FC<IntercompanyAccountingProps> = ({
+  currentEntity,
+}) => {
   const [activeTab, setActiveTab] = useState("transactions");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState("Parent Company");
+  const [selectedCompany, setSelectedCompany] = useState(
+    currentEntity || "All Companies",
+  );
+
+  // Update selected company when currentEntity changes
+  useEffect(() => {
+    if (currentEntity) {
+      setSelectedCompany(currentEntity);
+    }
+  }, [currentEntity]);
+
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("newest");
 
   // Fetch data from API
-  const { entities, transactions, loading, error, refetch } =
+  const { entities, allEntities, transactions, loading, error, refetch } =
     useIntercompanyData(selectedCompany);
 
   // Extract company names for the dropdown
-  const companies = entities.map((entity) => entity.name);
-
-  // Add "All Companies" option
-  useEffect(() => {
-    if (companies.length > 0 && selectedCompany === "Parent Company") {
-      setSelectedCompany("All Companies");
-    }
-  }, [companies]);
+  const companies = allEntities.map((entity) => entity.name);
 
   // Handle transaction deletion
   const handleDeleteTransaction = async (id: string) => {
@@ -100,23 +108,8 @@ const IntercompanyAccounting = () => {
           <h2 className="text-2xl font-bold text-white">
             Intercompany Accounting
           </h2>
-          <div className="bg-emerald-600 rounded-md h-10 flex items-center shadow-md">
-            <Select value={selectedCompany} onValueChange={setSelectedCompany}>
-              <SelectTrigger className="w-[180px] h-10 bg-transparent border-none focus:ring-0 text-white font-medium">
-                <SelectValue placeholder="Current Entity" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All Companies">All Entities</SelectItem>
-                {companies.map((company) => (
-                  <SelectItem key={company} value={company}>
-                    {company}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
         </div>
-        <NewEntityDialog entities={entities} onEntityCreated={refetch} />
+        <NewEntityDialog entities={allEntities} onEntityCreated={refetch} />
       </div>
 
       <Card className="border-slate-800 bg-slate-900">
@@ -146,8 +139,13 @@ const IntercompanyAccounting = () => {
                 Export
               </Button>
               <NewTransactionDialog
-                entities={entities}
+                entities={allEntities}
                 onTransactionCreated={refetch}
+                defaultEntityName={
+                  selectedCompany !== "All Companies"
+                    ? selectedCompany
+                    : undefined
+                }
               />
               <Button className="bg-purple-600 hover:bg-purple-700">
                 <svg
@@ -528,7 +526,7 @@ const IntercompanyAccounting = () => {
                   Intercompany Entities
                 </h3>
                 <NewEntityDialog
-                  entities={entities}
+                  entities={allEntities}
                   onEntityCreated={refetch}
                 />
               </div>

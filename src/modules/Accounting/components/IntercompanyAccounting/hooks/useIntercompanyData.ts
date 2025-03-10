@@ -173,16 +173,31 @@ export const useIntercompanyData = (selectedCompany: string) => {
 
   // Filter transactions based on selected company
   const filteredTransactions = transactions.filter((transaction) => {
-    if (selectedCompany === "All Companies") return true;
+    // If no company is selected or it's "All Companies", show all transactions
+    if (!selectedCompany || selectedCompany === "All Companies") return true;
 
+    // Otherwise, only show transactions where the selected company is involved
     return (
       transaction.from_entity?.name === selectedCompany ||
       transaction.to_entity?.name === selectedCompany
     );
   });
 
+  // Filter entities based on selected company
+  const filteredEntities =
+    selectedCompany && selectedCompany !== "All Companies"
+      ? entities.filter(
+          (entity) =>
+            entity.name === selectedCompany ||
+            (entity.parent_entity_id &&
+              entities.find((e) => e.id === entity.parent_entity_id)?.name ===
+                selectedCompany),
+        )
+      : entities;
+
   return {
-    entities,
+    entities: filteredEntities,
+    allEntities: entities,
     transactions: filteredTransactions,
     loading,
     error,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,7 +25,7 @@ const ViewTransactionDialog: React.FC<ViewTransactionDialogProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTransactionDetails = async () => {
+  const fetchTransactionDetails = useCallback(async () => {
     if (!open) return;
 
     setLoading(true);
@@ -61,11 +61,13 @@ const ViewTransactionDialog: React.FC<ViewTransactionDialogProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [open, transactionId]);
 
   useEffect(() => {
-    fetchTransactionDetails();
-  }, [open, transactionId]);
+    if (open) {
+      fetchTransactionDetails();
+    }
+  }, [open, fetchTransactionDetails]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
