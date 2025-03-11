@@ -156,21 +156,28 @@ export const createAccount = async (
     parentAccountId?: string | null;
   },
 ) => {
+  console.log("Creating account with data:", account);
+
+  // Ensure we have valid data for required fields
+  const accountData = {
+    account_code: account.accountNumber,
+    account_name: account.accountName,
+    account_type: account.accountType,
+    company_id: account.entityId,
+    parent_id: account.parentAccountId,
+    description: account.description,
+    is_active: account.isActive,
+    reporting_category: account.reportingCategory,
+    tax_code: account.taxCode,
+    balance: 0,
+    currency: "USD", // Add required currency field
+  };
+
+  console.log("Sending to Supabase:", accountData);
+
   const { data, error } = await supabase
     .from("chart_of_accounts")
-    .insert({
-      account_code: account.accountNumber,
-      account_name: account.accountName,
-      account_type: account.accountType,
-      company_id: account.entityId,
-      parent_id: account.parentAccountId,
-      description: account.description,
-      is_active: account.isActive,
-      reporting_category: account.reportingCategory,
-      tax_code: account.taxCode,
-      balance: 0,
-      account_level: account.parentAccountId ? 1 : 0, // This will be recalculated properly on the server
-    })
+    .insert(accountData)
     .select()
     .single();
 
@@ -179,6 +186,7 @@ export const createAccount = async (
     throw error;
   }
 
+  console.log("Account created successfully:", data);
   return data;
 };
 

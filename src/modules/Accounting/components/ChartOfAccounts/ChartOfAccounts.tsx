@@ -272,6 +272,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
         });
       } else {
         // Create new account
+        console.log("Form data for new account:", formData);
         const newAccount = await createAccount({
           accountNumber: formData.accountNumber,
           accountName: formData.accountName,
@@ -279,15 +280,56 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
           entityId: formData.entityId || currentEntityId,
           parentAccountId:
             formData.parentAccount === "null" ? null : formData.parentAccount,
-          description: formData.description,
+          description: formData.description || null,
           isActive: formData.isActive,
-          reportingCategory: formData.reportingCategory,
-          taxCode: formData.taxCode,
+          reportingCategory: formData.reportingCategory || null,
+          taxCode: formData.taxCode || null,
         });
 
-        // Refresh accounts to get the updated hierarchy
-        const updatedAccounts = await fetchAccounts(currentEntityId);
-        setAccounts(updatedAccounts);
+        // Add the new account to the local state
+        const newAccountObj: Account = {
+          id: newAccount.id,
+          accountNumber: formData.accountNumber,
+          accountName: formData.accountName,
+          accountType: formData.accountType,
+          entityId: formData.entityId || currentEntityId,
+          parentAccountId:
+            formData.parentAccount === "null" ? null : formData.parentAccount,
+          description: formData.description || null,
+          isActive: formData.isActive,
+          reportingCategory: formData.reportingCategory || null,
+          taxCode: formData.taxCode || null,
+          balance: 0,
+          level: 0,
+          children: [],
+        };
+
+        // If it has a parent, add it to the parent's children
+        if (newAccountObj.parentAccountId) {
+          const updatedAccounts = accounts.map((account) => {
+            if (account.id === newAccountObj.parentAccountId) {
+              return {
+                ...account,
+                children: [...(account.children || []), newAccountObj],
+              };
+            }
+            return account;
+          });
+          setAccounts(updatedAccounts);
+        } else {
+          // Otherwise add it as a top-level account
+          setAccounts([...accounts, newAccountObj]);
+        }
+
+        // Always refresh accounts from the database to ensure we have the latest data
+        try {
+          console.log("Refreshing accounts after creation");
+          const updatedAccounts = await fetchAccounts(currentEntityId);
+          console.log("Updated accounts:", updatedAccounts);
+          setAccounts(updatedAccounts);
+        } catch (refreshError) {
+          console.error("Error refreshing accounts:", refreshError);
+        }
 
         toast({
           title: "Success",
@@ -357,7 +399,7 @@ const ChartOfAccounts: React.FC<ChartOfAccountsProps> = ({
 
           {/* Account Form Dialog */}
           <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-            <DialogContent className="sm:max-w-[600px] bg-slate-900 border-slate-800">
+            <DialogContent className="sm:max-w-[800px] bg-slate-900 border-slate-800">
               <DialogHeader>
                 <DialogTitle className="text-xl font-semibold text-white">
                   {editMode ? "Edit Account" : "Add New Account"}
